@@ -1,0 +1,9 @@
+{
+    "name": "healthcare/information-system",
+    "autoload": {
+        "psr-4": {
+            "Healthcare\\InformationSystem\\": "src/"
+        }
+    },
+    "require": {}
+}
