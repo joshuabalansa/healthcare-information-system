@@ -1,14 +1,12 @@
 <?php
-
-require_once '../functions/Functions.php';
-
-class Database
+class Connection
 {
-    private $host = 'localhost';
-    private $database = 'vims';
+    private $host     = 'localhost';
+    private $database = 'healthcare';
     private $username = 'root';
     private $password = '';
-    public $conn;
+
+    public  $connect;
 
     public function __construct()
     {
@@ -17,29 +15,20 @@ class Database
 
     private function connect()
     {
-        $this->conn = null;
+        $this->connect = null;
 
         try {
-            $this->conn = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->database, $this->username, $this->password);
+            $this->connect = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->database, $this->username, $this->password);
 
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             echo "Connected successfully";
+
         } catch (PDOException $e) {
 
             echo 'Connection failed: ' . $e->getMessage();
         }
 
-        return $this->conn;
+        return $this->connect;
     }
 }
-$database = new Database();
-
-// Assign the PDO connection object to the $pdo variable
-$pdo = $database->conn;
-
-$functions = new Functions();
-
-$data = $functions->getAllData($pdo, 'users');
-
-print_r($data);
