@@ -12,7 +12,6 @@ class Functions
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result;
-
         } catch (PDOException $e) {
 
             echo 'Query failed: ' . $e->getMessage();

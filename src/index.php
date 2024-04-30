@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -24,40 +25,41 @@
 	<script src="assets/js/jquery-1.11.3.min.js"></script>
 
 </head>
-<body class="page-body login-page login-form-fall" data-url="http://neon.dev">
+
+<body class="page-body login-page login-form-fall">
 
 
 
-<script type="text/javascript">
-var baseurl = '';
-</script>
+	<script type="text/javascript">
+		var baseurl = '';
+	</script>
 
-<div class="login-container">
+	<div class="login-container">
 
-	<div class="login-header login-caret">
+		<div class="login-header login-caret">
 
-		<div class="login-content">
+			<div class="login-content">
 
-			<a href="index.html" class="logo">
-				<img src="assets/images/logo@2x.png" width="120" alt="" />
-			</a>
+				<a href="index.html" class="logo">
+					<img src="assets/images/logo@2x.png" width="120" alt="" />
+				</a>
 
-			<p class="description">Dear user, log in to access the admin area!</p>
+				<p class="description">Dear user, log in to access the admin area!</p>
 
 
-			<div class="login-progressbar-indicator">
-				<h3>43%</h3>
-				<span>logging in...</span>
+				<div class="login-progressbar-indicator">
+					<h3>43%</h3>
+					<span>logging in...</span>
+				</div>
 			</div>
+
 		</div>
 
-	</div>
+		<div class="login-progressbar">
+			<div></div>
+		</div>
 
-	<div class="login-progressbar">
-		<div></div>
-	</div>
-
-	<div class="login-form">
+		<!-- <div class="login-form"> -->
 
 		<div class="login-content">
 
@@ -66,7 +68,7 @@ var baseurl = '';
 				<p>Enter <strong>demo</strong>/<strong>demo</strong> as login and password.</p>
 			</div>
 
-			<form method="post" role="form" id="form_login">
+			<form method="post" role="form" action="functions/Login.php" id="form_login">
 
 				<div class="form-group">
 
@@ -122,21 +124,20 @@ var baseurl = '';
 			</div>
 
 		</div>
+		<!-- </div> -->
 
 	</div>
-
-</div>
 
 
 	<!-- Bottom scripts (common) -->
 	<script src="assets/js/gsap/TweenMax.min.js"></script>
 	<script src="assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
 	<script src="assets/js/bootstrap.js"></script>
-	<script src="assets/js/joinable.js"></script>
+	<!-- <script src="assets/js/joinable.js"></script>
 	<script src="assets/js/resizeable.js"></script>
 	<script src="assets/js/neon-api.js"></script>
 	<script src="assets/js/jquery.validate.min.js"></script>
-	<script src="assets/js/neon-login.js"></script>
+	<script src="assets/js/neon-login.js"></script> -->
 
 
 	<!-- JavaScripts initializations and stuff -->
@@ -147,4 +148,5 @@ var baseurl = '';
 	<script src="assets/js/neon-demo.js"></script>
 
 </body>
+
 </html>

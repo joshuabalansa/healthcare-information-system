@@ -6,7 +6,7 @@ class Connection
     private $username = 'root';
     private $password = '';
 
-    public  $connect;
+    public  $conn;
 
     public function __construct()
     {
@@ -15,20 +15,17 @@ class Connection
 
     private function connect()
     {
-        $this->connect = null;
+        $this->conn = null;
 
         try {
-            $this->connect = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->database, $this->username, $this->password);
+            $this->conn = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->database, $this->username, $this->password);
 
-            $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            echo "Connected successfully";
-
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
 
-            echo 'Connection failed: ' . $e->getMessage();
+            die($e->getMessage());
         }
 
-        return $this->connect;
+        return $this->conn;
     }
 }

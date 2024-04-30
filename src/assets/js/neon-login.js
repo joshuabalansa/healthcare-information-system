@@ -61,26 +61,25 @@ var neonLogin = neonLogin || {};
 
 					// Send data to the server
 					$.ajax({
-						url: baseurl + 'functions/Login.php',
+						url: baseurl + 'functions/Function.php',
 						method: 'POST',
 						dataType: 'json',
 						data: {
 							username: $("input#username").val(),
 							password: $("input#password").val(),
 						},
-						error: function()
+						error: function(xhr, status, error)
 						{
+							console.error(status, error);
 							alert("Wrong Credentials!");
-
 							window.location.href = baseurl;
-
 						},
 						success: function(response)
 						{
 							// Login status [success|invalid]
 							// var login_status = response.login_status;
 							var login_status = 'success';
-
+							console.log(response);
 							// Form is fully completed, we update the percentage
 							neonLogin.setPercentage(100);
 
@@ -110,6 +109,7 @@ var neonLogin = neonLogin || {};
 										}
 
 										window.location.href = redirect_url;
+										
 									}, 400);
 								}
 

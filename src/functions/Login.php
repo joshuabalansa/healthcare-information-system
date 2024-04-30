@@ -1,35 +1,34 @@
 <?php
+session_start();
 
-require_once 'config/Connection.php';
+require_once '../config/Connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
 
     $connection = new Connection();
-    $db = $connection->connect;
+
+    $db = $connection->conn;
 
 
-    $statement = $db->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
+    $statement = $db->prepare("SELECT * FROM users WHERE username = :username AND password = :password AND status = 'active' ");
 
-    $statement->execute([':username' => $username, ':password' => $password]);
+    $statement->execute([':username' => $username, ':password' => sha1($password)]);
 
     $user = $statement->fetch(PDO::FETCH_ASSOC);
+
     if ($user) {
 
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
 
-        $response = ["login_status" => "success", "message" => "Login successful"];
-
+        header('location: ../dashboard.php');
     } else {
 
-        $response = ["login_status" => "invalid", "message" => "Invalid username or password"];
-
+        header('location: ../index.php');
     }
 
-    header('Content-Type: application/json');
-    echo json_encode($response);
+    exit;
 }
-?>
