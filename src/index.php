@@ -11,7 +11,7 @@
 
 	<link rel="icon" href="assets/images/favicon.ico">
 
-	<title>Neon | Login</title>
+	<title>Login</title>
 
 	<link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
 	<link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
@@ -41,10 +41,10 @@
 			<div class="login-content">
 
 				<a href="index.html" class="logo">
-					<img src="assets/images/logo@2x.png" width="120" alt="" />
+					<!-- <img src="assets/images/logo@2x.png" width="120" alt="" /> -->
 				</a>
 
-				<p class="description">Dear user, log in to access the admin area!</p>
+				<!-- <p class="description">Dear user, log in to access the admin area!</p> -->
 
 
 				<div class="login-progressbar-indicator">
