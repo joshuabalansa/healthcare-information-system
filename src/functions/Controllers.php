@@ -1,7 +1,7 @@
 <?php
 require_once '../config/connection.php';
 
-class Functions
+class Controllers
 {
     public function getAllData($connnect, $table)
     {

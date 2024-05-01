@@ -23,7 +23,7 @@ class Connection
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
 
-            die($e->getMessage());
+            echo $e->getMessage();
         }
 
         return $this->conn;
