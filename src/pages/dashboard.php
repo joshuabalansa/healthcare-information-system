@@ -5,9 +5,9 @@ require_once '../config/Connection.php';
 
 session_start();
 
-$validate = new Helpers();
+$helper = new Helpers();
 
-$validate->validateUserSession($_SESSION['user_id']);
+$helper->validateUserSession($_SESSION['user_id']);
 
 $user_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
