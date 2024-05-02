@@ -3,7 +3,16 @@ require_once '../config/connection.php';
 
 class Controllers
 {
-    public function getData($connnect, $table, $user_id)
+
+    /**
+     * Get data by id function
+     *
+     * @param object $connnect
+     * @param string $table
+     * @param int $user_id
+     * @return array
+     */
+    public function getDataById($connnect, $table, $user_id)
     {
         try {
 
@@ -13,12 +22,17 @@ class Controllers
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result;
-
         } catch (PDOException $e) {
 
             echo 'Query failed: ' . $e->getMessage();
 
             return false;
         }
+    }
+
+    public function storeData($connect, $table, $data)
+    {
+
+        return $connect;
     }
 }

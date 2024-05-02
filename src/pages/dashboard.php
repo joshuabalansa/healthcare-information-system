@@ -1,25 +1,24 @@
 <?php
-	require_once '../functions/Helpers.php';
-	require_once '../functions/Controllers.php';
-	require_once '../config/Connection.php';
+require_once '../functions/Helpers.php';
+require_once '../functions/Controllers.php';
+require_once '../config/Connection.php';
 
-	session_start();
+session_start();
 
-	$helper = new Helpers();
+$helper = new Helpers();
 
-	$helper->validateUserSession($_SESSION['user_id']);
+$helper->validateUserSession($_SESSION['user_id']);
 
-	$user_id = $_SESSION['user_id'];
-	$username = $_SESSION['username'];
+$user_id = $_SESSION['user_id'];
+$username = $_SESSION['username'];
 
-	$controller = new Controllers();
-	$connection = new Connection();
+$controller = new Controllers();
+$connection = new Connection();
 
-	$user = $controller->getData($connection->conn, 'users', $user_id);
+$user = $controller->getDataById($connection->conn, 'users', $user_id);
 
-	$role = $user[0]['role'];
+$role = $user[0]['role'];
 
-	print_r($user);
 ?>
 <!DOCTYPE html>
 <html lang="en">
