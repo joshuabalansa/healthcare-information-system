@@ -1,3 +1,10 @@
+<?php
+	require_once '../functions/Helpers.php';
+
+	$helper = new Helpers;
+	$helper->validateUserSession($_SESSION['user_id']);
+?>
+
 <div class="row">
 			<div class="col-sm-3 col-xs-6">
 

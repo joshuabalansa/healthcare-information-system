@@ -3,11 +3,11 @@ require_once '../config/connection.php';
 
 class Controllers
 {
-    public function getAllData($connnect, $table)
+    public function getData($connnect, $table, $user_id)
     {
         try {
 
-            $stmt = $connnect->query("SELECT * FROM $table");
+            $stmt = $connnect->query("SELECT * FROM $table WHERE id = $user_id");
 
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
