@@ -7,11 +7,13 @@ class Controllers
     {
         try {
 
-            $stmt = $connnect->query("SELECT * FROM $table WHERE id = $user_id");
+            $stmt = $connnect->prepare("SELECT * FROM $table WHERE id = ?");
+            $stmt->execute([$user_id]);
 
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result;
+
         } catch (PDOException $e) {
 
             echo 'Query failed: ' . $e->getMessage();
