@@ -34,18 +34,24 @@ class Controllers
     /**
      * Store data
      *
-     * @param object $connect
      * @param string $table
-     * @param string $column
-     * @param string $data
+     * @param array $data
      * @return void
      */
-    public function store($connect, $table, $column, $data)
+    public function store($table, $data)
     {
         try {
 
-            // $valuePlaceHolders = rtrim(str_repeat('? ', count($data), ', '));
+            $keys = array_keys($data);
+            $placeholders = implode(', ', array_fill(0, count($keys), '?'));
 
+            $connection = new Connection();
+            $conn = $connection->conn;
+
+            $sql = "INSERT INTO $table (" . implode(', ', $keys) . ") VALUES ($placeholders)";
+            $stmt = $conn->prepare($sql);
+
+            $stmt->execute(array_values($data));
 
         } catch(PDOException $e) {
 

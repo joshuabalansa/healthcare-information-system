@@ -22,14 +22,10 @@
             }
         }
 
-        $column = implode(", ", array_keys($data));
-        $value = "'" . implode("', ", $data) . "'";
-
-
         $connection = new Connection();
         $controller = new Controllers();
 
-        // $controller->store($connection->conn, 'apppointments', $column, $value);
+        $controller->store('apppointments', $data);
 
     }
 ?>
