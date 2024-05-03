@@ -1,8 +1,8 @@
 <?php
-	require_once '../functions/Helpers.php';
+require_once '../class/Validator.php';
 
-	$helper = new Helpers;
-	$helper->validateUserSession($_SESSION['user_id']);
+$validate = new Validator;
+$validate->validateUserSession($_SESSION['user_id']);
 ?>
 
 <div class="row">
@@ -444,7 +444,7 @@
 			<li class="sep"></li>
 
 			<li>
-				<a href="../functions/Logout.php">
+				<a href="../class/Logout.php">
 					Log Out <i class="entypo-logout right"></i>
 				</a>
 			</li>

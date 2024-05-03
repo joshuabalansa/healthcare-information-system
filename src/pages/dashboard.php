@@ -1,13 +1,14 @@
 <?php
-require_once '../functions/Helpers.php';
-require_once '../functions/Controllers.php';
-require_once '../config/Connection.php';
 
 session_start();
 
-$helper = new Helpers();
+require_once '../class/Validator.php';
+require_once '../class/Controllers.php';
+require_once '../config/Connection.php';
 
-$helper->validateUserSession($_SESSION['user_id']);
+$validator = new Validator();
+
+$validator->validateUserSession($_SESSION['user_id']);
 
 $user_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
@@ -30,8 +31,6 @@ $role = $user[0]['role'];
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="description" content="Neon Admin Panel" />
 	<meta name="author" content="" />
-
-	<!-- <link rel="icon" href="../assets/images/favicon.ico"> -->
 
 	<title></title>
 

@@ -22,7 +22,6 @@ class Controllers
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result;
-
         } catch (PDOException $e) {
 
             echo 'Query failed: ' . $e->getMessage();
@@ -52,8 +51,7 @@ class Controllers
             $stmt = $conn->prepare($sql);
 
             $stmt->execute(array_values($data));
-
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
 
             return false;
         }

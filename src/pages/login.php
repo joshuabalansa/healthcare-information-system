@@ -41,7 +41,8 @@
             <div class="login-content">
 
                 <a href="index.html" class="logo">
-                    <!-- <img src="assets/images/logo@2x.png" width="120" alt="" /> -->
+                    <img src="assets/images/app_logo.png" width="120" alt="" />
+                    <h2 style="color: #fff">Vaccination And Family Planning</h2>
                 </a>
 
                 <!-- <p class="description">Dear user, log in to access the admin area!</p> -->
@@ -68,7 +69,7 @@
                 <p>Enter <strong>demo</strong>/<strong>demo</strong> as login and password.</p>
             </div>
 
-            <form method="post" role="form" action="functions/Login.php" id="form_login">
+            <form method="post" role="form" action="class/Login.php" id="form_login">
 
                 <div class="form-group">
 

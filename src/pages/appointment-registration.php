@@ -1,33 +1,32 @@
 <?php
-    require_once('../functions/Controllers.php');
-    require_once('../config/connection.php');
-    require_once('../config/Forms.php');
+require_once('../class/Controllers.php');
+require_once('../config/connection.php');
+require_once('../config/Forms.php');
 
-    $form = new Forms;
+$form = new Forms;
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        $formFields = $formFields = $form->registrationFields();
+    $formFields = $formFields = $form->registrationFields();
 
-        $data = [];
+    $data = [];
 
-        foreach($formFields as $field => [$label, $type]) {
+    foreach ($formFields as $field => [$label, $type]) {
 
-            if(isset($_POST[$field])) {
+        if (isset($_POST[$field])) {
 
-                $data[$field] = $_POST[$field];
-            } else {
+            $data[$field] = $_POST[$field];
+        } else {
 
-                $data[$field] = '';
-            }
+            $data[$field] = '';
         }
-
-        $connection = new Connection();
-        $controller = new Controllers();
-
-        $controller->store('apppointments', $data);
-
     }
+
+    $connection = new Connection();
+    $controller = new Controllers();
+
+    $controller->store('apppointments', $data);
+}
 ?>
 
 <!DOCTYPE html>
@@ -54,9 +53,9 @@
     <div class="container">
         <div class="row flex justify-content-center w-full">
             <div class="col-md-8">
-                <!-- <h1 class="card-header">Vaccination and Family Planning Online Appointment</h1> -->
+                <h1 class="card-header">Vaccination and Family Planning Online Appointment</h1>
                 <div class="card-body">
-                    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>">
+                    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
 
                         <?php foreach ($form->registrationFields() as $field => [$label, $type]) : ?>
                             <div class="form-group row">

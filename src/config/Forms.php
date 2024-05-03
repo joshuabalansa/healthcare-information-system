@@ -1,13 +1,15 @@
 <?php
 
-class Forms {
+class Forms
+{
 
     /**
      * Set registration fields
      *
      * @return array $fields
      */
-    public function registrationFields() {
+    public function registrationFields()
+    {
 
         $fields = [
             'first_name'        => ['First Name', 'text'],
@@ -40,5 +42,3 @@ class Forms {
         return $fields;
     }
 }
-
-?>

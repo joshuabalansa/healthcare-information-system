@@ -1,7 +1,7 @@
 <?php
-require_once '../functions/Helpers.php';
-$helper = new Helpers;
-$helper->validateUserSession($_SESSION['user_id']);
+require_once '../class/Validator.php';
+$validator = new Validator;
+$validator->validateUserSession($_SESSION['user_id']);
 ?>
 
 <div class="sidebar-menu">
