@@ -107,9 +107,9 @@
 
                 <div class="form-group">
 
-                    <button type="button" class="btn btn-default">
+                    <a href="pages/appointment-registration" class="btn btn-dark">
                         Register an Appointment
-                    </button>
+                    </a>
                 </div>
 
             </form>

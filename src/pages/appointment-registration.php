@@ -1,40 +1,37 @@
 <?php
-require_once('../functions/Controllers.php');
+    require_once('../functions/Controllers.php');
+    require_once('../config/connection.php');
+    require_once('../config/Forms.php');
 
-$controller = new Controllers();
+    $form = new Forms;
 
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-$fields = [
-    'first_name'        => ['First Name', 'text'],
-    'middle_name'       => ['Middle Name', 'text'],
-    'last_name'         => ['Last Name', 'text'],
-    'birth_date'        => ['Birth Date', 'date'],
-    'body_weight'       => ['Body Weight', 'text'],
-    'body_length'       => ['Body Length', 'text'],
-    'address'           => ['Address', 'text'],
-    'gravida'           => ['Gravida', 'text'],
-    'para'              => ['Para', 'text'],
-    'abortion'          => ['Abortion', 'text'],
-    'live_birth'        => ['Live Birth', 'text'],
-    'death'             => ['Death', 'text'],
-    'philhealth'        => ['Philhealth Number', 'text'],
-    '4ps_number'        => ['4Ps Number', 'text'],
-    'mother_maiden_name' => ['Mother Maiden Name', 'text'],
-    'mother_birth_date' => ['Mother Birth Date', 'date'],
-    'mother_age'        => ['Mother Age', 'text'],
-    'mother_occupation' => ['Mother Occupation', 'text'],
-    'father_name'       => ['Father Name', 'text'],
-    'father_birth_date' => ['Father Birth Date', 'date'],
-    'father_age'        => ['Father Age', 'text'],
-    'father_occupation' => ['Father Occupation', 'text'],
-    'phone_number'      => ['Phone Number', 'number'],
-    'appointment_time'  => ['Appointment Time', 'time'],
-    'appointment_date'  => ['Appointment Date', 'date'],
-];
+        $formFields = $formFields = $form->registrationFields();
+
+        $data = [];
+
+        foreach($formFields as $field => [$label, $type]) {
+
+            if(isset($_POST[$field])) {
+
+                $data[$field] = $_POST[$field];
+            } else {
+
+                $data[$field] = '';
+            }
+        }
+
+        $column = implode(", ", array_keys($data));
+        $value = "'" . implode("', ", $data) . "'";
 
 
+        $connection = new Connection();
+        $controller = new Controllers();
 
+        // $controller->store($connection->conn, 'apppointments', $column, $value);
 
+    }
 ?>
 
 <!DOCTYPE html>
@@ -61,16 +58,16 @@ $fields = [
     <div class="container">
         <div class="row flex justify-content-center w-full">
             <div class="col-md-8">
-                <h1 class="card-header">Vaccination and Family Planning Online Appointment</h1>
+                <!-- <h1 class="card-header">Vaccination and Family Planning Online Appointment</h1> -->
                 <div class="card-body">
-                    <form method="POST" action="appointment-registration">
+                    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>">
 
-                        <?php foreach ($fields as $field => [$label, $type]) : ?>
+                        <?php foreach ($form->registrationFields() as $field => [$label, $type]) : ?>
                             <div class="form-group row">
                                 <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
 
                                 <div class="col-md-6 mb-3">
-                                    <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" value="" placeholder="Enter <?= $label ?>">
+                                    <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>">
                                 </div>
                             </div>
                         <?php endforeach; ?>

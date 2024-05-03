@@ -22,6 +22,7 @@ class Controllers
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result;
+
         } catch (PDOException $e) {
 
             echo 'Query failed: ' . $e->getMessage();
@@ -30,9 +31,25 @@ class Controllers
         }
     }
 
-    public function storeData($connect, $table, $data)
+    /**
+     * Store data
+     *
+     * @param object $connect
+     * @param string $table
+     * @param string $column
+     * @param string $data
+     * @return void
+     */
+    public function store($connect, $table, $column, $data)
     {
+        try {
 
-        return $connect;
+            // $valuePlaceHolders = rtrim(str_repeat('? ', count($data), ', '));
+
+
+        } catch(PDOException $e) {
+
+            return false;
+        }
     }
 }
