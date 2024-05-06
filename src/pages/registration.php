@@ -1,13 +1,17 @@
 <?php
+session_start();
+
 require_once('../class/Controllers.php');
 require_once('../config/connection.php');
 require_once('../config/Forms.php');
+
+$_SESSION['appointment'] = $_GET['appointment'] ?? '';
 
 $form = new Forms;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $formFields = $formFields = $form->registrationFields();
+    $formFields = $form->registrationFields();
 
     $data = [];
 
@@ -25,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $connection = new Connection();
     $controller = new Controllers();
 
-    $controller->store('apppointments', $data);
+    $controller->store('apppointments', $data, 'success');
 }
 ?>
 
@@ -53,7 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="container">
         <div class="row flex justify-content-center w-full">
             <div class="col-md-8">
-                <h1 class="card-header">Vaccination and Family Planning Online Appointment</h1>
+
+              <h1 class="card-header"><?php if($_SESSION['appointment'] == 'vaccination') { echo 'Vaccination'; } else { echo 'Family Planning'; } ?> Appointment</h1>
+
+
+                <?php if($_SESSION['appointment'] == 'vaccination'): ?>
                 <div class="card-body">
                     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
 
@@ -76,6 +84,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                     </form>
                 </div>
+
+                <?php else: ?>
+                <div class="card-body">
+                    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+
+                        <?php foreach ($form->registrationFields() as $field => [$label, $type]) : ?>
+                            <div class="form-group row">
+                                <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
+
+                                <div class="col-md-6 mb-3">
+                                    <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>">
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Register an Appointment
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

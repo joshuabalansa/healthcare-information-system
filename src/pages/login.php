@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,8 +45,8 @@
             <div class="login-content">
 
                 <a href="index.html" class="logo">
-                    <img src="assets/images/app_logo.png" width="120" alt="" />
-                    <h2 style="color: #fff">Vaccination And Family Planning</h2>
+                    <!-- <img src="assets/images/app_logo.png" width="120" alt="" />
+                    <h2 style="color: #fff">Vaccination And Family Planning</h2> -->
                 </a>
 
                 <!-- <p class="description">Dear user, log in to access the admin area!</p> -->
@@ -108,8 +112,11 @@
 
                 <div class="form-group">
 
-                    <a href="pages/appointment-registration" class="btn btn-dark">
-                        Register an Appointment
+                    <a href="pages/registration?appointment=<?=$_SESSION['vaccination'] = 'vaccination' ?>" class="btn btn-dark">
+                        Vaccination Appointment
+                    </a>
+                    <a href="pages/registration?appointment=<?=$_SESSION['vaccination'] = 'family_planning' ?>" class="btn btn-dark">
+                         Family Planning Appointment
                     </a>
                 </div>
 

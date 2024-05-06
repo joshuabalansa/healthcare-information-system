@@ -4,12 +4,17 @@ require_once '../config/connection.php';
 class Controllers
 {
 
+    public $connect;
+
+    public function __construct() {
+
+    }
     /**
      * Get data by id function
      *
      * @param object $connnect
      * @param string $table
-     * @param int   $user_id
+     * @param int $user_id
      * @return array
      */
     public function getDataById($connnect, $table, $user_id)
@@ -22,6 +27,7 @@ class Controllers
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result;
+
         } catch (PDOException $e) {
 
             echo 'Query failed: ' . $e->getMessage();
@@ -37,7 +43,7 @@ class Controllers
      * @param array $data
      * @return void
      */
-    public function store($table, $data, $redirect)
+    public function store($table, $data)
     {
         try {
 
@@ -52,11 +58,9 @@ class Controllers
 
             $stmt->execute(array_values($data));
 
-            header("location: $redirect");
+        } catch(PDOException $e) {
 
-        } catch (PDOException $e) {
-
-            header("location: $redirect");
+            return false;
         }
     }
 }
