@@ -6,20 +6,16 @@ require_once '../class/Validator.php';
 require_once '../class/Controllers.php';
 require_once '../config/Connection.php';
 
-$validator = new Validator();
-
-$validator->validateUserSession($_SESSION['user_id']);
-
 $user_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
 
-$controller = new Controllers();
-$connection = new Connection();
+$validator = new Validator();
+$validator->validateUserSession($_SESSION['user_id']);
 
-$user = $controller->getDataById($connection->conn, 'users', $user_id);
+$controller = new Controllers();
+$user = $controller->getDataById('users', $user_id);
 
 $role = $user[0]['role'];
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

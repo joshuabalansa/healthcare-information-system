@@ -1,3 +1,9 @@
+<?php
+
+
+?>
+
+
 <div class="container">
     <h2>Appointments</h2><br />
     <table class="table table-bordered datatable" id="datatable">

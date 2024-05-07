@@ -6,23 +6,37 @@ class Controllers
 {
 
     /**
+     * @var object $connection
+     */
+    public $connection;
+
+    /**
+     * @param $object $connection
+     */
+    public function __construct() {
+
+        $this->connection = (new Connection())->conn;
+    }
+
+    /**
      * Get data by id function
      *
      * @param object $connnect
      * @param string $table
      * @param int   $user_id
-     * @return array
+     * @return array $result | false
      */
-    public function getDataById($connnect, $table, $user_id)
+    public function getDataById($table, $user_id)
     {
         try {
 
-            $stmt = $connnect->prepare("SELECT * FROM $table WHERE id = ?");
+            $stmt = $this->connection->prepare("SELECT * FROM $table WHERE id = ?");
             $stmt->execute([$user_id]);
 
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result;
+
         } catch (PDOException $e) {
 
             echo 'Query failed: ' . $e->getMessage();
@@ -43,13 +57,12 @@ class Controllers
         try {
 
             $keys = array_keys($data);
+
             $placeholders = implode(', ', array_fill(0, count($keys), '?'));
 
-            $connection = new Connection();
-            $conn = $connection->conn;
-
             $sql = "INSERT INTO $table (" . implode(', ', $keys) . ") VALUES ($placeholders)";
-            $stmt = $conn->prepare($sql);
+
+            $stmt = $this->connection->prepare($sql);
 
             $stmt->execute(array_values($data));
 
