@@ -8,7 +8,7 @@ class Forms
      *
      * @return array $fields
      */
-    public function registrationFields()
+    public function vaccinationFields()
     {
 
         $fields = [

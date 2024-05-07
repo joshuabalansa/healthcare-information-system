@@ -1,5 +1,6 @@
 <?php
 require_once '../config/connection.php';
+include '../functions/functions.php';
 
 class Controllers
 {
@@ -56,7 +57,7 @@ class Controllers
 
         } catch (PDOException $e) {
 
-            header("location: $redirect");
+           die_dump($e);
         }
     }
 }

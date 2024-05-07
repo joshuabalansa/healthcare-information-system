@@ -5,13 +5,12 @@ require_once '../config/Connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $username = $_POST['username'] ?? '';
-    $password = $_POST['password'] ?? '';
+    $username = htmlspecialchars($_POST['username']) ?? '';
+    $password = htmlspecialchars($_POST['password']) ?? '';
 
     $connection = new Connection();
 
     $db = $connection->conn;
-
 
     $statement = $db->prepare("SELECT * FROM users WHERE username = :username AND password = :password AND status = 'active' ");
 
@@ -25,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['username'] = $user['username'];
 
         header('location: ../pages/dashboard.php');
+
     } else {
 
         header('location: ../index.php');

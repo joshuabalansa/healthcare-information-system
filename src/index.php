@@ -1,1 +1,3 @@
-<?php include 'pages/login.php';
+<?php
+
+include 'pages/login.php';

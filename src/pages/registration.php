@@ -11,7 +11,7 @@ $form = new Forms;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $formFields = $form->registrationFields();
+    $formFields = $form->vaccinationFields();
 
     $data = [];
 
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $connection = new Connection();
     $controller = new Controllers();
 
-    $controller->store('apppointments', $data, 'success');
+    $controller->store('vaccinations', $data, 'success');
 }
 ?>
 
@@ -58,14 +58,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row flex justify-content-center w-full">
             <div class="col-md-8">
 
-              <h1 class="card-header"><?php if($_SESSION['appointment'] == 'vaccination') { echo 'Vaccination'; } else { echo 'Family Planning'; } ?> Appointment</h1>
+
 
 
                 <?php if($_SESSION['appointment'] == 'vaccination'): ?>
                 <div class="card-body">
                     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
 
-                        <?php foreach ($form->registrationFields() as $field => [$label, $type]) : ?>
+                        <?php foreach ($form->vaccinationFields() as $field => [$label, $type]) : ?>
                             <div class="form-group row">
                                 <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
 
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="card-body">
                     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
 
-                        <?php foreach ($form->registrationFields() as $field => [$label, $type]) : ?>
+                        <?php foreach ($form->vaccinationFields() as $field => [$label, $type]) : ?>
                             <div class="form-group row">
                                 <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
 
