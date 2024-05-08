@@ -14,6 +14,7 @@ class Authorization
     public static function authorize($role)
     {
 
+        # menu | url | icon
         $permissions = [
             1 => [
                 'Dashboard'   => ['dashboard', 'chart-pie'],

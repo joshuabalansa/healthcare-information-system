@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $connection = new Connection();
     $controller = new Controllers();
 
-    $controller->store('vaccinations', $data, 'success');
+    $controller->store($connection->conn, 'vaccinations', $data, 'success');
 }
 ?>
 

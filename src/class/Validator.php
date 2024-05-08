@@ -9,7 +9,7 @@ class Validator
      * @param int $sessionId
      * @return void
      */
-    public function validateUserSession($sessionId)
+    public static function validateUserSession($sessionId)
     {
         if (!$sessionId) {
 

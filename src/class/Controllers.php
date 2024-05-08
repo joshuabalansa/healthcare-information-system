@@ -1,6 +1,6 @@
 <?php
-require_once '../config/connection.php';
-include '../functions/functions.php';
+// require_once '../config/connection.php';
+// include '../functions/functions.php';
 
 class Controllers
 {
@@ -8,15 +8,15 @@ class Controllers
     /**
      * @var object $connection
      */
-    public $connection;
+    // public $connection;
 
     /**
      * @param $object $connection
      */
-    public function __construct() {
+    // public function __construct() {
 
-        $this->connection = (new Connection())->conn;
-    }
+    //     $this->connection = (new Connection())->conn;
+    // }
 
     /**
      * Get data by id function
@@ -26,11 +26,11 @@ class Controllers
      * @param int   $user_id
      * @return array $result | false
      */
-    public function getDataById($table, $user_id)
+    public function getDataById($conn, $table, $user_id)
     {
         try {
 
-            $stmt = $this->connection->prepare("SELECT * FROM $table WHERE id = ?");
+            $stmt = $conn->prepare("SELECT * FROM $table WHERE id = ?");
             $stmt->execute([$user_id]);
 
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -52,7 +52,7 @@ class Controllers
      * @param array $data
      * @return void
      */
-    public function store($table, $data, $redirect)
+    public function store($conn, $table, $data, $redirect)
     {
         try {
 
@@ -62,7 +62,7 @@ class Controllers
 
             $sql = "INSERT INTO $table (" . implode(', ', $keys) . ") VALUES ($placeholders)";
 
-            $stmt = $this->connection->prepare($sql);
+            $stmt = $conn->prepare($sql);
 
             $stmt->execute(array_values($data));
 
@@ -70,7 +70,7 @@ class Controllers
 
         } catch (PDOException $e) {
 
-           die_dump($e);
+           die($e->getMessage);
         }
     }
 }

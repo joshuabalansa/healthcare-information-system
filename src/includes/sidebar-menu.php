@@ -1,10 +1,7 @@
 <?php
 
-require_once '../class/Validator.php';
-require_once '../class/Authorization.php';
+$authorization = $_SESSION['authorization'];
 
-$validator = new Validator;
-$validator->validateUserSession($_SESSION['user_id']);
 ?>
 
 <div class="sidebar-menu">
@@ -16,7 +13,7 @@ $validator->validateUserSession($_SESSION['user_id']);
 			<div class="logo">
 				<a href="dashboard.php">
 					<p class="lead">ADMIN</p>
-					<p>@<?= $username ?></p>
+					<p>@<?=$_SESSION['username']?></p>
 				</a>
 			</div>
 
@@ -34,10 +31,8 @@ $validator->validateUserSession($_SESSION['user_id']);
 
 		</header>
 
-
 		<ul id="main-menu" class="main-menu">
-
-			<?php foreach (Authorization::authorize($role) as $menu => [$url, $icon]) : ?>
+			<?php foreach ($authorization as $menu => [$url, $icon]) : ?>
 				<li>
 					<a href="<?= $url ?>">
 						<i class="entypo-<?= $icon ?>"></i>

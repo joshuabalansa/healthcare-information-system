@@ -4,18 +4,22 @@ session_start();
 
 require_once '../class/Validator.php';
 require_once '../class/Controllers.php';
-require_once '../config/Connection.php';
+require_once '../config/connection.php';
+require_once '../class/Authorization.php';
+require_once '../functions/functions.php';
 
 $user_id = $_SESSION['user_id'];
-$username = $_SESSION['username'];
 
 $validator = new Validator();
 $validator->validateUserSession($_SESSION['user_id']);
 
 $controller = new Controllers();
-$user = $controller->getDataById('users', $user_id);
+
+$connection = new Connection();
+$user = $controller->getDataById($connection->conn, 'users', $user_id);
 
 $role = $user[0]['role'];
+$_SESSION['authorization'] = Authorization::authorize($role);
 ?>
 <!DOCTYPE html>
 <html lang="en">
