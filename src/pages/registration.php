@@ -56,60 +56,64 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="container">
         <div class="row flex justify-content-center w-full">
-            <div class="col-md-8">
 
 
 
+            <center>
+                <div class="col-md-8">
 
-                <?php if($_SESSION['appointment'] == 'vaccination'): ?>
-                <div class="card-body">
-                    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+                    <?php if ($_SESSION['appointment'] == 'vaccination') : ?>
+                        <h1>Vaccination Online Registration</h1>
+                        <div class="card-body">
+                            <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
 
-                        <?php foreach ($form->vaccinationFields() as $field => [$label, $type]) : ?>
-                            <div class="form-group row">
-                                <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
+                                <?php foreach ($form->vaccinationFields() as $field => [$label, $type]) : ?>
+                                    <div class="form-group row">
+                                        <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
 
-                                <div class="col-md-6 mb-3">
-                                    <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>">
+                                        <div class="col-md-6 mb-3">
+                                            <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>">
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6 offset-md-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            Register an Appointment
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Register an Appointment
-                                </button>
-                            </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
 
-                <?php else: ?>
-                <div class="card-body">
-                    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+                    <?php else : ?>
+                        <h1>Family Planning Online Registration</h1>
+                        <div class="card-body">
+                            <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
 
-                        <?php foreach ($form->vaccinationFields() as $field => [$label, $type]) : ?>
-                            <div class="form-group row">
-                                <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
+                                <?php foreach ($form->vaccinationFields() as $field => [$label, $type]) : ?>
+                                    <div class="form-group row">
+                                        <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
 
-                                <div class="col-md-6 mb-3">
-                                    <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>">
+                                        <div class="col-md-6 mb-3">
+                                            <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>">
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6 offset-md-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            Register an Appointment
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Register an Appointment
-                                </button>
-                            </div>
+                            </form>
                         </div>
-                    </form>
+                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
-            </div>
+            </center>
         </div>
     </div>
 

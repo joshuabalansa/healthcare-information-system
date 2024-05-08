@@ -437,7 +437,7 @@
 			<li class="sep"></li>
 
 			<li>
-				<a href="../class/Logout.php">
+				<a href="http://healthcare.test/src/class/Logout">
 					Log Out <i class="entypo-logout right"></i>
 				</a>
 			</li>
