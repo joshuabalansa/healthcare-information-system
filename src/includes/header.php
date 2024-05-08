@@ -1,9 +1,3 @@
-<?php
-require_once '../class/Validator.php';
-
-$validate = new Validator;
-$validate->validateUserSession($_SESSION['user_id']);
-?>
 
 <div class="row">
 

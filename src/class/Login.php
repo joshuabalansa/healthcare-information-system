@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } else {
 
+        $_SESSION['error'] = 'Wrong Username or Password';
         header('location: ../index.php');
     }
 

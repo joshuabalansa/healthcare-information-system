@@ -65,13 +65,7 @@ session_start();
         </div>
 
         <!-- <div class="login-form"> -->
-
         <div class="login-content">
-
-            <div class="form-login-error">
-                <h3>Invalid login</h3>
-                <p>Enter <strong>demo</strong>/<strong>demo</strong> as login and password.</p>
-            </div>
 
             <form method="post" role="form" action="class/Login.php" id="form_login">
 
@@ -104,6 +98,8 @@ session_start();
                         <i class="entypo-login"></i>
                         Login In
                     </button>
+                    <br>
+                  <span style="color: #f00"><?=$_SESSION['error'] ?? ''?></span>
                 </div>
 
                 <div class="form-group">

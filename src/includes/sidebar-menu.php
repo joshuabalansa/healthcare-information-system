@@ -34,7 +34,7 @@ $authorization = $_SESSION['authorization'];
 		<ul id="main-menu" class="main-menu">
 			<?php foreach ($authorization as $menu => [$url, $icon]) : ?>
 				<li>
-					<a href="<?= $url ?>">
+				<a href="<?= $url ?>">
 						<i class="entypo-<?= $icon ?>"></i>
 						<span class="title"><?= $menu ?> </span>
 					</a>
