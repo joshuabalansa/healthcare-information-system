@@ -1,4 +1,3 @@
-
 <div class="row">
 
 	<!-- Profile Info and Notifications -->
@@ -8,11 +7,11 @@
 
 			<!-- Profile Info -->
 			<li class="profile-info dropdown"><!-- add class "pull-right" if you want to place this from right -->
-
+				<!-- 
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 					<img src="../assets/images/thumb-1@2x.png" alt="" class="img-circle" width="44" />
 					John Henderson
-				</a>
+				</a> -->
 
 				<ul class="dropdown-menu">
 
@@ -381,7 +380,7 @@
 		<ul class="list-inline links-list pull-right">
 
 			<!-- Language Selector -->
-			<li class="dropdown language-selector">
+			<!-- <li class="dropdown language-selector">
 
 				Language: &nbsp;
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
@@ -421,7 +420,7 @@
 					</li>
 				</ul>
 
-			</li>
+			</li> -->
 
 			<li class="sep"></li>
 

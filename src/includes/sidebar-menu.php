@@ -1,9 +1,3 @@
-<?php
-
-$authorization = $_SESSION['authorization'];
-
-?>
-
 <div class="sidebar-menu">
 
 	<div class="sidebar-menu-inner">
@@ -13,7 +7,7 @@ $authorization = $_SESSION['authorization'];
 			<div class="logo">
 				<a href="dashboard.php">
 					<p class="lead">ADMIN</p>
-					<p>@<?=$_SESSION['username']?></p>
+					<p>@<?= $_SESSION['username'] ?></p>
 				</a>
 			</div>
 
@@ -32,11 +26,11 @@ $authorization = $_SESSION['authorization'];
 		</header>
 
 		<ul id="main-menu" class="main-menu">
-			<?php foreach ($authorization as $menu => [$url, $icon]) : ?>
+			<?php foreach ($_SESSION['routes'] as $menu => [$url, $icon]) : ?>
 				<li>
-				<a href="<?= $url ?>">
+					<a href="<?= $url ?>">
 						<i class="entypo-<?= $icon ?>"></i>
-						<span class="title"><?= $menu ?> </span>
+						<span class="title"><?= $menu ?></span>
 					</a>
 				</li>
 			<?php endforeach; ?>

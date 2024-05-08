@@ -5,7 +5,8 @@
  * @param mixed $data
  * @return void
  */
-function die_dump($data) {
+function die_dump($data)
+{
     echo "<pre>";
     var_dump($data);
     echo "</pre>";
@@ -17,26 +18,17 @@ function die_dump($data) {
  * @param mixed $data
  * @return void
  */
-function dump($data) {
+function dump($data)
+{
     echo "<pre>";
     var_dump($data);
     echo "</pre>";
 }
 
+$baseUrl = "healthcare.local/";
 
-function __include($filepath, $variable = [], $print = true) {
-
-    extract($variables);
-
-    ob_start();
-
-    include $filePath;
-
-    $output = ob_get_clean();
-
-    if (!$print) {
-        return $output;
-    }
-
-    echo $output;
+function generateUrl($url)
+{
+    global $baseUrl;
+    return rtrim($baseUrl, '/') . '/' . ltrim($url, '/');
 }

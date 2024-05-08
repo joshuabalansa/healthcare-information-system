@@ -1,22 +1,6 @@
 <?php
-// require_once '../config/connection.php';
-// include '../functions/functions.php';
-
 class Controllers
 {
-
-    /**
-     * @var object $connection
-     */
-    // public $connection;
-
-    /**
-     * @param $object $connection
-     */
-    // public function __construct() {
-
-    //     $this->connection = (new Connection())->conn;
-    // }
 
     /**
      * Get data by id function
@@ -36,7 +20,6 @@ class Controllers
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result;
-
         } catch (PDOException $e) {
 
             echo 'Query failed: ' . $e->getMessage();
@@ -67,10 +50,9 @@ class Controllers
             $stmt->execute(array_values($data));
 
             header("location: $redirect");
-
         } catch (PDOException $e) {
 
-           die($e->getMessage);
+            die($e->getMessage());
         }
     }
 }

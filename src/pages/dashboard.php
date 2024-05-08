@@ -18,8 +18,7 @@ $controller = new Controllers();
 $connection = new Connection();
 $user = $controller->getDataById($connection->conn, 'users', $user_id);
 
-$role = $user[0]['role'];
-$_SESSION['authorization'] = Authorization::authorize($role);
+$_SESSION['routes'] = Authorization::routes($user[0]['role']);
 ?>
 <!DOCTYPE html>
 <html lang="en">

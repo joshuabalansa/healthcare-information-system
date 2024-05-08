@@ -15,7 +15,7 @@ $validator->validateUserSession($_SESSION['user_id']);
 
 $controller = new Controllers();
 $connection = new Connection();
-$user = $controller->getDataById($connection->conn,'users', $user_id);
+$user = $controller->getDataById($connection->conn, 'users', $user_id);
 
 // $role = $user[0]['role'];
 // $_SESSION['authorization'] = Authorization::authorize($role);
@@ -50,17 +50,17 @@ $user = $controller->getDataById($connection->conn,'users', $user_id);
 
 	<div class="page-container">
 
-	<?php include '../../includes/sidebar-menu.php'; ?>
+		<?php include '../../includes/sidebar-menu.php'; ?>
 
 
 		<div class="main-content">
 
-        <?php include '../../includes/header.php'; ?>
+			<?php include '../../includes/header.php'; ?>
 
 			<hr />
 
 
-            <!-- ../../includes/cards.php -->
+			<!-- ../../includes/cards.php -->
 			<br />
 			<h1>Appointments</h1>
 
