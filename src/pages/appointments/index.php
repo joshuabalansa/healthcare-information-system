@@ -7,18 +7,21 @@ require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
 require_once '../../class/Authorization.php';
 
+if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
+
+	die("<h1>401 Authorization Required</h1>");
+}
+
 $user_id = $_SESSION['user_id'];
-// $username = $_SESSION['username'];
 
 $validator = new Validator();
 $validator->validateUserSession($_SESSION['user_id']);
 
 $controller = new Controllers();
 $connection = new Connection();
-$user = $controller->getDataById($connection->conn, 'users', $user_id);
 
-// $role = $user[0]['role'];
-// $_SESSION['authorization'] = Authorization::authorize($role);
+// $user = $controller->getDataById($connection->conn, 'users', $user_id);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,89 +62,63 @@ $user = $controller->getDataById($connection->conn, 'users', $user_id);
 
 			<hr />
 
-
-			<!-- ../../includes/cards.php -->
 			<br />
-			<script type="text/javascript">
-				jQuery(document).ready(function($) {
-					var $table1 = jQuery('#table-1');
 
-					// Initialize DataTable
-					$table1.DataTable({
-						"aLengthMenu": [
-							[10, 25, 50, -1],
-							[10, 25, 50, "All"]
-						],
-						"bStateSave": true
-					});
-
-					// Initalize Select Dropdown after DataTables is created
-					$table1.closest('.dataTables_wrapper').find('select').select2({
-						minimumResultsForSearch: -1
-					});
-				});
-			</script>
 			<h1>Appointments</h1>
 			<table class="table table-bordered datatable" id="table-1">
 				<thead>
 					<tr>
-						<th data-hide="phone">Rendering engine</th>
-						<th>Browser</th>
-						<th data-hide="phone">Platform(s)</th>
-						<th data-hide="phone,tablet">Engine version</th>
-						<th>CSS grade</th>
+						<th>Name</th>
+						<th>Phone Number</th>
+						<th>Date Appointment</th>
+						<th>Time</th>
+						<th>Status</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="odd gradeX">
-						<td>Trident</td>
-						<td>Internet Explorer 4.0</td>
-						<td>Win 95+</td>
-						<td class="center">4</td>
-						<td class="center">X</td>
-					</tr>
-					<tr class="even gradeC">
-						<td>Trident</td>
-						<td>Internet Explorer 5.0</td>
-						<td>Win 95+</td>
-						<td class="center">5</td>
-						<td class="center">C</td>
-					</tr>
-					<tr class="odd gradeA">
-						<td>Trident</td>
-						<td>Internet Explorer 5.5</td>
-						<td>Win 95+</td>
-						<td class="center">5.5</td>
-						<td class="center">A</td>
-					</tr>
-					<tr class="even gradeA">
-						<td>Trident</td>
-						<td>Internet Explorer 6</td>
-						<td>Win 98+</td>
-						<td class="center">6</td>
-						<td class="center">A</td>
-					</tr>
-					<tr class="gradeU">
-						<td>Other browsers</td>
-						<td>All others</td>
-						<td>-</td>
-						<td class="center">-</td>
-						<td class="center">U</td>
-					</tr>
+					<?php foreach ($controller->get($connection->conn, 'vaccinations') as $vaccination) : ?>
+						<tr class="odd gradeX">
+							<td><?= $vaccination['first_name'] . ' ' . $vaccination['last_name'] ?></td>
+							<td><?= $vaccination['phone_number'] ?></td>
+							<td><?= $vaccination['appointment_date'] ?></td>
+							<td><?= $vaccination['appointment_time'] ?></td>
+							<td><?= $vaccination['status'] ?></td>
+							<td class="center">
+								<a href="http://healthcare.test/src/pages/appointments/show.php?show=<?= $vaccination['id'] ?>" class="btn btn-sm btn-info">Info</a>
+								<a href="http://healthcare.test/src/pages/appointments/show.php?show=<?= $vaccination['id'] ?>" class="btn btn-sm btn-outline-success">Approve</a>
+								<button onclick="confirmCancel(<?= $vaccination['id'] ?>)" class="btn btn-sm btn-secondary">Cancel</button>
+							</td>
+						</tr>
+					<?php endforeach; ?>
 				</tbody>
 				<tfoot>
 					<tr>
-						<th>Rendering engine</th>
-						<th>Browser</th>
-						<th>Platform(s)</th>
-						<th>Engine version</th>
-						<th>CSS grade</th>
+						<th>Name</th>
+						<th>Phone Number</th>
+						<th>Date Appointment</th>
+						<th>Time</th>
+						<th>Status</th>
+						<th>Action</th>
 					</tr>
+					</thead>
 				</tfoot>
 			</table>
 
 			<br />
 		</div>
+
+
+		<script>
+			function confirmCancel(id) {
+				var confirmation = confirm("Are you sure you want to Cancel Appointment?")
+
+				if (confirmation) {
+					window.location.href = "user.php?userDelete=" + userId
+				}
+			}
+		</script>
+
 
 		<!-- Imported styles on this page -->
 		<link rel="stylesheet" href="../../assets/js/jvectormap/jquery-jvectormap-1.2.2.css">
@@ -182,7 +159,7 @@ $user = $controller->getDataById($connection->conn, 'users', $user_id);
 		<script src="../../assets/js/datatables/datatables.js"></script>
 		<script src="../../assets/js/select2/select2.min.js"></script>
 		<script src="../../assets/js/neon-chat.js"></script>
-
+		<script src="../../assets/datatable/datatable.js"></script>
 </body>
 
 </html>

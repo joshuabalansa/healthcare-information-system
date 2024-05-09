@@ -437,7 +437,7 @@
 			<li class="sep"></li>
 
 			<li>
-				<a href="http://healthcare.test/src/class/Logout">
+				<a href="#" onclick="logout()">
 					Log Out <i class="entypo-logout right"></i>
 				</a>
 			</li>
@@ -446,3 +446,13 @@
 	</div>
 
 </div>
+
+<script>
+	function logout() {
+		var confirmation = confirm("Are you sure you want to logout?")
+
+		if (confirmation) {
+			window.location.href = "http://healthcare.test/src/class/Logout"
+		}
+	}
+</script>

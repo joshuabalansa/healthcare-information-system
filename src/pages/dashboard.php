@@ -8,6 +8,11 @@ require_once '../config/connection.php';
 require_once '../class/Authorization.php';
 require_once '../functions/functions.php';
 
+if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
+
+	echo "<script>window.location.href='http://healthcare.test/src/pages/401.php'</script>";
+}
+
 $user_id = $_SESSION['user_id'];
 
 $validator = new Validator();

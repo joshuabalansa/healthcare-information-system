@@ -5,7 +5,7 @@ class Controllers
     /**
      * Get data by id function
      *
-     * @param object $connnect
+     * @param object $conn
      * @param string $table
      * @param int   $user_id
      * @return array $result | false
@@ -17,9 +17,9 @@ class Controllers
             $stmt = $conn->prepare("SELECT * FROM $table WHERE id = ?");
             $stmt->execute([$user_id]);
 
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return $result;
+            return $data;
         } catch (PDOException $e) {
 
             echo 'Query failed: ' . $e->getMessage();
@@ -29,8 +29,27 @@ class Controllers
     }
 
     /**
+     * Fetch All data from the database function
+     *
+     * @param object $conn
+     * @param string $table
+     * @return array $data
+     */
+    public function get($conn, $table)
+    {
+
+        $stmt = $conn->prepare("SELECT * FROM $table");
+        $stmt->execute();
+
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $data;
+    }
+
+    /**
      * Store data
      *
+     * @param object $conn
      * @param string $table
      * @param array $data
      * @return void
