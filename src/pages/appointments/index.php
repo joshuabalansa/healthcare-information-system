@@ -20,8 +20,6 @@ $validator->validateUserSession($_SESSION['user_id']);
 $controller = new Controllers();
 $connection = new Connection();
 
-// $user = $controller->getDataById($connection->conn, 'users', $user_id);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -67,12 +67,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="card-body">
                             <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
 
-                                <?php foreach ($form->vaccinationFields() as $field => [$label, $type]) : ?>
+                                <?php foreach ($form->vaccinationFields() as $field => [$label, $type, $isRequired]) : ?>
                                     <div class="form-group row">
                                         <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
 
                                         <div class="col-md-6 mb-3">
-                                            <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>">
+                                            <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>" <?= $isRequired ?>>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="card-body">
                             <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
 
-                                <?php foreach ($form->vaccinationFields() as $field => [$label, $type]) : ?>
+                                <?php foreach ($form->familyPlanningFields() as $field => [$label, $type]) : ?>
                                     <div class="form-group row">
                                         <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
 
