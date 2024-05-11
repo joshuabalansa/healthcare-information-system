@@ -20,6 +20,12 @@ $validator->validateUserSession($_SESSION['user_id']);
 $controller = new Controllers();
 $connection = new Connection();
 
+if (isset($_GET['delete'])) {
+	$id = $_GET['delete'];
+
+	Controllers::delete($connection->conn, 'vaccinations', $id, 'index.php');
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,9 +37,7 @@ $connection = new Connection();
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="description" content="Neon Admin Panel" />
 	<meta name="author" content="" />
-
 	<title></title>
-
 	<link rel="stylesheet" href="../../assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
 	<link rel="stylesheet" href="../../assets/css/font-icons/entypo/css/entypo.css">
 
@@ -109,10 +113,10 @@ $connection = new Connection();
 
 		<script>
 			function confirmCancel(id) {
-				var confirmation = confirm("Are you sure you want to Cancel Appointment?")
+				var confirmation = confirm("Are you sure you want to Delete Appointment?")
 
 				if (confirmation) {
-					window.location.href = "user.php?userDelete=" + userId
+					window.location.href = "index.php?delete=" + id
 				}
 			}
 		</script>

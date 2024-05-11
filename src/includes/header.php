@@ -1,3 +1,28 @@
+<style>
+	/* Disable all transitions */
+	* {
+		transition: none !important;
+	}
+
+	/* Disable transitions for specific elements */
+	/* For example, disable transitions for all anchor tags */
+	a {
+		transition: none !important;
+	}
+
+	/* Disable transitions for a specific class */
+	/* For example, disable transitions for elements with class "no-transition" */
+	.no-transition {
+		transition: none !important;
+	}
+
+	/* Disable transitions for a specific element with an ID */
+	/* For example, disable transitions for an element with ID "no-transition-element" */
+	#no-transition-element {
+		transition: none !important;
+	}
+</style>
+
 <div class="row">
 
 	<!-- Profile Info and Notifications -->
