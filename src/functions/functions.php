@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * @param mixed $data
  * @return void
@@ -25,10 +24,26 @@ function dump($data)
     echo "</pre>";
 }
 
-$baseUrl = "healthcare.local/";
-
-function generateUrl($url)
+/**
+ * Get data from form
+ *
+ * @param array $fields
+ * @return array $data
+ */
+function getFormData($fields)
 {
-    global $baseUrl;
-    return rtrim($baseUrl, '/') . '/' . ltrim($url, '/');
+
+    $data = [];
+
+    foreach ($fields as $field => [$label, $type]) {
+
+        if (isset($_POST[$field])) {
+
+            $data[$field] = htmlspecialchars($_POST[$field]);
+        } else {
+
+            $data[$field] = '';
+        }
+    }
+    return $data;
 }

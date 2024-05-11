@@ -43,7 +43,7 @@ class Forms
     }
 
 
-     /**
+    /**
      * Set registration fields
      *
      * @return array $fields
@@ -52,16 +52,14 @@ class Forms
     {
 
         $fields = [
-            'first_name'        =>  ['First Name', 'text'],
-            'middle_name'       =>  ['Middle Name', 'text'],
-            'last_name'         =>  ['Last Name', 'text'],
-            'birth_date'        =>  ['Birth Date', 'date'],
-            'body_weight'       =>  ['Body Weight', 'text'],
-            'body_length'       =>  ['Body Length', 'text'],
-            'address'           =>  ['Address', 'text'],
-            'phone_number'      =>  ['Phone Number', 'number'],
-            'appointment_time'  =>  ['Appointment Time', 'time'],
-            'appointment_date'  =>  ['Appointment Date', 'date'],
+            'first_name'        =>  ['First Name', 'text', 'required'],
+            'middle_name'       =>  ['Middle Name', 'text', 'required'],
+            'last_name'         =>  ['Last Name', 'text', 'required'],
+            'birth_date'        =>  ['Birth Date', 'date', 'required'],
+            'address'           =>  ['Address', 'text', 'required'],
+            'phone_number'      =>  ['Phone Number', 'number', 'required'],
+            'appointment_time'  =>  ['Appointment Time', 'time', 'required'],
+            'appointment_date'  =>  ['Appointment Date', 'date', 'required'],
         ];
 
         return $fields;

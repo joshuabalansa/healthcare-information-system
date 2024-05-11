@@ -24,6 +24,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             max-width: 500px;
             text-align: center;
+            margin: 20px;
         }
 
         h1 {
@@ -53,7 +54,7 @@
 <body>
     <div class="container">
         <h2>Congratulations! Your Appointment Registration was Successful!</h2>
-        <p>Thank you for choosing our services to schedule your appointment.</p>
+        <p>Thank you for choosing our online platform to schedule your appointment.</p>
     </div>
 </body>
 

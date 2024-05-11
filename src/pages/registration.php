@@ -1,35 +1,42 @@
 <?php
 session_start();
 
-require_once('../class/Controllers.php');
-require_once('../config/connection.php');
-require_once('../config/Forms.php');
+require_once '../class/Controllers.php';
+require_once '../config/connection.php';
+require_once '../config/Forms.php';
+include     '../functions/functions.php';
 
-$_SESSION['appointment'] = $_GET['appointment'] ?? '';
-
+$appointmentType = $_GET['appointment'] ?? '';
 $form = new Forms;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $formFields = $form->vaccinationFields();
-
-    $data = [];
-
-    foreach ($formFields as $field => [$label, $type]) {
-
-        if (isset($_POST[$field])) {
-
-            $data[$field] = $_POST[$field];
-        } else {
-
-            $data[$field] = '';
-        }
-    }
-
     $connection = new Connection();
     $controller = new Controllers();
 
-    $controller->store($connection->conn, 'vaccinations', $data, 'success');
+    $registrationType = $_GET['registration'] ?? '';
+
+    if ($registrationType == 'vaccination') {
+
+        $data = getFormData($form->vaccinationFields());
+
+        $controller->store($connection->conn, 'vaccinations', $data, 'success');
+
+        header('location: success.php');
+
+        exit;
+    }
+
+    if ($registrationType == 'family_planning') {
+
+        $data = getFormData($form->familyPlanningFields());
+
+        $controller->store($connection->conn, 'family_planning', $data, 'success');
+
+        header('location: success.php');
+
+        exit;
+    }
 }
 ?>
 
@@ -56,64 +63,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="container">
         <div class="row flex justify-content-center w-full">
+            <div class="col-md-8">
 
+                <h1><?= $appointmentType == 'vaccination' ? 'Vaccination Online Registration' : 'Family Planning Online Registration' ?></h1>
+                <div class="card-body">
+                    <form method="POST" action="registration.php?registration=<?= $appointmentType ?>">
+                        <?php
+                        $fields = ($appointmentType == 'vaccination') ? $form->vaccinationFields() : $form->familyPlanningFields();
 
+                        foreach ($fields as $field => [$label, $type, $isRequired]) :
+                        ?>
+                            <div class="form-group row">
+                                <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
 
-            <center>
-                <div class="col-md-8">
-
-                    <?php if ($_SESSION['appointment'] == 'vaccination') : ?>
-                        <h1>Vaccination Online Registration</h1>
-                        <div class="card-body">
-                            <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
-
-                                <?php foreach ($form->vaccinationFields() as $field => [$label, $type, $isRequired]) : ?>
-                                    <div class="form-group row">
-                                        <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
-
-                                        <div class="col-md-6 mb-3">
-                                            <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>" <?= $isRequired ?>>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-
-                                <div class="form-group row mb-0">
-                                    <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
-                                            Register an Appointment
-                                        </button>
-                                    </div>
+                                <div class="col-md-6 mb-3">
+                                    <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>" <?= $isRequired ?>>
                                 </div>
-                            </form>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Register an Appointment
+                                </button>
+                            </div>
                         </div>
-
-                    <?php else : ?>
-                        <h1>Family Planning Online Registration</h1>
-                        <div class="card-body">
-                            <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
-
-                                <?php foreach ($form->familyPlanningFields() as $field => [$label, $type]) : ?>
-                                    <div class="form-group row">
-                                        <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
-
-                                        <div class="col-md-6 mb-3">
-                                            <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>">
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-
-                                <div class="form-group row mb-0">
-                                    <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
-                                            Register an Appointment
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    <?php endif; ?>
+                    </form>
                 </div>
-            </center>
+            </div>
         </div>
     </div>
 
