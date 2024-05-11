@@ -26,6 +26,12 @@ if (isset($_GET['delete'])) {
 	Controllers::delete($connection->conn, 'vaccinations', $id, 'index.php');
 }
 
+if (isset($_GET['approve'])) {
+	$id = $_GET['approve'];
+
+	Controllers::update($connection->conn, 'vaccinations', $id, 'status', 'approved', 'index.php');
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,10 +91,10 @@ if (isset($_GET['delete'])) {
 							<td><?= $vaccination['phone_number'] ?></td>
 							<td><?= $vaccination['appointment_date'] ?></td>
 							<td><?= $vaccination['appointment_time'] ?></td>
-							<td><?= $vaccination['status'] ?></td>
+							<td><span class="badge text-bg-<?= $vaccination['status'] == 'approved' ? 'success' : 'danger' ?>"><?= ucfirst($vaccination['status']) ?></span></td>
 							<td class="center">
 								<a href="http://healthcare.test/src/pages/appointments/show.php?show=<?= $vaccination['id'] ?>" class="btn btn-sm btn-info">Info</a>
-								<a href="http://healthcare.test/src/pages/appointments/show.php?show=<?= $vaccination['id'] ?>" class="btn btn-sm btn-outline-success">Approve</a>
+								<button onclick="confirmApprove(<?= $vaccination['id'] ?>)" class="btn btn-sm btn-success">Approve</button>
 								<button onclick="confirmCancel(<?= $vaccination['id'] ?>)" class="btn btn-sm btn-secondary">Cancel</button>
 							</td>
 						</tr>
@@ -119,49 +125,19 @@ if (isset($_GET['delete'])) {
 					window.location.href = "index.php?delete=" + id
 				}
 			}
+
+			function confirmApprove(id) {
+				var confirmation = confirm("Are you sure you want to Approve Appointment?")
+
+				if (confirmation) {
+					window.location.href = "index.php?approve=" + id
+				}
+			}
 		</script>
 
 
 		<!-- Imported styles on this page -->
-		<link rel="stylesheet" href="../../assets/js/jvectormap/jquery-jvectormap-1.2.2.css">
-		<link rel="stylesheet" href="../../assets/js/rickshaw/rickshaw.min.css">
 
-		<!-- Bottom scripts (common) -->
-		<script src="../../assets/js/gsap/TweenMax.min.js"></script>
-		<script src="../../assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
-		<script src="../../assets/js/bootstrap.js"></script>
-		<script src="../../assets/js/joinable.js"></script>
-		<script src="../../assets/js/resizeable.js"></script>
-		<script src="../../assets/js/neon-api.js"></script>
-		<script src="../../assets/js/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-
-
-		<!-- Imported scripts on this page -->
-		<script src="../../assets/js/jvectormap/jquery-jvectormap-europe-merc-en.js"></script>
-		<script src="../../assets/js/jquery.sparkline.min.js"></script>
-		<script src="../../assets/js/rickshaw/vendor/d3.v3.js"></script>
-		<script src="../../assets/js/rickshaw/rickshaw.min.js"></script>
-		<script src="../../assets/js/raphael-min.js"></script>
-		<script src="../../assets/js/morris.min.js"></script>
-		<script src="../../assets/js/toastr.js"></script>
-		<script src="../../assets/js/neon-chat.js"></script>
-
-
-		<!-- JavaScripts initializations and stuff -->
-		<script src="../../assets/js/neon-custom.js"></script>
-
-
-		<!-- Demo Settings -->
-		<script src="../../assets/js/neon-demo.js"></script>
-
-		<!-- Imported styles on this page -->
-		<link rel="stylesheet" href="../../assets/js/datatables/datatables.css">
-		<link rel="stylesheet" href="../../assets/js/select2/select2-bootstrap.css">
-		<link rel="stylesheet" href="../../assets/js/select2/select2.css">
-		<script src="../../assets/js/datatables/datatables.js"></script>
-		<script src="../../assets/js/select2/select2.min.js"></script>
-		<script src="../../assets/js/neon-chat.js"></script>
-		<script src="../../assets/datatable/datatable.js"></script>
 </body>
 
 </html>

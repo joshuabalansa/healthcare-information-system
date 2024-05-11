@@ -99,7 +99,7 @@ session_start();
                         Login In
                     </button>
                     <br>
-                  <span style="color: #f00"><?=$_SESSION['error'] ?? ''?></span>
+                    <span style="color: #f00"><?= $_SESSION['error'] ?? '' ?></span>
                 </div>
 
                 <div class="form-group">
@@ -108,11 +108,11 @@ session_start();
 
                 <div class="form-group">
 
-                    <a href="pages/registration?appointment=<?=$_SESSION['vaccination'] = 'vaccination' ?>" class="btn btn-dark">
+                    <a href="pages/registration?appointment=<?= $_SESSION['vaccination'] = 'vaccination' ?>" class="btn btn-dark">
                         Vaccination Appointment
                     </a>
-                    <a href="pages/registration?appointment=<?=$_SESSION['vaccination'] = 'family_planning' ?>" class="btn btn-dark">
-                         Family Planning Appointment
+                    <a href="pages/registration?appointment=<?= $_SESSION['vaccination'] = 'family_planning' ?>" class="btn btn-dark">
+                        Family Planning Appointment
                     </a>
                 </div>
 

@@ -97,4 +97,30 @@ class Controllers
             die($e->getMessage());
         }
     }
+
+    /**
+     * Update a specific field for a record in the database
+     *
+     * @param object $conn
+     * @param string $table
+     * @param int $id
+     * @param string $field
+     * @param mixed $value
+     * @return void
+     */
+    public static function update($conn, $table, $id, $field, $value, $redirect)
+    {
+        try {
+
+            $sql = "UPDATE $table SET $field = ? WHERE id = ?";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$value, $id]);
+
+            header("location: $redirect");
+        } catch (PDOException $e) {
+
+            die($e->getMessage());
+        }
+    }
 }
