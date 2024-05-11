@@ -47,3 +47,4 @@ function getFormData($fields)
     }
     return $data;
 }
+

@@ -6,6 +6,8 @@ require_once '../../class/Validator.php';
 require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
 require_once '../../class/Authorization.php';
+require_once '../../api/sms.php';
+require_once '../../functions/functions.php';
 
 if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
 
@@ -29,7 +31,48 @@ if (isset($_GET['delete'])) {
 if (isset($_GET['approve'])) {
 	$id = $_GET['approve'];
 
+	$appointmentData = $controller->getDataById($connection->conn, 'vaccinations', $id);
+	$username = setUsername($appointmentData);
+	$password = rand(99999, 999999);
+
+	$data = userData($appointmentData, $username, $password);
+
+	$message = "Your appointment has been approved. you may login using the provided credentials to track your records \n \n Username: $username \n Password: $password";
+
+	$controller->store($connection->conn, 'users', $data, 'index.php');
+
+	sendMessageNotification(
+		'', 
+		$appointmentData[0]['phone_number'], 
+		$message, 
+		'SEMAPHORE', 
+		'https://semaphore.co/api/v4/messages'
+	);
+
 	Controllers::update($connection->conn, 'vaccinations', $id, 'status', 'approved', 'index.php');
+}
+
+function userData($appointmentData, $username, $password)
+{
+	$data = [
+		'name' => $appointmentData[0]['first_name'],
+		'username' => $username,
+		'role' => 2,
+		'password' => sha1($password),
+		'status' => 'active'
+	];
+
+	return $data;
+}
+
+function setUsername($appointmentData)
+{
+	$username = strtoupper(substr($appointmentData[0]['last_name'], 0, 1) 	.
+		substr($appointmentData[0]['first_name'], 0, 1) 	.
+		substr($appointmentData[0]['middle_name'], 0, 1) .
+		str_replace('-', '', $appointmentData[0]['birth_date']));
+
+	return $username;
 }
 
 ?>
