@@ -11,7 +11,7 @@ require_once '../../functions/functions.php';
 
 if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
 
-	die("<h1>401 Authorization Required</h1>");
+	die("<center>401 Authorization Required</center>");
 }
 
 $user_id = $_SESSION['user_id'];
@@ -22,58 +22,40 @@ $validator->validateUserSession($_SESSION['user_id']);
 $controller = new Controllers();
 $connection = new Connection();
 
-if (isset($_GET['delete'])) {
-	$id = $_GET['delete'];
+if (isset($_GET['cancel'])) {
+	$id = $_GET['cancel'];
 
-	Controllers::delete($connection->conn, 'vaccinations', $id, 'index.php');
+	Controllers::update($connection->conn, 'vaccinations', $id, 'status', 'cancelled', 'index.php');
 }
+
 
 if (isset($_GET['approve'])) {
+
 	$id = $_GET['approve'];
+	$appointmentData = $controller->getDataById($connection->conn, 'vaccinations', 'id', $id);
 
-	$appointmentData = $controller->getDataById($connection->conn, 'vaccinations', $id);
-	$username = setUsername($appointmentData);
-	$password = rand(99999, 999999);
+	if ($appointmentData['status'] !== 'approved') {
 
-	$data = userData($appointmentData, $username, $password);
+		$username = setUsername($appointmentData);
+		$password = rand(99999, 999999);
 
-	$message = "Your appointment has been approved. you may login using the provided credentials to track your records \n \n Username: $username \n Password: $password";
+		$message = "Your appointment has been approved. you may login using the provided credentials to track your records \n \n Username: $username \n Password: $password";
 
-	$controller->store($connection->conn, 'users', $data, 'index.php');
 
-	sendMessageNotification(
-		'', 
-		$appointmentData[0]['phone_number'], 
-		$message, 
-		'SEMAPHORE', 
-		'https://semaphore.co/api/v4/messages'
-	);
+		$controller->store($connection->conn, 'users', userData($appointmentData, $username, $password), 'index.php');
 
-	Controllers::update($connection->conn, 'vaccinations', $id, 'status', 'approved', 'index.php');
+		SMS::sendMessageNotification(
+			'',
+			$appointmentData[0]['phone_number'],
+			$message,
+			'SEMAPHORE',
+			'https://semaphore.co/api/v4/messages'
+		);
+
+		Controllers::update($connection->conn, 'vaccinations', $id, 'status', 'approved', 'index.php');
+	}
 }
 
-function userData($appointmentData, $username, $password)
-{
-	$data = [
-		'name' => $appointmentData[0]['first_name'],
-		'username' => $username,
-		'role' => 2,
-		'password' => sha1($password),
-		'status' => 'active'
-	];
-
-	return $data;
-}
-
-function setUsername($appointmentData)
-{
-	$username = strtoupper(substr($appointmentData[0]['last_name'], 0, 1) 	.
-		substr($appointmentData[0]['first_name'], 0, 1) 	.
-		substr($appointmentData[0]['middle_name'], 0, 1) .
-		str_replace('-', '', $appointmentData[0]['birth_date']));
-
-	return $username;
-}
 
 ?>
 <!DOCTYPE html>
@@ -165,7 +147,7 @@ function setUsername($appointmentData)
 				var confirmation = confirm("Are you sure you want to Delete Appointment?")
 
 				if (confirmation) {
-					window.location.href = "index.php?delete=" + id
+					window.location.href = "index.php?cancel=" + id
 				}
 			}
 
@@ -177,10 +159,6 @@ function setUsername($appointmentData)
 				}
 			}
 		</script>
-
-
-		<!-- Imported styles on this page -->
-
 </body>
 
 </html>

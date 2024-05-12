@@ -10,7 +10,7 @@ require_once '../functions/functions.php';
 
 if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
 
-	echo "<script>window.location.href='http://healthcare.test/src/pages/401.php'</script>";
+	die("<center>401 Authorization Required</center>");
 }
 
 $user_id = $_SESSION['user_id'];
@@ -21,7 +21,7 @@ $validator->validateUserSession($_SESSION['user_id']);
 $controller = new Controllers();
 
 $connection = new Connection();
-$user = $controller->getDataById($connection->conn, 'users', $user_id);
+$user = $controller->getDataById($connection->conn, 'users', 'id', $user_id);
 
 $_SESSION['routes'] = Authorization::routes($user[0]['role']);
 ?>

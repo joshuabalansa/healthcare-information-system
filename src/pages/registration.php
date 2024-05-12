@@ -16,28 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $registrationType = $_GET['registration'] ?? '';
 
-    if ($registrationType == 'vaccination') {
-
-        $data = getFormData($form->vaccinationFields());
-
-        $controller->store($connection->conn, 'vaccinations', $data, 'success');
-
-        header('location: success.php');
-
-        exit;
-    }
-
-    if ($registrationType == 'family_planning') {
-
-        $data = getFormData($form->familyPlanningFields());
-
-        $controller->store($connection->conn, 'family_planning', $data, 'success');
-
-        header('location: success.php');
-
-        exit;
-    }
+    appointmentRegistration($registrationType, $connection, $controller, $form);
 }
+
 ?>
 
 <!DOCTYPE html>

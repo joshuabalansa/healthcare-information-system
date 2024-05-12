@@ -7,15 +7,15 @@ class Controllers
      *
      * @param object $conn
      * @param string $table
-     * @param int   $user_id
+     * @param int $user_id
      * @return array $result | false
      */
-    public function getDataById($conn, $table, $user_id)
+    public function getDataById($conn, $table, $field, $id)
     {
         try {
 
-            $stmt = $conn->prepare("SELECT * FROM $table WHERE id = ?");
-            $stmt->execute([$user_id]);
+            $stmt = $conn->prepare("SELECT * FROM $table WHERE $field = ?");
+            $stmt->execute([$id]);
 
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -54,7 +54,7 @@ class Controllers
      * @param array $data
      * @return void
      */
-    public function store($conn, $table, $data, $redirect)
+    public function store($conn, $table, $data)
     {
         try {
 
@@ -68,7 +68,7 @@ class Controllers
 
             $stmt->execute(array_values($data));
 
-            header("location: $redirect");
+            // header("location: $redirect");
         } catch (PDOException $e) {
 
             die($e->getMessage());
