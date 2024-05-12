@@ -56,7 +56,6 @@ if (isset($_GET['approve'])) {
 	}
 }
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

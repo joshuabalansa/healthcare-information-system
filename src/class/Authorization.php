@@ -20,7 +20,7 @@ class Authorization
                 'Dashboard'             => [$baseUrl . 'pages/dashboard', 'chart-pie'],
                 'Appointments'          => [$baseUrl . 'pages/appointments', 'bell'],
                 'Patients'              => [$baseUrl . 'pages/patients', 'users'],
-                'Vaccine Management'    => [$baseUrl . 'vaccination', 'archive'],
+                'Vaccine Management'    => [$baseUrl . 'pages/vaccine', 'archive'],
                 'Reports'               => [$baseUrl . 'reports', 'chart-area'],
                 'Users'                 => [$baseUrl . 'users', 'user']
             ],

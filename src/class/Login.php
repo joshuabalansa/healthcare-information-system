@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['username'] = $user['username'];
 
         header('location: ../pages/dashboard.php');
-
     } else {
 
         $_SESSION['error'] = 'Wrong Username or Password';

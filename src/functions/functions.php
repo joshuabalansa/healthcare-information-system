@@ -102,7 +102,7 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
 
         $appointmentData = $controller->getDataById($connection->conn, 'family_planning', 'id', $connection->conn->lastInsertId());
 
-        $appointmentFields =  [
+        $appointmentFields = [
             'patient_id' => $appointmentData[0]['id'],
             'appointment_type' => $appointmentData[0]['appointment_type'],
         ];
