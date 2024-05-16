@@ -5,5 +5,7 @@
             "Healthcare\\InformationSystem\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "ramsey/uuid": "^4.7"
+    }
 }

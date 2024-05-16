@@ -2,11 +2,10 @@
 
 session_start();
 
-require_once '../../class/Validator.php';
 require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
 require_once '../../class/Authorization.php';
-require_once '../../api/sms.php';
+require_once '../../class/Sms.php';
 require_once '../../functions/functions.php';
 
 if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
@@ -15,9 +14,6 @@ if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-
-$validator = new Validator();
-$validator->validateUserSession($_SESSION['user_id']);
 
 $controller = new Controllers();
 $connection = new Connection();
@@ -32,27 +28,12 @@ if (isset($_GET['cancel'])) {
 if (isset($_GET['approve'])) {
 
 	$id = $_GET['approve'];
+
 	$appointmentData = $controller->getDataById($connection->conn, 'vaccinations', 'id', $id);
 
-	if ($appointmentData['status'] !== 'approved') {
+	if ($appointmentData[0]['status'] !== 'approved') {
 
-		$username = setUsername($appointmentData);
-		$password = rand(99999, 999999);
-
-		$message = "Your appointment has been approved. you may login using the provided credentials to track your records \n \n Username: $username \n Password: $password";
-
-
-		$controller->store($connection->conn, 'users', userData($appointmentData, $username, $password), 'index.php');
-
-		SMS::sendMessageNotification(
-			'',
-			$appointmentData[0]['phone_number'],
-			$message,
-			'SEMAPHORE',
-			'https://semaphore.co/api/v4/messages'
-		);
-
-		Controllers::update($connection->conn, 'vaccinations', $id, 'status', 'approved', 'index.php');
+		appointmentUpdates($appointmentData, $controller, $connection, $id);
 	}
 }
 
@@ -100,10 +81,12 @@ if (isset($_GET['approve'])) {
 			<table class="table table-bordered datatable" id="table-1">
 				<thead>
 					<tr>
+						<th>#</th>
 						<th>Name</th>
 						<th>Phone Number</th>
 						<th>Date Appointment</th>
 						<th>Time</th>
+						<th>Type</th>
 						<th>Status</th>
 						<th>Action</th>
 					</tr>
@@ -111,13 +94,15 @@ if (isset($_GET['approve'])) {
 				<tbody>
 					<?php foreach ($controller->get($connection->conn, 'vaccinations') as $vaccination) : ?>
 						<tr class="odd gradeX">
+							<td><?= $vaccination['id'] ?></td>
 							<td><?= $vaccination['first_name'] . ' ' . $vaccination['last_name'] ?></td>
 							<td><?= $vaccination['phone_number'] ?></td>
 							<td><?= $vaccination['appointment_date'] ?></td>
 							<td><?= $vaccination['appointment_time'] ?></td>
+							<td><?= $vaccination['appointment_type'] ?></td>
 							<td><span class="badge text-bg-<?= $vaccination['status'] == 'approved' ? 'success' : 'danger' ?>"><?= ucfirst($vaccination['status']) ?></span></td>
 							<td class="center">
-								<a href="http://healthcare.test/src/pages/appointments/show.php?show=<?= $vaccination['id'] ?>" class="btn btn-sm btn-info">Info</a>
+								<a href="<?= $_SESSION['base_url'] ?>/pages/appointments/show.php?show=<?= $vaccination['id'] ?>" class="btn btn-sm btn-info">Info</a>
 								<button onclick="confirmApprove(<?= $vaccination['id'] ?>)" class="btn btn-sm btn-success">Approve</button>
 								<button onclick="confirmCancel(<?= $vaccination['id'] ?>)" class="btn btn-sm btn-secondary">Cancel</button>
 							</td>
@@ -126,10 +111,12 @@ if (isset($_GET['approve'])) {
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>#</th>
 						<th>Name</th>
 						<th>Phone Number</th>
 						<th>Date Appointment</th>
 						<th>Time</th>
+						<th>Type</th>
 						<th>Status</th>
 						<th>Action</th>
 					</tr>

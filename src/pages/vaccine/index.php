@@ -116,7 +116,7 @@ if (isset($_GET['approve']) && $appointmentData == 'pending') {
                             <td><?= $vaccination['appointment_time'] ?></td>
                             <td><span class="badge text-bg-<?= $vaccination['status'] == 'approved' ? 'success' : 'danger' ?>"><?= ucfirst($vaccination['status']) ?></span></td>
                             <td class="center">
-                                <a href="http://healthcare.test/src/pages/appointments/show.php?show=<?= $vaccination['id'] ?>" class="btn btn-sm btn-info">Info</a>
+                                <a href="<?= $_SESSION['base_url'] ?>/pages/appointments/show.php?show=<?= $vaccination['id'] ?>" class="btn btn-sm btn-info">Info</a>
                                 <button onclick="confirmApprove(<?= $vaccination['id'] ?>)" class="btn btn-sm btn-success">Approve</button>
                                 <button onclick="confirmCancel(<?= $vaccination['id'] ?>)" class="btn btn-sm btn-secondary">Cancel</button>
                             </td>

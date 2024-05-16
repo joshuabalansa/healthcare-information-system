@@ -1,14 +1,17 @@
 <?php
 session_start();
-
+require '../../vendor/autoload.php';
 require_once '../class/Controllers.php';
 require_once '../config/connection.php';
 require_once '../config/Forms.php';
 include     '../functions/functions.php';
 
-$appointmentType = $_GET['appointment'] ?? '';
-$form = new Forms;
+use Ramsey\Uuid\Uuid;
 
+$appointmentType = $_GET['appointment'] ?? '';
+
+$form = new Forms;
+$uuid = Uuid::uuid4();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $connection = new Connection();
@@ -16,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $registrationType = $_GET['registration'] ?? '';
 
-    appointmentRegistration($registrationType, $connection, $controller, $form);
+    appointmentRegistration($registrationType, $connection, $controller, $form, $uuid->toString());
 }
 
 ?>

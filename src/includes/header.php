@@ -552,7 +552,7 @@
 		var confirmation = confirm("Are you sure you want to logout?")
 
 		if (confirmation) {
-			window.location.href = "http://healthcare.test/src/class/Logout"
+			window.location.href = "<?php echo $_SESSION['base_url']; ?>class/Logout"
 		}
 	}
 </script>

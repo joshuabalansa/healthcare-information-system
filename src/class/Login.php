@@ -20,8 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user) {
 
-        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_id']  = $user['id'];
         $_SESSION['username'] = $user['username'];
+
+        $_SESSION['base_url'] = 'http://healthcare.test/src/';
 
         header('location: ../pages/dashboard.php');
     } else {

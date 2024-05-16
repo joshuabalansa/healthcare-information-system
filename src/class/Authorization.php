@@ -13,7 +13,7 @@ class Authorization
      */
     public static function routes($role)
     {
-        $baseUrl = 'http://healthcare.test/src/';
+        $baseUrl = $_SESSION['base_url'];
 
         $permissions = [
             1 => [

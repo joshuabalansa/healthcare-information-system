@@ -57,7 +57,6 @@ $_SESSION['routes'] = Authorization::routes($user[0]['role']);
 
 			<br />
 			<h1>Dashboard</h1>
-
 		</div>
 </body>
 

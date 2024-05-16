@@ -67,8 +67,6 @@ class Controllers
             $stmt = $conn->prepare($sql);
 
             $stmt->execute(array_values($data));
-
-            // header("location: $redirect");
         } catch (PDOException $e) {
 
             die($e->getMessage());

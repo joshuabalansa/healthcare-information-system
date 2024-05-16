@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * @param mixed $data
  * @return void
@@ -51,6 +52,7 @@ function getFormData($fields)
 function userData($appointmentData, $username, $password)
 {
     $data = [
+        'appointment_id' => $appointmentData[0]['id'],
         'name' => $appointmentData[0]['first_name'],
         'username' => $username,
         'role' => 2,
@@ -71,12 +73,22 @@ function setUsername($appointmentData)
     return $username;
 }
 
-
-function appointmentRegistration($registrationType, $connection, $controller, $form)
+/**
+ * Appointment and vaccination store function
+ *
+ * @param string $registrationType
+ * @param object $connection
+ * @param object $controller
+ * @param object $form
+ * @return void
+ */
+function appointmentRegistration($registrationType, $connection, $controller, $form, $uuid)
 {
     if ($registrationType == 'vaccination') {
 
         $data = getFormData($form->vaccinationFields());
+
+        $data['user_id'] = $uuid;
 
         $controller->store($connection->conn, 'vaccinations', $data);
 
@@ -98,6 +110,8 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
 
         $data = getFormData($form->familyPlanningFields());
 
+        $data['user_id'] = $uuid;
+
         $controller->store($connection->conn, 'family_planning', $data);
 
         $appointmentData = $controller->getDataById($connection->conn, 'family_planning', 'id', $connection->conn->lastInsertId());
@@ -113,4 +127,97 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
 
         exit;
     }
+}
+
+/**
+ * Send SMS notification
+ *
+ * @param array  $appointmentData
+ * @param string $message
+ * @return void
+ */
+function sendSms($appointmentData, $message)
+{
+    SMS::sendMessageNotification(
+        '',
+        $appointmentData[0]['phone_number'],
+        $message,
+        'SEMAPHORE',
+        'https://semaphore.co/api/v4/messages'
+    );
+}
+
+
+/**
+ * Generates a string of random characters.
+ *
+ * @param int $length
+ * @return string
+ */
+function getRandomChars($length = 6)
+{
+    $characters     = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    $randomString   = '';
+    $charLength     = strlen($characters);
+
+    for ($i = 0; $i < $length; $i++) {
+
+        $randomString .= $characters[rand(0, $charLength - 1)];
+    }
+
+    return $randomString;
+}
+
+
+function appointmentUpdates($appointmentData, $controller, $connection, $id)
+{
+
+    $username = setUsername($appointmentData);
+    $password = getRandomChars();
+    $message  = "Your appointment has been approved. you may login using the provided 
+    credentials to track your records \n \n Username: $username \n Password: $password";
+
+    $controller->store($connection->conn, 'users', userData($appointmentData, $username, $password), 'index.php');
+
+
+    sendSms($appointmentData, $message);
+
+    Controllers::update($connection->conn, 'vaccinations', $id, 'status', 'approved', 'index.php');
+}
+
+
+function combinedAppointmentsData($connection)
+{
+
+
+    $sql = "SELECT 
+            'vaccinations' AS source,
+            first_name,
+            phone_number,
+            appointment_date,
+            appointment_time,
+            appointment_type,
+            status
+        FROM 
+            vaccinations
+
+        UNION ALL
+
+        SELECT 
+            'family_planning' AS source,
+            first_name,
+            phone_number,
+            appointment_date,
+            appointment_time,
+            appointment_type,
+            status
+        FROM 
+            family_planning;";
+
+
+    $stmt = $connection->query($sql);
+
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $data;
 }
