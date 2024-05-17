@@ -139,7 +139,7 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
 function sendSms($appointmentData, $message)
 {
     SMS::sendMessageNotification(
-        'a3ad1dbbf8c030eea80b28724c9da746',
+        '',
         $appointmentData[0]['phone_number'],
         $message,
         'SEMAPHORE',
