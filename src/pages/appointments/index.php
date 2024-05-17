@@ -33,9 +33,10 @@ if (isset($_GET['approve'])) {
 
 	if ($appointmentData[0]['status'] !== 'approved') {
 
-		appointmentUpdates($appointmentData, $controller, $connection, $id);
+		updateAppointment($appointmentData, $controller, $connection, $id);
 	}
 }
+// die_dump(getCombinedAppointmentsData($connection->conn));
 
 ?>
 <!DOCTYPE html>
@@ -92,19 +93,23 @@ if (isset($_GET['approve'])) {
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ($controller->get($connection->conn, 'vaccinations') as $vaccination) : ?>
+					<?php foreach (getCombinedAppointmentsData($connection->conn) as $appointment) : ?>
 						<tr class="odd gradeX">
-							<td><?= $vaccination['id'] ?></td>
-							<td><?= $vaccination['first_name'] . ' ' . $vaccination['last_name'] ?></td>
-							<td><?= $vaccination['phone_number'] ?></td>
-							<td><?= $vaccination['appointment_date'] ?></td>
-							<td><?= $vaccination['appointment_time'] ?></td>
-							<td><?= $vaccination['appointment_type'] ?></td>
-							<td><span class="badge text-bg-<?= $vaccination['status'] == 'approved' ? 'success' : 'danger' ?>"><?= ucfirst($vaccination['status']) ?></span></td>
+							<td><?= htmlspecialchars(trim($appointment['id'])) ?></td>
+							<td><?= htmlspecialchars($appointment['first_name'] . ' ' . $appointment['last_name']) ?></td>
+							<td><?= htmlspecialchars($appointment['phone_number']) ?></td>
+							<td><?= htmlspecialchars($appointment['appointment_date']) ?></td>
+							<td><?= htmlspecialchars($appointment['appointment_time']) ?></td>
+							<td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $appointment['appointment_type']))) ?></td>
+							<td>
+								<span class="badge text-bg-<?= $appointment['status'] == 'approved' ? 'success' : 'danger' ?>">
+									<?= ucfirst(htmlspecialchars($appointment['status'])) ?>
+								</span>
+							</td>
 							<td class="center">
-								<a href="<?= $_SESSION['base_url'] ?>/pages/appointments/show.php?show=<?= $vaccination['id'] ?>" class="btn btn-sm btn-info">Info</a>
-								<button onclick="confirmApprove(<?= $vaccination['id'] ?>)" class="btn btn-sm btn-success">Approve</button>
-								<button onclick="confirmCancel(<?= $vaccination['id'] ?>)" class="btn btn-sm btn-secondary">Cancel</button>
+								<a href="<?= htmlspecialchars($_SESSION['base_url']) ?>/pages/appointments/show.php?show=<?= htmlspecialchars($appointment['id']) ?>" class="btn btn-sm btn-info">Info</a>
+								<button onclick="confirmApprove(<?= htmlspecialchars($appointment['id']) ?>)" class="btn btn-sm btn-success">Approve</button>
+								<button onclick="confirmCancel(<?= htmlspecialchars($appointment['id']) ?>)" class="btn btn-sm btn-secondary">Cancel</button>
 							</td>
 						</tr>
 					<?php endforeach; ?>

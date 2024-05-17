@@ -49,10 +49,10 @@ function getFormData($fields)
     return $data;
 }
 
-function userData($appointmentData, $username, $password)
+function setUserData($appointmentData, $username, $password)
 {
     $data = [
-        'appointment_id' => $appointmentData[0]['id'],
+        'appointment_id' => $appointmentData[0]['user_id'],
         'name' => $appointmentData[0]['first_name'],
         'username' => $username,
         'role' => 2,
@@ -139,7 +139,7 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
 function sendSms($appointmentData, $message)
 {
     SMS::sendMessageNotification(
-        '',
+        'a3ad1dbbf8c030eea80b28724c9da746',
         $appointmentData[0]['phone_number'],
         $message,
         'SEMAPHORE',
@@ -169,15 +169,14 @@ function getRandomChars($length = 6)
 }
 
 
-function appointmentUpdates($appointmentData, $controller, $connection, $id)
+function updateAppointment($appointmentData, $controller, $connection, $id)
 {
 
     $username = setUsername($appointmentData);
     $password = getRandomChars();
-    $message  = "Your appointment has been approved. you may login using the provided 
-    credentials to track your records \n \n Username: $username \n Password: $password";
+    $message  = "Your appointment has been approved. you may login using the provided credentials to track your records \n \n Username: $username \n Password: $password";
 
-    $controller->store($connection->conn, 'users', userData($appointmentData, $username, $password), 'index.php');
+    $controller->store($connection->conn, 'users', setUserData($appointmentData, $username, $password), 'index.php');
 
 
     sendSms($appointmentData, $message);
@@ -186,34 +185,37 @@ function appointmentUpdates($appointmentData, $controller, $connection, $id)
 }
 
 
-function combinedAppointmentsData($connection)
+function getCombinedAppointmentsData($connection)
 {
-
-
     $sql = "SELECT 
-            'vaccinations' AS source,
-            first_name,
-            phone_number,
-            appointment_date,
-            appointment_time,
-            appointment_type,
-            status
-        FROM 
-            vaccinations
+                'vaccinations' AS source,
+                user_id, 
+                id,
+                first_name,
+                last_name,
+                phone_number,
+                appointment_date,
+                appointment_time,
+                appointment_type,
+                status
+            FROM 
+                vaccinations
 
-        UNION ALL
+            UNION ALL
 
-        SELECT 
-            'family_planning' AS source,
-            first_name,
-            phone_number,
-            appointment_date,
-            appointment_time,
-            appointment_type,
-            status
-        FROM 
-            family_planning;";
-
+            SELECT 
+                'family_planning' AS source,
+                user_id, 
+                id,
+                first_name,
+                last_name,
+                phone_number,
+                appointment_date,
+                appointment_time,
+                appointment_type,
+                status
+            FROM 
+                family_planning;";
 
     $stmt = $connection->query($sql);
 

@@ -12,6 +12,7 @@ $appointmentType = $_GET['appointment'] ?? '';
 
 $form = new Forms;
 $uuid = Uuid::uuid4();
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $connection = new Connection();
@@ -21,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     appointmentRegistration($registrationType, $connection, $controller, $form, $uuid->toString());
 }
-
 ?>
 
 <!DOCTYPE html>
