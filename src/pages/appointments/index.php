@@ -18,29 +18,41 @@ $user_id = $_SESSION['user_id'];
 $controller = new Controllers();
 $connection = new Connection();
 
+
 if (isset($_GET['cancel'])) {
+
 	$id = $_GET['cancel'];
+
+	$vacData = $controller->getDataById($connection->conn, 'vaccinations', 'user_id', $id);
+	$famData = $controller->getDataById($connection->conn, 'family_planning', 'user_id', $id);
+
+	if ($vacData) {
+
+		Controllers::update($connection->conn, 'vaccinations', 'user_id', $id, 'status', 'cancelled', 'index.php');
+	} else {
+
+		Controllers::update($connection->conn, 'family_planning', 'user_id', $id, 'status', 'cancelled', 'index.php');
+	}
 
 	Controllers::update($connection->conn, 'vaccinations', 'user_id', $id, 'status', 'cancelled', 'index.php');
 }
 
-
 if (isset($_GET['approve'])) {
 
 	$id = $_GET['approve'];
-
 
 	$vacData = $controller->getDataById($connection->conn, 'vaccinations', 'user_id', $id);
 	$famData = $controller->getDataById($connection->conn, 'family_planning', 'user_id', $id);
 
 	function checkAndUpdateAppointment($data, $controller, $connection, $id)
 	{
-		if ($data && $data[0]['status'] !== 'approved') {
+		$appointmentType = $data[0]['appointment_type'];
 
-			$appointmentType = $data[0]['appointment_type'] . 's';
-
-			updateAppointment($data, $appointmentType, $controller, $connection, $id);
+		if ($appointmentType === 'vaccination') {
+			$appointmentType = 'vaccinations';
 		}
+
+		updateAppointment($data, $appointmentType, $controller, $connection, $id);
 	}
 
 	if ($vacData) {
@@ -124,7 +136,7 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 							</td>
 							<td class="center">
 								<a href="<?= htmlspecialchars($_SESSION['base_url']) ?>/pages/appointments/show.php?show=<?= htmlspecialchars($appointment['id']) ?>" class="btn btn-sm btn-info">Info</a>
-								<button onclick='confirmApprove(<?= json_encode($appointment['user_id']) ?>)' class="btn btn-sm btn-success">Approve</button>
+								<?php if ($appointment['status'] !== 'approved') : ?><button onclick='confirmApprove(<?= json_encode($appointment['user_id']) ?>)' class="btn btn-sm btn-success">Approve</button> <?php endif; ?>
 								<button onclick='confirmCancel(<?= json_encode($appointment['user_id']) ?>)' class="btn btn-sm btn-secondary">Cancel</button>
 							</td>
 						</tr>

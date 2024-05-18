@@ -28,7 +28,6 @@ if (isset($_GET['cancel'])) {
     Controllers::update($connection->conn, 'vaccinations', 'status', 'cancelled', $id, 'index.php');
 }
 
-
 if (isset($_GET['approve']) && $appointmentData == 'pending') {
 
     $id = $_GET['approve'];
@@ -37,11 +36,9 @@ if (isset($_GET['approve']) && $appointmentData == 'pending') {
     $username = setUsername($appointmentData);
     $password = rand(99999, 999999);
 
-    // $data = ;
-
     $message = "Your appointment has been approved. you may login using the provided credentials to track your records \n \n Username: $username \n Password: $password";
 
-    $controller->store($connection->conn, 'users', userData($appointmentData, $username, $password));
+    $controller->store($connection->conn, 'users', setUserData($appointmentData, $username, $password));
 
     SMS::sendMessageNotification(
         '',
