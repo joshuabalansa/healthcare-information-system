@@ -5,7 +5,7 @@
  * @param mixed $data
  * @return void
  */
-function die_dump($data)
+function dd($data)
 {
     echo "<pre>";
     var_dump($data);
@@ -139,7 +139,7 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
 function sendSms($appointmentData, $message)
 {
     SMS::sendMessageNotification(
-        'a3ad1dbbf8c030eea80b28724c9da746',
+        '',
         $appointmentData[0]['phone_number'],
         $message,
         'SEMAPHORE',
@@ -169,7 +169,7 @@ function getRandomChars($length = 6)
 }
 
 
-function updateAppointment($appointmentData, $controller, $connection, $id)
+function updateAppointment($appointmentData, $appointment_type, $controller, $connection, $id)
 {
 
     $username = setUsername($appointmentData);
@@ -181,45 +181,102 @@ function updateAppointment($appointmentData, $controller, $connection, $id)
 
     sendSms($appointmentData, $message);
 
-    Controllers::update($connection->conn, 'vaccinations', $id, 'status', 'approved', 'index.php');
+    Controllers::update($connection->conn, $appointment_type, 'user_id', $id, 'status', 'approved');
+
+    header('location: index.php');
 }
 
 
-function getCombinedAppointmentsData($connection)
+/**
+ * Get combined data from two tables selecting all fields dynamically.
+ *
+ * @param object $connection Database connection
+ * @param string $table1 First table name
+ * @param string $table2 Second table name
+ * @return array Combined data from both tables
+ */
+function joinTable($connection, $table1, $table2)
 {
+    function getTableColumns($connection, $table)
+    {
+        $stmt = $connection->query("DESCRIBE $table");
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    $fields1 = getTableColumns($connection, $table1);
+    $fields2 = getTableColumns($connection, $table2);
+
+    $allFields = array_unique(array_merge($fields1, $fields2));
+
+    $fields1List = implode(', ', array_map(function ($field) use ($table1, $fields1) {
+        return in_array($field, $fields1) ? "$table1.$field" : "NULL AS $field";
+    }, $allFields));
+
+    $fields2List = implode(', ', array_map(function ($field) use ($table2, $fields2) {
+        return in_array($field, $fields2) ? "$table2.$field" : "NULL AS $field";
+    }, $allFields));
+
     $sql = "SELECT 
-                'vaccinations' AS source,
-                user_id, 
-                id,
-                first_name,
-                last_name,
-                phone_number,
-                appointment_date,
-                appointment_time,
-                appointment_type,
-                status
-            FROM 
-                vaccinations
+                '$table1' AS source,
+                $fields1List
+            FROM
+                $table1
 
             UNION ALL
 
             SELECT 
-                'family_planning' AS source,
-                user_id, 
-                id,
-                first_name,
-                last_name,
-                phone_number,
-                appointment_date,
-                appointment_time,
-                appointment_type,
-                status
+                '$table2' AS source,
+                $fields2List
             FROM 
-                family_planning;";
+                $table2";
 
     $stmt = $connection->query($sql);
 
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     return $data;
+}
+
+/**
+ * Get combined appointments data from two tables with specified fields and a where clause
+ *
+ * @param object $connection Database connection
+ * @param string $table1 First table name
+ * @param string $table2 Second table name
+ * @param array $fields1 Fields to select from the first table
+ * @param array $fields2 Fields to select from the second table
+ * @param string $whereClause Optional where clause
+ * @return array Combined data from both tables
+ */
+function joinTableWhereClause($connection, $table1, $table2, $fields1, $fields2, $whereClause = '')
+{
+    try {
+        $fields1List = implode(', ', array_map(fn ($field) => "$table1.$field", $fields1));
+        $fields2List = implode(', ', array_map(fn ($field) => "$table2.$field", $fields2));
+
+        $sql = "SELECT 
+                    '$table1' AS source,
+                    $fields1List
+                FROM
+                    $table1
+                $whereClause
+
+                UNION ALL
+
+                SELECT 
+                    '$table2' AS source,
+                    $fields2List
+                FROM 
+                    $table2
+                $whereClause";
+
+        $stmt = $connection->query($sql);
+
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $data;
+    } catch (\Exception $e) {
+        // Handle error and possibly log it
+        return [];
+    }
 }

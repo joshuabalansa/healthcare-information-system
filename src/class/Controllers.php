@@ -106,16 +106,15 @@ class Controllers
      * @param mixed $value
      * @return void
      */
-    public static function update($conn, $table, $id, $field, $value, $redirect)
+    public static function update($conn, $table, $whereClause, $id, $field, $value)
     {
         try {
 
-            $sql = "UPDATE $table SET $field = ? WHERE id = ?";
+            $sql = "UPDATE $table SET $field = ? WHERE $whereClause = ?";
 
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$value, $id]);
 
-            header("location: $redirect");
+            $stmt->execute([$value, $id]);
         } catch (PDOException $e) {
 
             die($e->getMessage());

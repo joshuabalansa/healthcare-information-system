@@ -2,6 +2,17 @@
 
 class SMS
 {
+
+    /**
+     * Send SMS function
+     *
+     * @param string $key
+     * @param string $recepients
+     * @param string $message
+     * @param string $senderName
+     * @param string $endpoint
+     * @return void
+     */
     public static function sendMessageNotification($key, $recepients, $message, $senderName, $endpoint)
     {
         $ch = curl_init();

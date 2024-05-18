@@ -2,11 +2,10 @@
 
 session_start();
 
-require_once '../../class/Validator.php';
 require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
 require_once '../../class/Authorization.php';
-require_once '../../api/sms.php';
+require_once '../../class/Sms.php';
 require_once '../../functions/functions.php';
 
 if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
@@ -16,44 +15,47 @@ if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$validator = new Validator();
-$validator->validateUserSession($_SESSION['user_id']);
-
 $controller = new Controllers();
 $connection = new Connection();
 
 if (isset($_GET['cancel'])) {
     $id = $_GET['cancel'];
 
-    Controllers::update($connection->conn, 'vaccinations', 'status', 'cancelled', $id, 'index.php');
+    Controllers::update($connection->conn, 'vaccinations', $id, 'status', 'cancelled', 'index.php');
 }
 
 
-if (isset($_GET['approve']) && $appointmentData == 'pending') {
+if (isset($_GET['approve'])) {
 
     $id = $_GET['approve'];
+
     $appointmentData = $controller->getDataById($connection->conn, 'vaccinations', 'id', $id);
 
-    $username = setUsername($appointmentData);
-    $password = rand(99999, 999999);
+    if ($appointmentData[0]['status'] !== 'approved') {
 
-    // $data = ;
-
-    $message = "Your appointment has been approved. you may login using the provided credentials to track your records \n \n Username: $username \n Password: $password";
-
-    $controller->store($connection->conn, 'users', userData($appointmentData, $username, $password));
-
-    SMS::sendMessageNotification(
-        '',
-        $appointmentData[0]['phone_number'],
-        $message,
-        'SEMAPHORE',
-        'https://semaphore.co/api/v4/messages'
-    );
-
-    Controllers::update($connection->conn, 'vaccinations', $id, 'status', 'approved', 'index.php');
+        updateAppointment($appointmentData, $controller, $connection, $id);
+    }
 }
+$fields = [
+    'user_id',
+    'id',
+    'first_name',
+    'last_name',
+    'phone_number',
+    'appointment_date',
+    'appointment_time',
+    'appointment_type',
+    'status'
+];
 
+$patients = joinTableWhereClause(
+    $connection->conn,
+    'vaccinations',
+    'family_planning',
+    $fields,
+    $fields,
+    "WHERE status = 'approved'"
+);
 
 ?>
 <!DOCTYPE html>
@@ -99,36 +101,38 @@ if (isset($_GET['approve']) && $appointmentData == 'pending') {
             <table class="table table-bordered datatable" id="table-1">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Name</th>
                         <th>Phone Number</th>
-                        <th>Date Appointment</th>
-                        <th>Time</th>
+                        <th>Type</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($controller->get($connection->conn, 'vaccinations') as $vaccination) : ?>
+                    <?php foreach ($patients as $appointment) : ?>
                         <tr class="odd gradeX">
-                            <td><?= $vaccination['first_name'] . ' ' . $vaccination['last_name'] ?></td>
-                            <td><?= $vaccination['phone_number'] ?></td>
-                            <td><?= $vaccination['appointment_date'] ?></td>
-                            <td><?= $vaccination['appointment_time'] ?></td>
-                            <td><span class="badge text-bg-<?= $vaccination['status'] == 'approved' ? 'success' : 'danger' ?>"><?= ucfirst($vaccination['status']) ?></span></td>
+                            <td><?= htmlspecialchars(trim($appointment['id'])) ?></td>
+                            <td><?= htmlspecialchars($appointment['first_name'] . ' ' . $appointment['last_name']) ?></td>
+                            <td><?= htmlspecialchars($appointment['phone_number']) ?></td>
+                            <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $appointment['appointment_type']))) ?></td>
+                            <td>
+                                <span class="badge text-bg-<?= $appointment['status'] == 'approved' ? 'success' : 'danger' ?>">
+                                    <?= ucfirst(htmlspecialchars($appointment['status'])) ?>
+                                </span>
+                            </td>
                             <td class="center">
-                                <a href="<?= $_SESSION['base_url'] ?>/pages/appointments/show.php?show=<?= $vaccination['id'] ?>" class="btn btn-sm btn-info">Info</a>
-                                <button onclick="confirmApprove(<?= $vaccination['id'] ?>)" class="btn btn-sm btn-success">Approve</button>
-                                <button onclick="confirmCancel(<?= $vaccination['id'] ?>)" class="btn btn-sm btn-secondary">Cancel</button>
+                                <a href="<?= htmlspecialchars($_SESSION['base_url']) ?>/pages/appointments/show.php?show=<?= htmlspecialchars($appointment['id']) ?>" class="btn btn-sm btn-info">Info</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
                 <tfoot>
                     <tr>
+                        <th>#</th>
                         <th>Name</th>
                         <th>Phone Number</th>
-                        <th>Date Appointment</th>
-                        <th>Time</th>
+                        <th>Type</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -157,10 +161,6 @@ if (isset($_GET['approve']) && $appointmentData == 'pending') {
                 }
             }
         </script>
-
-
-        <!-- Imported styles on this page -->
-
 </body>
 
 </html>

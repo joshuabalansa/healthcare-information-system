@@ -21,7 +21,7 @@ $connection = new Connection();
 if (isset($_GET['cancel'])) {
 	$id = $_GET['cancel'];
 
-	Controllers::update($connection->conn, 'vaccinations', $id, 'status', 'cancelled', 'index.php');
+	Controllers::update($connection->conn, 'vaccinations', 'user_id', $id, 'status', 'cancelled', 'index.php');
 }
 
 
@@ -29,14 +29,30 @@ if (isset($_GET['approve'])) {
 
 	$id = $_GET['approve'];
 
-	$appointmentData = $controller->getDataById($connection->conn, 'vaccinations', 'id', $id);
 
-	if ($appointmentData[0]['status'] !== 'approved') {
+	$vacData = $controller->getDataById($connection->conn, 'vaccinations', 'user_id', $id);
+	$famData = $controller->getDataById($connection->conn, 'family_planning', 'user_id', $id);
 
-		updateAppointment($appointmentData, $controller, $connection, $id);
+	function checkAndUpdateAppointment($data, $controller, $connection, $id)
+	{
+		if ($data && $data[0]['status'] !== 'approved') {
+
+			$appointmentType = $data[0]['appointment_type'] . 's';
+
+			updateAppointment($data, $appointmentType, $controller, $connection, $id);
+		}
+	}
+
+	if ($vacData) {
+
+		checkAndUpdateAppointment($vacData, $controller, $connection, $id);
+	} else {
+
+		checkAndUpdateAppointment($famData, $controller, $connection, $id);
 	}
 }
-// die_dump(getCombinedAppointmentsData($connection->conn));
+
+$appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 
 ?>
 <!DOCTYPE html>
@@ -93,7 +109,7 @@ if (isset($_GET['approve'])) {
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach (getCombinedAppointmentsData($connection->conn) as $appointment) : ?>
+					<?php foreach ($appointments as $appointment) : ?>
 						<tr class="odd gradeX">
 							<td><?= htmlspecialchars(trim($appointment['id'])) ?></td>
 							<td><?= htmlspecialchars($appointment['first_name'] . ' ' . $appointment['last_name']) ?></td>
@@ -102,14 +118,14 @@ if (isset($_GET['approve'])) {
 							<td><?= htmlspecialchars($appointment['appointment_time']) ?></td>
 							<td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $appointment['appointment_type']))) ?></td>
 							<td>
-								<span class="badge text-bg-<?= $appointment['status'] == 'approved' ? 'success' : 'danger' ?>">
+								<span class="badge <?= $appointment['status'] == 'approved' ? 'badge-success' : 'badge-danger' ?>">
 									<?= ucfirst(htmlspecialchars($appointment['status'])) ?>
 								</span>
 							</td>
 							<td class="center">
 								<a href="<?= htmlspecialchars($_SESSION['base_url']) ?>/pages/appointments/show.php?show=<?= htmlspecialchars($appointment['id']) ?>" class="btn btn-sm btn-info">Info</a>
-								<button onclick="confirmApprove(<?= htmlspecialchars($appointment['id']) ?>)" class="btn btn-sm btn-success">Approve</button>
-								<button onclick="confirmCancel(<?= htmlspecialchars($appointment['id']) ?>)" class="btn btn-sm btn-secondary">Cancel</button>
+								<button onclick='confirmApprove(<?= json_encode($appointment['user_id']) ?>)' class="btn btn-sm btn-success">Approve</button>
+								<button onclick='confirmCancel(<?= json_encode($appointment['user_id']) ?>)' class="btn btn-sm btn-secondary">Cancel</button>
 							</td>
 						</tr>
 					<?php endforeach; ?>
@@ -132,21 +148,20 @@ if (isset($_GET['approve'])) {
 			<br />
 		</div>
 
-
 		<script>
 			function confirmCancel(id) {
 				var confirmation = confirm("Are you sure you want to Delete Appointment?")
-
 				if (confirmation) {
-					window.location.href = "index.php?cancel=" + id
+					window.location.href = "index.php?cancel=" + encodeURIComponent(id);
 				}
 			}
 
 			function confirmApprove(id) {
-				var confirmation = confirm("Are you sure you want to Approve Appointment?")
 
+
+				var confirmation = confirm("Are you sure you want to Approve Appointment?");
 				if (confirmation) {
-					window.location.href = "index.php?approve=" + id
+					window.location.href = "index.php?approve=" + encodeURIComponent(id);
 				}
 			}
 		</script>
