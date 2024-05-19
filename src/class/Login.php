@@ -2,6 +2,7 @@
 session_start();
 
 require_once '../config/Connection.php';
+require_once 'Authorization.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -25,10 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $_SESSION['base_url'] = 'http://healthcare.test/src/';
 
+        $_SESSION['routes'] = Authorization::routes($user['role']);
+
         header('location: ../pages/dashboard.php');
     } else {
 
         $_SESSION['error'] = 'Wrong Username or Password';
+
         header('location: ../index.php');
     }
 

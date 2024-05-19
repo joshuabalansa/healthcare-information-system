@@ -47,19 +47,4 @@ class Authorization
 
         return $permissions[$role] ?? [];
     }
-
-    /**
-     * Redirect to the login 
-     * if not authenticated
-     *
-     * @param int $sessionId
-     * @return void
-     */
-    public function isAuthenticated($sessionId)
-    {
-        if (!$sessionId) {
-
-            header('location: ../index');
-        }
-    }
 }

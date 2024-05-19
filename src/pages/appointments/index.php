@@ -8,10 +8,7 @@ require_once '../../class/Authorization.php';
 require_once '../../class/Sms.php';
 require_once '../../functions/functions.php';
 
-if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
-
-	die("<center>401 Authorization Required</center>");
-}
+isAuthenticated();
 
 $user_id = $_SESSION['user_id'];
 

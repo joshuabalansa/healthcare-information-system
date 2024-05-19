@@ -2,28 +2,18 @@
 
 session_start();
 
-require_once '../class/Validator.php';
+require_once '../components/Cards.php';
+require_once '../components/SideBar.php';
 require_once '../class/Controllers.php';
-require_once '../config/connection.php';
-require_once '../class/Authorization.php';
+require_once '../config/Connection.php';
 require_once '../functions/functions.php';
 
-if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
+isAuthenticated();
+$connection = new Connection;
+$pendingVacData = Controllers::countData($connection->conn, 'vaccinations', 'status = ?', ['pending']);
+$sideBar = new SideBar($_SESSION['routes']);
+$cards = new Cards($pendingVacData);
 
-	die("<center>401 Authorization Required</center>");
-}
-
-$user_id = $_SESSION['user_id'];
-
-$validator = new Validator();
-$validator->validateUserSession($_SESSION['user_id']);
-
-$controller = new Controllers();
-
-$connection = new Connection();
-$user = $controller->getDataById($connection->conn, 'users', 'id', $user_id);
-
-$_SESSION['routes'] = Authorization::routes($user[0]['role']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +26,7 @@ $_SESSION['routes'] = Authorization::routes($user[0]['role']);
 	<meta name="description" content="Neon Admin Panel" />
 	<meta name="author" content="" />
 
-	<title></title>
+	<title>Dashboard</title>
 
 </head>
 
@@ -44,7 +34,7 @@ $_SESSION['routes'] = Authorization::routes($user[0]['role']);
 
 	<div class="page-container">
 
-		<?php include '../includes/sidebar-menu.php' ?>
+		<?php $sideBar->render() ?>
 
 		<div class="main-content">
 
@@ -52,8 +42,7 @@ $_SESSION['routes'] = Authorization::routes($user[0]['role']);
 
 			<hr />
 
-
-			<?php include '../includes/cards.php' ?>
+			<?php $cards->render() ?>
 
 			<br />
 			<h1>Dashboard</h1>

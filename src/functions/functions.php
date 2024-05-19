@@ -291,7 +291,7 @@ function joinTableWhereClause($connection, $table1, $table2, $fields1, $fields2,
 /**
  * Check and Update Appointment function
  *
- * @param array $data
+ * @param array  $data
  * @param object $controller
  * @param object $connection
  * @param string $id
@@ -306,4 +306,19 @@ function checkAndUpdateAppointment($data, $controller, $connection, $id)
     }
 
     updateAppointment($data, $appointmentType, $controller, $connection, $id);
+}
+
+
+/**
+ * Check if user is authenticated
+ *
+ * @return void
+ */
+function isAuthenticated()
+{
+
+    if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
+
+        die("<center>401 Authorization Required</center>");
+    }
 }

@@ -120,4 +120,28 @@ class Controllers
             die($e->getMessage());
         }
     }
+
+    /**
+     * Count data based on conditions
+     *
+     * @param object $conn
+     * @param string $table
+     * @param string $whereClause
+     * @param array $params
+     * @return int|false
+     */
+    public static function countData($conn, $table, $whereClause = "", $params = [])
+    {
+        try {
+            $sql = "SELECT COUNT(*) FROM $table";
+            if (!empty($whereClause)) {
+                $sql .= " WHERE $whereClause";
+            }
+            $stmt = $conn->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
 }

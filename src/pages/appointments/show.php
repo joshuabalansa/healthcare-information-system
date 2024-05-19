@@ -6,10 +6,7 @@ require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
 require_once '../../functions/functions.php';
 
-if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
-
-    die("<center>401 Authorization Required</center>");
-}
+isAuthenticated();
 
 $vacId = $_GET['vaccination'] ?? '';
 $famId = $_GET['family_planning'] ?? '';

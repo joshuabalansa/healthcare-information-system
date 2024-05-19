@@ -2,16 +2,10 @@
 
 session_start();
 
-require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
-require_once '../../class/Authorization.php';
-require_once '../../class/Sms.php';
 require_once '../../functions/functions.php';
 
-if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
-
-    die("<center>401 Authorization Required</center>");
-}
+isAuthenticated();
 
 $user_id = $_SESSION['user_id'];
 
@@ -114,24 +108,6 @@ $patients = joinTableWhereClause(
             <br />
         </div>
 
-
-        <script>
-            function confirmCancel(id) {
-                var confirmation = confirm("Are you sure you want to Delete Appointment?")
-
-                if (confirmation) {
-                    window.location.href = "index.php?cancel=" + id
-                }
-            }
-
-            function confirmApprove(id) {
-                var confirmation = confirm("Are you sure you want to Approve Appointment?")
-
-                if (confirmation) {
-                    window.location.href = "index.php?approve=" + id
-                }
-            }
-        </script>
 </body>
 
 </html>
