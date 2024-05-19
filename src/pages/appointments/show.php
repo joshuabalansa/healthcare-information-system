@@ -82,24 +82,6 @@ $famData = $controller->getDataById($connection->conn, 'family_planning', 'user_
 
             <br />
         </div>
-
-        <script>
-            function confirmCancel(id) {
-                var confirmation = confirm("Are you sure you want to Delete Appointment?")
-                if (confirmation) {
-                    window.location.href = "index.php?cancel=" + encodeURIComponent(id);
-                }
-            }
-
-            function confirmApprove(id) {
-
-
-                var confirmation = confirm("Are you sure you want to Approve Appointment?");
-                if (confirmation) {
-                    window.location.href = "index.php?approve=" + encodeURIComponent(id);
-                }
-            }
-        </script>
 </body>
 
 </html>
