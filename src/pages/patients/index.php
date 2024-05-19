@@ -15,27 +15,8 @@ if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$controller = new Controllers();
 $connection = new Connection();
 
-if (isset($_GET['cancel'])) {
-    $id = $_GET['cancel'];
-
-    Controllers::update($connection->conn, 'vaccinations', $id, 'status', 'cancelled', 'index.php');
-}
-
-
-if (isset($_GET['approve'])) {
-
-    $id = $_GET['approve'];
-
-    $appointmentData = $controller->getDataById($connection->conn, 'vaccinations', 'id', $id);
-
-    if ($appointmentData[0]['status'] !== 'approved') {
-
-        updateAppointment($appointmentData, $controller, $connection, $id);
-    }
-}
 $fields = [
     'user_id',
     'id',
@@ -103,26 +84,18 @@ $patients = joinTableWhereClause(
                     <tr>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Phone Number</th>
                         <th>Type</th>
-                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($patients as $appointment) : ?>
+                    <?php foreach ($patients as $index => $appointment) :  ?>
                         <tr class="odd gradeX">
-                            <td><?= htmlspecialchars(trim($appointment['id'])) ?></td>
+                            <td><?= $index + 1 ?></td>
                             <td><?= htmlspecialchars($appointment['first_name'] . ' ' . $appointment['last_name']) ?></td>
-                            <td><?= htmlspecialchars($appointment['phone_number']) ?></td>
                             <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $appointment['appointment_type']))) ?></td>
-                            <td>
-                                <span class="badge text-bg-<?= $appointment['status'] == 'approved' ? 'success' : 'danger' ?>">
-                                    <?= ucfirst(htmlspecialchars($appointment['status'])) ?>
-                                </span>
-                            </td>
                             <td class="center">
-                                <a href="<?= htmlspecialchars($_SESSION['base_url']) ?>/pages/appointments/show.php?show=<?= htmlspecialchars($appointment['id']) ?>" class="btn btn-sm btn-info">Info</a>
+                                <a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/appointments/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>" class="btn btn-sm btn-info">Info</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -131,9 +104,7 @@ $patients = joinTableWhereClause(
                     <tr>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Phone Number</th>
                         <th>Type</th>
-                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     </thead>

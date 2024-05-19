@@ -110,7 +110,7 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 				<tbody>
 					<?php foreach ($appointments as $index => $appointment) : ?>
 						<tr class="odd gradeX">
-							<td><?= $index++ ?></td>
+							<td><?= $index + 1 ?></td>
 							<td><?= htmlspecialchars($appointment['first_name'] . ' ' . $appointment['last_name']) ?></td>
 							<td><?= htmlspecialchars($appointment['phone_number']) ?></td>
 							<td><?= htmlspecialchars($appointment['appointment_date']) ?></td>
