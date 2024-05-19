@@ -97,6 +97,7 @@
 <script src="../../assets/js/select2/select2.min.js"></script>
 <script src="../../assets/js/neon-chat.js"></script>
 <script src="../../assets/datatable/datatable.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--  -->
 <div class="row">
 

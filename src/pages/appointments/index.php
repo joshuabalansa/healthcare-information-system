@@ -24,17 +24,15 @@ if (isset($_GET['cancel'])) {
 	$id = $_GET['cancel'];
 
 	$vacData = $controller->getDataById($connection->conn, 'vaccinations', 'user_id', $id);
-	$famData = $controller->getDataById($connection->conn, 'family_planning', 'user_id', $id);
+	$famData = $controller->getDataById($connection->conn, 'family_planning', 'user_id', $id) ?? [];
 
 	if ($vacData) {
 
-		Controllers::update($connection->conn, 'vaccinations', 'user_id', $id, 'status', 'cancelled', 'index.php');
+		Controllers::update($connection->conn, 'vaccinations', 'user_id', $id, 'status', 'cancelled');
 	} else {
 
-		Controllers::update($connection->conn, 'family_planning', 'user_id', $id, 'status', 'cancelled', 'index.php');
+		Controllers::update($connection->conn, 'family_planning', 'user_id', $id, 'status', 'cancelled');
 	}
-
-	Controllers::update($connection->conn, 'vaccinations', 'user_id', $id, 'status', 'cancelled', 'index.php');
 }
 
 if (isset($_GET['approve'])) {
@@ -43,17 +41,6 @@ if (isset($_GET['approve'])) {
 
 	$vacData = $controller->getDataById($connection->conn, 'vaccinations', 'user_id', $id);
 	$famData = $controller->getDataById($connection->conn, 'family_planning', 'user_id', $id);
-
-	function checkAndUpdateAppointment($data, $controller, $connection, $id)
-	{
-		$appointmentType = $data[0]['appointment_type'];
-
-		if ($appointmentType === 'vaccination') {
-			$appointmentType = 'vaccinations';
-		}
-
-		updateAppointment($data, $appointmentType, $controller, $connection, $id);
-	}
 
 	if ($vacData) {
 
@@ -121,9 +108,9 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ($appointments as $appointment) : ?>
+					<?php foreach ($appointments as $index => $appointment) : ?>
 						<tr class="odd gradeX">
-							<td><?= htmlspecialchars(trim($appointment['id'])) ?></td>
+							<td><?= $index++ ?></td>
 							<td><?= htmlspecialchars($appointment['first_name'] . ' ' . $appointment['last_name']) ?></td>
 							<td><?= htmlspecialchars($appointment['phone_number']) ?></td>
 							<td><?= htmlspecialchars($appointment['appointment_date']) ?></td>
@@ -162,19 +149,36 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 
 		<script>
 			function confirmCancel(id) {
-				var confirmation = confirm("Are you sure you want to Delete Appointment?")
-				if (confirmation) {
-					window.location.href = "index.php?cancel=" + encodeURIComponent(id);
-				}
+				Swal.fire({
+					title: "Are you sure you want to cancel the Appointment?",
+					text: "You will be able to revert this!",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#3085d6",
+					cancelButtonColor: "#d33",
+					confirmButtonText: "Yes, cancel it!"
+				}).then((result) => {
+					if (result.isConfirmed) {
+
+						window.location.href = "index.php?cancel=" + encodeURIComponent(id);
+					}
+				});
 			}
 
 			function confirmApprove(id) {
-
-
-				var confirmation = confirm("Are you sure you want to Approve Appointment?");
-				if (confirmation) {
-					window.location.href = "index.php?approve=" + encodeURIComponent(id);
-				}
+				Swal.fire({
+					title: "Are you sure you want to Approve Appointment?",
+					text: "You will be able to revert this!",
+					icon: "info",
+					showCancelButton: true,
+					confirmButtonColor: "#3085d6",
+					cancelButtonColor: "#d33",
+					confirmButtonText: "Yes, Approve it!"
+				}).then((result) => {
+					if (result.isConfirmed) {
+						window.location.href = "index.php?approve=" + encodeURIComponent(id);
+					}
+				});
 			}
 		</script>
 </body>

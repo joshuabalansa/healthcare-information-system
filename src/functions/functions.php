@@ -147,7 +147,6 @@ function sendSms($appointmentData, $message)
     );
 }
 
-
 /**
  * Generates a string of random characters.
  *
@@ -168,7 +167,16 @@ function getRandomChars($length = 6)
     return $randomString;
 }
 
-
+/**
+ * Update Appointment function
+ *
+ * @param array $appointmentData
+ * @param string $appointment_type
+ * @param object $controller
+ * @param object $connection
+ * @param string $id
+ * @return void
+ */
 function updateAppointment($appointmentData, $appointment_type, $controller, $connection, $id)
 {
 
@@ -177,7 +185,6 @@ function updateAppointment($appointmentData, $appointment_type, $controller, $co
     $message  = "Your appointment has been approved. you may login using the provided credentials to track your records \n \n Username: $username \n Password: $password";
 
     $controller->store($connection->conn, 'users', setUserData($appointmentData, $username, $password), 'index.php');
-
 
     sendSms($appointmentData, $message);
 
@@ -190,10 +197,10 @@ function updateAppointment($appointmentData, $appointment_type, $controller, $co
 /**
  * Get combined data from two tables selecting all fields dynamically.
  *
- * @param object $connection Database connection
- * @param string $table1 First table name
- * @param string $table2 Second table name
- * @return array Combined data from both tables
+ * @param object $connection
+ * @param string $table1 
+ * @param string $table2 
+ * @return array 
  */
 function joinTable($connection, $table1, $table2)
 {
@@ -240,13 +247,13 @@ function joinTable($connection, $table1, $table2)
 /**
  * Get combined appointments data from two tables with specified fields and a where clause
  *
- * @param object $connection Database connection
- * @param string $table1 First table name
- * @param string $table2 Second table name
- * @param array $fields1 Fields to select from the first table
- * @param array $fields2 Fields to select from the second table
- * @param string $whereClause Optional where clause
- * @return array Combined data from both tables
+ * @param object $connection
+ * @param string $table1
+ * @param string $table2
+ * @param array $fields1
+ * @param array $fields2 
+ * @param string $whereClause 
+ * @return array 
  */
 function joinTableWhereClause($connection, $table1, $table2, $fields1, $fields2, $whereClause = '')
 {
@@ -276,7 +283,27 @@ function joinTableWhereClause($connection, $table1, $table2, $fields1, $fields2,
 
         return $data;
     } catch (\Exception $e) {
-        // Handle error and possibly log it
+
         return [];
     }
+}
+
+/**
+ * Check and Update Appointment function
+ *
+ * @param array $data
+ * @param object $controller
+ * @param object $connection
+ * @param string $id
+ * @return void
+ */
+function checkAndUpdateAppointment($data, $controller, $connection, $id)
+{
+    $appointmentType = $data[0]['appointment_type'];
+
+    if ($appointmentType === 'vaccination') {
+        $appointmentType = 'vaccinations';
+    }
+
+    updateAppointment($data, $appointmentType, $controller, $connection, $id);
 }

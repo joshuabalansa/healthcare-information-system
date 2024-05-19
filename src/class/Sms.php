@@ -15,6 +15,7 @@ class SMS
      */
     public static function sendMessageNotification($key, $recepients, $message, $senderName, $endpoint)
     {
+
         $ch = curl_init();
 
         $parameters = array(
@@ -23,7 +24,6 @@ class SMS
             'message' => $message,
             'sendername' => $senderName
         );
-
         curl_setopt($ch, CURLOPT_URL, $endpoint);
 
         curl_setopt($ch, CURLOPT_POST, 1);
