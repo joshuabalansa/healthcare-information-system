@@ -9,6 +9,7 @@ require_once '../../class/Sms.php';
 require_once '../../functions/functions.php';
 require_once '../../components/SideBar.php';
 require_once '../../components/Header.php';
+require_once '../../components/CreateVaccineModal.php';
 
 isAuthenticated();
 
@@ -40,6 +41,7 @@ $patients = joinTableWhereClause(
 $routes = $_SESSION['routes'];
 $sideBar = new Sidebar($routes);
 $header = new Header();
+$modal = new CreateVaccineModal('Create', 'Add Vaccine', 'Add a vaccine records');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,14 +62,13 @@ $header = new Header();
     <link rel="stylesheet" href="../../assets/css/neon-theme.css">
     <link rel="stylesheet" href="../../assets/css/neon-forms.css">
     <link rel="stylesheet" href="../../assets/css/custom.css">
-
     <script src="../../assets/js/jquery-1.11.3.min.js"></script>
 
 </head>
 
 <body class="page-body  page-fade">
 
-    <div class="page-container">
+    <div class="page-container" x-data="{ showModal: false }">
 
 
         <?php $sideBar->render(); ?>
@@ -80,7 +81,9 @@ $header = new Header();
             <br />
 
             <h1>Vaccine Management</h1>
-            <button class="btn btn-primary" style="margin-bottom: 10px;">Add Vaccine</button>
+
+            <?php $modal->render() ?>
+
             <table class="table table-bordered datatable mt-5" id="table-1">
                 <thead>
                     <tr>

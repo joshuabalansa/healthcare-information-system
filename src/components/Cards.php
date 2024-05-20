@@ -8,6 +8,7 @@ class Cards
     {
         $this->count = $count;
     }
+    
     public function render()
     {
         echo "
