@@ -95,7 +95,7 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
         $appointmentData = $controller->getDataById($connection->conn, 'vaccinations', 'id', $connection->conn->lastInsertId());
 
         $appointmentFields =  [
-            'patient_id' => $appointmentData[0]['id'],
+            'patient_id' => $appointmentData[0]['user_id'],
             'appointment_type' => $appointmentData[0]['appointment_type'],
         ];
 
@@ -117,7 +117,7 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
         $appointmentData = $controller->getDataById($connection->conn, 'family_planning', 'id', $connection->conn->lastInsertId());
 
         $appointmentFields = [
-            'patient_id' => $appointmentData[0]['id'],
+            'patient_id' => $appointmentData[0]['user_id'],
             'appointment_type' => $appointmentData[0]['appointment_type'],
         ];
 
