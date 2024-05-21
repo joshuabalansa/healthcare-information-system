@@ -322,3 +322,8 @@ function isAuthenticated()
         die("<center>401 Authorization Required</center>");
     }
 }
+
+function sanitizeInput($data)
+{
+    return htmlspecialchars(strip_tags(trim($data)));
+}

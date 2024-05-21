@@ -10,6 +10,7 @@ require_once '../../functions/functions.php';
 require_once '../../components/SideBar.php';
 require_once '../../components/Header.php';
 require_once '../../components/CreateVaccineModal.php';
+require_once '../../class/Controllers.php';
 
 isAuthenticated();
 
@@ -42,6 +43,31 @@ $routes = $_SESSION['routes'];
 $sideBar = new Sidebar($routes);
 $header = new Header();
 $modal = new CreateVaccineModal('Create', 'Add Vaccine', 'Add a vaccine records');
+
+$controller = new Controllers;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $vaccine_name = sanitizeInput($_POST['vaccine_name']);
+    $abbreviation = sanitizeInput($_POST['abbreviation']);
+    $manufacturer = sanitizeInput($_POST['manufacturer']);
+    $doses          = sanitizeInput($_POST['doses']);
+    $approved_ages = sanitizeInput($_POST['approved_ages']);
+    $description = sanitizeInput($_POST['description']);
+
+    $vaccineData = [
+        'vaccine' => $vaccine_name,
+        'abbreviation' => $abbreviation,
+        'manufacturer' => $manufacturer,
+        'doses' => $doses,
+        'approved_ages' => $approved_ages,
+        'description' => $description,
+    ];
+
+    $controller->store($connection->conn, 'vaccines', $vaccineData);
+
+    echo "<script>window.location.reload</script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,16 +115,16 @@ $modal = new CreateVaccineModal('Create', 'Add Vaccine', 'Add a vaccine records'
                     <tr>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Type</th>
+                        <th>Abbreviation</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($patients as $index => $appointment) :  ?>
+                    <?php foreach ($controller->get($connection->conn, 'vaccines') as $index => $vac) :  ?>
                         <tr class="odd gradeX">
                             <td><?= $index + 1 ?></td>
-                            <td><?= htmlspecialchars($appointment['first_name'] . ' ' . $appointment['last_name']) ?></td>
-                            <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $appointment['appointment_type']))) ?></td>
+                            <td><?= htmlspecialchars($vac['vaccine']) ?></td>
+                            <td><?= htmlspecialchars($vac['abbreviation']) ?></td>
                             <td class="center">
                                 <a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/appointments/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>" class="btn btn-sm btn-info">Info</a>
                             </td>
@@ -109,7 +135,7 @@ $modal = new CreateVaccineModal('Create', 'Add Vaccine', 'Add a vaccine records'
                     <tr>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Type</th>
+                        <th>Abbreviation</th>
                         <th>Action</th>
                     </tr>
                     </thead>
