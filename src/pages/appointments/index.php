@@ -119,9 +119,9 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 								</span>
 							</td>
 							<td class="center">
-								<a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/appointments/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>" class="btn btn-sm btn-info">Info</a>
-								<?php if ($appointment['status'] !== 'approved') : ?><button onclick='confirmApprove(<?= json_encode($appointment['user_id']) ?>)' class="btn btn-sm btn-success">Approve</button> <?php endif; ?>
-								<button onclick='confirmCancel(<?= json_encode($appointment['user_id']) ?>)' class="btn btn-sm btn-secondary">Cancel</button>
+								<a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/appointments/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>" class="btn btn-sm btn-info"><i class="entypo-info"></i></a>
+								<?php if ($appointment['status'] !== 'approved') : ?><button onclick='confirmApprove(<?= json_encode($appointment['user_id']) ?>)' class="btn btn-sm btn-green btn-icon icon-left">Approve<i class="entypo-check"></i></button> <?php endif; ?>
+								<button onclick='confirmCancel(<?= json_encode($appointment['user_id']) ?>)' class="btn btn-sm btn-danger btn-secondary"><i class="entypo-cancel"></i></button>
 							</td>
 						</tr>
 					<?php endforeach; ?>

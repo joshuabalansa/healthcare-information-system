@@ -9,10 +9,13 @@ require_once '../config/Connection.php';
 require_once '../functions/functions.php';
 
 isAuthenticated();
+
 $connection = new Connection;
 $pendingVacData = Controllers::countData($connection->conn, 'vaccinations', 'status = ?', ['pending']);
+$pendingFamData = Controllers::countData($connection->conn, 'family_planning', 'status = ?', ['pending']);
+
 $sideBar = new SideBar($_SESSION['routes']);
-$cards = new Cards($pendingVacData);
+$cards = new Cards($pendingVacData + $pendingFamData);
 
 ?>
 <!DOCTYPE html>

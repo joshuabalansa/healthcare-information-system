@@ -9,7 +9,7 @@ require_once '../../class/Sms.php';
 require_once '../../functions/functions.php';
 require_once '../../components/SideBar.php';
 require_once '../../components/Header.php';
-require_once '../../components/CreateVaccineModal.php';
+require_once '../../components/VaccineModalComponent.php';
 require_once '../../class/Controllers.php';
 
 isAuthenticated();
@@ -42,7 +42,7 @@ $patients = joinTableWhereClause(
 $routes = $_SESSION['routes'];
 $sideBar = new Sidebar($routes);
 $header = new Header();
-$modal = new CreateVaccineModal('Create', 'Add Vaccine', 'Add a vaccine records');
+$render = new CreateVaccineModal('New Record', 'Add Vaccine', 'Add a vaccine records');
 
 $controller = new Controllers;
 
@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <h1>Vaccine Management</h1>
 
-            <?php $modal->render() ?>
+            <?php $render->createModal() ?>
 
             <table class="table table-bordered datatable mt-5" id="table-1">
                 <thead>
@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <td><?= htmlspecialchars($vac['vaccine']) ?></td>
                             <td><?= htmlspecialchars($vac['abbreviation']) ?></td>
                             <td class="center">
-                                <a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/appointments/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>" class="btn btn-sm btn-info">Info</a>
+                                <?= $render->show($controller->getDataById($connection->conn, 'vaccines', 'id', $vac['id'])) ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

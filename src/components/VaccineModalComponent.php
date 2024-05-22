@@ -16,7 +16,8 @@ class CreateVaccineModal
     {
         return <<<CSS
         <style>
-            /* Basic styles for the modal */
+           
+            [x-cloak] { display: none !important; }
             .modal {
                 display: none;
                 position: fixed;
@@ -101,8 +102,8 @@ class CreateVaccineModal
     private function renderModal()
     {
         return <<<HTML
-        <div x-data="{ showModal: false }" class="bottom-margin">
-            <button @click="showModal = true" class="btn btn-primary">{$this->btnName}</button>
+        <div x-cloak x-data="{ showModal: false }" class="bottom-margin">
+            <button @click="showModal = true" class="btn btn-info">{$this->btnName}</button>
 
                 <div x-show="showModal" x-transition @click.away="showModal = false" @keydown.escape.window="showModal = false" class="modal" :class="{ 'show': showModal }">
                     <div class="modal-content">
@@ -123,18 +124,18 @@ class CreateVaccineModal
                             </div>
                             <div class="form-group">
                                 <label for="doses">Doses</label>
-                                <input type="text" id="doses" name="doses" required>
+                                <input type="text" id="doses" name="doses">
                             </div>
                             <div class="form-group">
                                 <label for="approved_ages">Approved Ages</label>
-                                <input type="text" id="approved_ages" name="approved_ages" required>
+                                <input type="text" id="approved_ages" name="approved_ages">
                             </div>
                             <div class="form-group">
                                 <label for="description">Description</label>
-                                <textarea id="description" name="description" rows="4" required></textarea>
+                                <textarea id="description" name="description" rows="4"></textarea>
                             </div>
                             <div>
-                                <button type="submit" @click="showModal = false" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
                                 <button type="button" @click="showModal = false" class="btn btn-outline-primary">Close</button>
                             </div>
                         </form>
@@ -144,10 +145,48 @@ class CreateVaccineModal
         HTML;
     }
 
-    public function render()
+    private function showData($data)
+    {
+        $fields = '';
+        foreach ($data[0] as $field => $value) {
+            if ($field !== 'id') {
+
+                $field = ucwords(str_replace('_', ' ', $field));
+
+                $fields .= "<tr>
+                        <th scope='row'>{$field}</th>
+                        <td>{$value}</td>
+                        </tr>";
+            }
+        }
+        return <<<HTML
+            <div x-cloak x-data="{ showModal: false }">
+            
+            <div x-show="showModal" x-transition @click.away="showModal = false" @keydown.escape.window="showModal = false" class="modal" :class="{ 'show': showModal }">
+                <div class="modal-content">
+                    <h2>All Information</h2>
+                    <table>
+                    <tbody>
+                        {$fields}
+                    </tbody>
+                    </table>
+                    <button @click="showModal = false" class="btn btn-outline-primary">Close</button>
+                </div>
+                </div>
+                <button @click="showModal = true" class="btn btn-primary">Info</button>
+        </div>
+        HTML;
+    }
+
+    public function createModal()
     {
         echo $this->renderStyles();
         echo $this->renderScripts();
         echo $this->renderModal();
+    }
+
+    public function show($data)
+    {
+        return $this->showData($data);
     }
 }
