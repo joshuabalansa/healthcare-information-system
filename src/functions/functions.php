@@ -198,9 +198,9 @@ function updateAppointment($appointmentData, $appointment_type, $controller, $co
  * Get combined data from two tables selecting all fields dynamically.
  *
  * @param object $connection
- * @param string $table1 
- * @param string $table2 
- * @return array 
+ * @param string $table1
+ * @param string $table2
+ * @return array
  */
 function joinTable($connection, $table1, $table2)
 {
@@ -223,7 +223,7 @@ function joinTable($connection, $table1, $table2)
         return in_array($field, $fields2) ? "$table2.$field" : "NULL AS $field";
     }, $allFields));
 
-    $sql = "SELECT 
+    $sql = "SELECT
                 '$table1' AS source,
                 $fields1List
             FROM
@@ -231,10 +231,10 @@ function joinTable($connection, $table1, $table2)
 
             UNION ALL
 
-            SELECT 
+            SELECT
                 '$table2' AS source,
                 $fields2List
-            FROM 
+            FROM
                 $table2";
 
     $stmt = $connection->query($sql);
@@ -251,9 +251,9 @@ function joinTable($connection, $table1, $table2)
  * @param string $table1
  * @param string $table2
  * @param array $fields1
- * @param array $fields2 
- * @param string $whereClause 
- * @return array 
+ * @param array $fields2
+ * @param string $whereClause
+ * @return array
  */
 function joinTableWhereClause($connection, $table1, $table2, $fields1, $fields2, $whereClause = '')
 {
@@ -261,7 +261,7 @@ function joinTableWhereClause($connection, $table1, $table2, $fields1, $fields2,
         $fields1List = implode(', ', array_map(fn ($field) => "$table1.$field", $fields1));
         $fields2List = implode(', ', array_map(fn ($field) => "$table2.$field", $fields2));
 
-        $sql = "SELECT 
+        $sql = "SELECT
                     '$table1' AS source,
                     $fields1List
                 FROM
@@ -270,10 +270,10 @@ function joinTableWhereClause($connection, $table1, $table2, $fields1, $fields2,
 
                 UNION ALL
 
-                SELECT 
+                SELECT
                     '$table2' AS source,
                     $fields2List
-                FROM 
+                FROM
                     $table2
                 $whereClause";
 
@@ -326,4 +326,34 @@ function isAuthenticated()
 function sanitizeInput($data)
 {
     return htmlspecialchars(strip_tags(trim($data)));
+}
+
+/**
+ * @param object $connection
+ * @param object $controller
+ * @return void
+ */
+function storeVaccineData($connection, $controller) {
+
+    $vaccine_name   = sanitizeInput($_POST['vaccine_name']);
+    $abbreviation   = sanitizeInput($_POST['abbreviation']);
+    $manufacturer   = sanitizeInput($_POST['manufacturer']);
+    $doses          = sanitizeInput($_POST['doses']);
+    $approved_ages  = sanitizeInput($_POST['approved_ages']);
+    $description    = sanitizeInput($_POST['description']);
+
+    $vaccineData = [
+        'vaccine' => $vaccine_name,
+        'abbreviation' => $abbreviation,
+        'manufacturer' => $manufacturer,
+        'doses' => $doses,
+        'approved_ages' => $approved_ages,
+        'description' => $description,
+    ];
+
+    $controller->store($connection->conn, 'vaccines', $vaccineData);
+
+    $_POST = [];
+
+    header('location: index.php');
 }

@@ -12,11 +12,11 @@ class CreateVaccineModal
         $this->content = $content;
     }
 
-    private function renderStyles()
+    private function styles()
     {
         return <<<CSS
         <style>
-           
+
             [x-cloak] { display: none !important; }
             .modal {
                 display: none;
@@ -33,12 +33,13 @@ class CreateVaccineModal
 
             .modal-content {
                 background: white;
-                padding: 1rem;
+                padding: 1.5rem;
                 border-radius: 0.5rem;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
                 width: 100%;
                 max-width: 500px;
                 margin: auto;
+
             }
 
             .modal.show {
@@ -88,101 +89,121 @@ class CreateVaccineModal
             .bottom-margin {
                 margin-bottom: 10px;
             }
+            .endButton {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
         </style>
         CSS;
     }
 
-    private function renderScripts()
+    private function scripts()
     {
         return <<<JS
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
         JS;
     }
 
-    private function renderModal()
-    {
-        return <<<HTML
-        <div x-cloak x-data="{ showModal: false }" class="bottom-margin">
-            <button @click="showModal = true" class="btn btn-info">{$this->btnName}</button>
+    private function create()
+{
+    $fields = [
+        ['label' => 'Vaccine Name', 'id' => 'vaccine_name', 'name' => 'vaccine_name', 'type' => 'text', 'required' => true],
+        ['label' => 'Abbreviation', 'id' => 'abbreviation', 'name' => 'abbreviation', 'type' => 'text', 'required' => true],
+        ['label' => 'Manufacturer', 'id' => 'manufacturer', 'name' => 'manufacturer', 'type' => 'text', 'required' => true],
+        ['label' => 'Doses', 'id' => 'doses', 'name' => 'doses', 'type' => 'text', 'required' => false],
+        ['label' => 'Approved Ages', 'id' => 'approved_ages', 'name' => 'approved_ages', 'type' => 'text', 'required' => false],
+        ['label' => 'Description', 'id' => 'description', 'name' => 'description', 'type' => 'textarea', 'required' => false, 'rows' => 4],
+    ];
 
-                <div x-show="showModal" x-transition @click.away="showModal = false" @keydown.escape.window="showModal = false" class="modal" :class="{ 'show': showModal }">
-                    <div class="modal-content">
-                        <h2>{$this->title}</h2>
-                        <p>{$this->content}</p>
-                        <form method="post">
-                            <div class="form-group">
-                                <label for="vaccine_name">Vaccine Name</label>
-                                <input type="text" id="vaccine_name" name="vaccine_name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="abbreviation">Abbreviation</label>
-                                <input type="text" id="abbreviation" name="abbreviation" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="manufacturer">Manufacturer</label>
-                                <input type="text" id="manufacturer" name="manufacturer" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="doses">Doses</label>
-                                <input type="text" id="doses" name="doses">
-                            </div>
-                            <div class="form-group">
-                                <label for="approved_ages">Approved Ages</label>
-                                <input type="text" id="approved_ages" name="approved_ages">
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Description</label>
-                                <textarea id="description" name="description" rows="4"></textarea>
-                            </div>
-                            <div>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" @click="showModal = false" class="btn btn-outline-primary">Close</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-        </div>
-        HTML;
+    $formFields = '';
+    foreach ($fields as $field) {
+        $required = $field['required'] ? 'required' : '';
+        if ($field['type'] === 'textarea') {
+            $formFields .= <<<HTML
+            <div class="form-group">
+                <label for="{$field['id']}">{$field['label']}</label>
+                <textarea id="{$field['id']}" name="{$field['name']}" rows="{$field['rows']}" {$required}></textarea>
+            </div>
+            HTML;
+
+        } else {
+            $formFields .= <<<HTML
+            <div class="form-group">
+                <label for="{$field['id']}">{$field['label']}</label>
+                <input type="{$field['type']}" id="{$field['id']}" name="{$field['name']}" {$required}>
+            </div>
+            HTML;
+        }
     }
+
+    return <<<HTML
+
+    <div x-cloak x-data="{ showModal: false }" class="bottom-margin">
+        <button @click="showModal = true" class="btn btn-primary">{$this->btnName}</button>
+        <div x-show="showModal" x-transition @click.away="showModal = false" @keydown.escape.window="showModal = false" class="modal" :class="{ 'show': showModal }">
+            <div class="modal-content">
+                <h2>{$this->title}</h2>
+                <p>{$this->content}</p>
+                <form method="post">
+                    {$formFields}
+                    <div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" @click="showModal = false" class="btn btn-outline-primary">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    HTML;
+}
+
 
     private function showData($data)
     {
         $fields = '';
+
         foreach ($data[0] as $field => $value) {
+
             if ($field !== 'id') {
 
-                $field = ucwords(str_replace('_', ' ', $field));
+            $field = ucwords(str_replace('_', ' ', $field));
 
-                $fields .= "<tr>
-                        <th scope='row'>{$field}</th>
-                        <td>{$value}</td>
-                        </tr>";
+            $fields .= "<tr>
+                    <th scope='row'>{$field}</th>
+                    <td>{$value}</td>
+                    </tr>";
             }
         }
+
         return <<<HTML
+
             <div x-cloak x-data="{ showModal: false }">
-            
-            <div x-show="showModal" x-transition @click.away="showModal = false" @keydown.escape.window="showModal = false" class="modal" :class="{ 'show': showModal }">
-                <div class="modal-content">
-                    <h2>All Information</h2>
-                    <table>
-                    <tbody>
-                        {$fields}
-                    </tbody>
-                    </table>
-                    <button @click="showModal = false" class="btn btn-outline-primary">Close</button>
+
+                <div x-show="showModal" x-transition @click.away="showModal = false" @keydown.escape.window="showModal = false" class="modal" :class="{ 'show': showModal }">
+                    <div class="modal-content">
+                        <h2>All Information</h2>
+                        <table>
+                        <tbody>
+                            {$fields}
+                        </tbody>
+                        </table>
+                        <div class="endButton">
+                            <button @click="showModal = false" class="btn btn-outline-primary">Close</button>
+                        </div>
+                    </div>
                 </div>
-                </div>
-                <button @click="showModal = true" class="btn btn-primary">Info</button>
-        </div>
+                    <button @click="showModal = true" class="btn btn-sm btn-primary"><i class="entypo-info"></i></button>
+            </div>
+
         HTML;
     }
 
     public function createModal()
     {
-        echo $this->renderStyles();
-        echo $this->renderScripts();
-        echo $this->renderModal();
+        echo $this->styles();
+        echo $this->scripts();
+        echo $this->create();
     }
 
     public function show($data)

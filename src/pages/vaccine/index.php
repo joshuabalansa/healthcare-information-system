@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+isAuthenticated();
 
 require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
@@ -12,63 +13,25 @@ require_once '../../components/Header.php';
 require_once '../../components/VaccineModalComponent.php';
 require_once '../../class/Controllers.php';
 
-isAuthenticated();
+
 
 $user_id = $_SESSION['user_id'];
 
 $connection = new Connection();
 
-$fields = [
-    'user_id',
-    'id',
-    'first_name',
-    'last_name',
-    'phone_number',
-    'appointment_date',
-    'appointment_time',
-    'appointment_type',
-    'status'
-];
-
-$patients = joinTableWhereClause(
-    $connection->conn,
-    'vaccinations',
-    'family_planning',
-    $fields,
-    $fields,
-    "WHERE status = 'approved'"
-);
-
-$routes = $_SESSION['routes'];
-$sideBar = new Sidebar($routes);
+$sideBar = new Sidebar($_SESSION['routes']);
 $header = new Header();
 $render = new CreateVaccineModal('New Record', 'Add Vaccine', 'Add a vaccine records');
 
 $controller = new Controllers;
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $vaccine_name = sanitizeInput($_POST['vaccine_name']);
-    $abbreviation = sanitizeInput($_POST['abbreviation']);
-    $manufacturer = sanitizeInput($_POST['manufacturer']);
-    $doses          = sanitizeInput($_POST['doses']);
-    $approved_ages = sanitizeInput($_POST['approved_ages']);
-    $description = sanitizeInput($_POST['description']);
-
-    $vaccineData = [
-        'vaccine' => $vaccine_name,
-        'abbreviation' => $abbreviation,
-        'manufacturer' => $manufacturer,
-        'doses' => $doses,
-        'approved_ages' => $approved_ages,
-        'description' => $description,
-    ];
-
-    $controller->store($connection->conn, 'vaccines', $vaccineData);
-
-    echo "<script>window.location.reload</script>";
+    storeVaccineData($connection, $controller);
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -79,10 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Neon Admin Panel" />
     <meta name="author" content="" />
-    <title></title>
+    <title>Vaccine</title>
     <link rel="stylesheet" href="../../assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
     <link rel="stylesheet" href="../../assets/css/font-icons/entypo/css/entypo.css">
-
     <link rel="stylesheet" href="../../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../../assets/css/neon-core.css">
     <link rel="stylesheet" href="../../assets/css/neon-theme.css">
@@ -141,7 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </thead>
                 </tfoot>
             </table>
-
             <br />
         </div>
 
