@@ -16,6 +16,9 @@ $controller = new Controllers();
 $connection = new Connection();
 
 
+/**
+ * Cancel Appointments based on thier user_id
+ */
 if (isset($_GET['cancel'])) {
 
 	$id = $_GET['cancel'];
@@ -32,6 +35,20 @@ if (isset($_GET['cancel'])) {
 	}
 }
 
+/**
+ * Confirm all appointments
+ */
+if (isset($_GET['confirm'])) {
+
+	 Controllers::update($connection->conn, 'vaccinations', 'status', 'pending', 'status', 'approved');
+	 Controllers::update($connection->conn, 'family_planning', 'status', 'pending', 'status', 'approved');
+
+	 header('location: index.php');
+}
+
+/**
+ * Approve appointment based on thier user_id
+ */
 if (isset($_GET['approve'])) {
 
 	$id = $_GET['approve'];
@@ -91,6 +108,7 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 			<br />
 
 			<h3>Appointments</h3>
+			<button onclick="notify('confirm')" style="margin-bottom: 10px;" class="btn btn-sm btn-primary">Approve All</button>
 			<table class="table table-bordered datatable" id="table-1">
 				<thead>
 					<tr>
@@ -119,9 +137,22 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 								</span>
 							</td>
 							<td class="center">
-								<a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/appointments/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>" class="btn btn-sm btn-info"><i class="entypo-info"></i></a>
-								<?php if ($appointment['status'] !== 'approved') : ?><button onclick='confirmApprove(<?= json_encode($appointment['user_id']) ?>)' class="btn btn-sm btn-green btn-icon icon-left">Approve<i class="entypo-check"></i></button> <?php endif; ?>
-								<button onclick='confirmCancel(<?= json_encode($appointment['user_id']) ?>)' class="btn btn-sm btn-danger btn-secondary"><i class="entypo-cancel"></i></button>
+								<a
+									href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/appointments/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>"
+									class="btn btn-sm btn-info">
+									<i class="entypo-info"></i>
+								</a>
+
+								<?php if ($appointment['status'] !== 'approved') : ?>
+									<button onclick='confirmation(<?= json_encode($appointment['user_id']) ?>, <?= json_encode('approve') ?>)'
+										class="btn btn-sm btn-green btn-icon icon-left">
+										Approve<i class="entypo-check"></i>
+									</button>
+
+									<?php endif; ?>
+									<button class="btn btn-sm btn-secondary btn-secondary" onclick='confirmation(<?= json_encode($appointment['user_id']) ?>, <?= json_encode('cancel') ?>)'><i class="entypo-cancel"></i></button>
+
+
 							</td>
 						</tr>
 					<?php endforeach; ?>
@@ -143,41 +174,7 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 
 			<br />
 		</div>
-
-		<script>
-			function confirmCancel(id) {
-				Swal.fire({
-					title: "Are you sure you want to cancel the Appointment?",
-					text: "You will be able to revert this!",
-					icon: "warning",
-					showCancelButton: true,
-					confirmButtonColor: "#3085d6",
-					cancelButtonColor: "#d33",
-					confirmButtonText: "Yes, cancel it!"
-				}).then((result) => {
-					if (result.isConfirmed) {
-
-						window.location.href = "index.php?cancel=" + encodeURIComponent(id);
-					}
-				});
-			}
-
-			function confirmApprove(id) {
-				Swal.fire({
-					title: "Are you sure you want to Approve Appointment?",
-					text: "You will be able to revert this!",
-					icon: "info",
-					showCancelButton: true,
-					confirmButtonColor: "#3085d6",
-					cancelButtonColor: "#d33",
-					confirmButtonText: "Yes, Approve it!"
-				}).then((result) => {
-					if (result.isConfirmed) {
-						window.location.href = "index.php?approve=" + encodeURIComponent(id);
-					}
-				});
-			}
-		</script>
+ 		<script src="../../js/alert.js"></script>
 </body>
 
 </html>

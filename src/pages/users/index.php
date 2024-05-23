@@ -93,9 +93,9 @@ if (isset($_GET['reactivate'])) {
                                 <td><span class="badge badge-<?= $user['status'] == 'active' ? 'success' : 'secondary' ?>"><?= $user['status'] ?></span></td>
                                 <td class="center">
                                     <?php if ($user['status'] == 'active') : ?>
-                                        <a href="#" onclick="deactivate(<?= $user['id'] ?>)"><i class="entypo-cancel"></i> Deactivate</a>
+                                        <a href="#" onclick="confirmation(<?= $user['id'] ?>, 'deactivate')"><i class="entypo-cancel"></i> Deactivate</a>
                                     <?php else : ?>
-                                        <a href="#" onclick="reactivate(<?= $user['id'] ?>)"><i class="entypo-check"></i> Reactivate</a>
+                                        <a href="#" onclick="confirmation(<?= $user['id'] ?>, 'reactivate')"><i class="entypo-check"></i> Reactivate</a>
                                     <?php endif ?>
                                 </td>
                             </tr>
@@ -116,41 +116,7 @@ if (isset($_GET['reactivate'])) {
             <br />
         </div>
 
-        <script>
-            function deactivate(id) {
-                Swal.fire({
-                    title: "Are you sure you want to deactivate the Appointment?",
-                    text: "You will be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, cancel it!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-
-                        window.location.href = "index.php?deactivate=" + encodeURIComponent(id);
-                    }
-                });
-            }
-
-            function reactivate(id) {
-                Swal.fire({
-                    title: "Are you sure you want to reactivate the Appointment?",
-                    text: "You will be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, cancel it!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-
-                        window.location.href = "index.php?reactivate=" + encodeURIComponent(id);
-                    }
-                });
-            }
-        </script>
+        <script src="../../js/alert.js"></script>
 </body>
 
 </html>

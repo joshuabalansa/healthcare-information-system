@@ -117,6 +117,7 @@ class Controllers
             $stmt = $conn->prepare($sql);
 
             $stmt->execute([$value, $id]);
+
         } catch (PDOException $e) {
 
             die($e->getMessage());
