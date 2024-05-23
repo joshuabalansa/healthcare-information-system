@@ -1,8 +1,4 @@
 <?php
-
-session_start();
-isAuthenticated();
-
 require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
 require_once '../../class/Authorization.php';
@@ -13,18 +9,17 @@ require_once '../../components/Header.php';
 require_once '../../components/VaccineModalComponent.php';
 require_once '../../class/Controllers.php';
 
+session_start();
+isAuthenticated();
 
-
-$user_id = $_SESSION['user_id'];
+$user_id    = $_SESSION['user_id'];
 
 $connection = new Connection();
 
-$sideBar = new Sidebar($_SESSION['routes']);
-$header = new Header();
-$render = new CreateVaccineModal('New Record', 'Add Vaccine', 'Add a vaccine records');
-
+$sideBar    = new Sidebar($_SESSION['routes']);
+$header     = new Header();
+$render     = new CreateVaccineModal('New Record', 'Add Vaccine', 'Add a vaccine records');
 $controller = new Controllers;
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -68,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <br />
 
-            <h1>Vaccine Management</h1>
+            <h3>Vaccine Management</h3>
 
             <?php $render->createModal() ?>
 

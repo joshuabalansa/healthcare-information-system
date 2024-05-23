@@ -58,7 +58,7 @@ $famData = $controller->getDataById($connection->conn, 'family_planning', 'user_
 
             <br />
 
-            <h1>All Information</h1>
+            <h3>All Information</h3>
             <table class="table">
                 <thead>
                     <tr>

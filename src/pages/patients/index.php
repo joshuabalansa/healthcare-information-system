@@ -72,7 +72,7 @@ $patients = joinTableWhereClause(
 
             <br />
 
-            <h1>Patients Records</h1>
+            <h3>Patients Records</h3>
             <table class="table table-bordered datatable" id="table-1">
                 <thead>
                     <tr>

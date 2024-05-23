@@ -333,7 +333,8 @@ function sanitizeInput($data)
  * @param object $controller
  * @return void
  */
-function storeVaccineData($connection, $controller) {
+function storeVaccineData($connection, $controller)
+{
 
     $vaccine_name   = sanitizeInput($_POST['vaccine_name']);
     $abbreviation   = sanitizeInput($_POST['abbreviation']);

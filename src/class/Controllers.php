@@ -86,7 +86,9 @@ class Controllers
 
         try {
             $sql = "DELETE FROM $table WHERE id = ?";
+
             $stmt = $conn->prepare($sql);
+
             $stmt->execute([$id]);
 
             header("location: $redirect");

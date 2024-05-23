@@ -74,7 +74,7 @@ class CreateVaccineModal
             }
 
             .btn {
-                padding: 0.6rem 1.6rem;
+                padding: 0.4rem 1.2rem;
                 border: none;
                 border-radius: 0.25rem;
                 cursor: pointer;
@@ -106,38 +106,37 @@ class CreateVaccineModal
     }
 
     private function create()
-{
-    $fields = [
-        ['label' => 'Vaccine Name', 'id' => 'vaccine_name', 'name' => 'vaccine_name', 'type' => 'text', 'required' => true],
-        ['label' => 'Abbreviation', 'id' => 'abbreviation', 'name' => 'abbreviation', 'type' => 'text', 'required' => true],
-        ['label' => 'Manufacturer', 'id' => 'manufacturer', 'name' => 'manufacturer', 'type' => 'text', 'required' => true],
-        ['label' => 'Doses', 'id' => 'doses', 'name' => 'doses', 'type' => 'text', 'required' => false],
-        ['label' => 'Approved Ages', 'id' => 'approved_ages', 'name' => 'approved_ages', 'type' => 'text', 'required' => false],
-        ['label' => 'Description', 'id' => 'description', 'name' => 'description', 'type' => 'textarea', 'required' => false, 'rows' => 4],
-    ];
+    {
+        $fields = [
+            ['label' => 'Vaccine Name', 'id' => 'vaccine_name', 'name' => 'vaccine_name', 'type' => 'text', 'required' => true],
+            ['label' => 'Abbreviation', 'id' => 'abbreviation', 'name' => 'abbreviation', 'type' => 'text', 'required' => true],
+            ['label' => 'Manufacturer', 'id' => 'manufacturer', 'name' => 'manufacturer', 'type' => 'text', 'required' => true],
+            ['label' => 'Doses', 'id' => 'doses', 'name' => 'doses', 'type' => 'text', 'required' => false],
+            ['label' => 'Approved Ages', 'id' => 'approved_ages', 'name' => 'approved_ages', 'type' => 'text', 'required' => false],
+            ['label' => 'Description', 'id' => 'description', 'name' => 'description', 'type' => 'textarea', 'required' => false, 'rows' => 4],
+        ];
 
-    $formFields = '';
-    foreach ($fields as $field) {
-        $required = $field['required'] ? 'required' : '';
-        if ($field['type'] === 'textarea') {
-            $formFields .= <<<HTML
+        $formFields = '';
+        foreach ($fields as $field) {
+            $required = $field['required'] ? 'required' : '';
+            if ($field['type'] === 'textarea') {
+                $formFields .= <<<HTML
             <div class="form-group">
                 <label for="{$field['id']}">{$field['label']}</label>
                 <textarea id="{$field['id']}" name="{$field['name']}" rows="{$field['rows']}" {$required}></textarea>
             </div>
             HTML;
-
-        } else {
-            $formFields .= <<<HTML
+            } else {
+                $formFields .= <<<HTML
             <div class="form-group">
                 <label for="{$field['id']}">{$field['label']}</label>
                 <input type="{$field['type']}" id="{$field['id']}" name="{$field['name']}" {$required}>
             </div>
             HTML;
+            }
         }
-    }
 
-    return <<<HTML
+        return <<<HTML
 
     <div x-cloak x-data="{ showModal: false }" class="bottom-margin">
         <button @click="showModal = true" class="btn btn-primary">{$this->btnName}</button>
@@ -156,7 +155,7 @@ class CreateVaccineModal
         </div>
     </div>
     HTML;
-}
+    }
 
 
     private function showData($data)
@@ -167,9 +166,9 @@ class CreateVaccineModal
 
             if ($field !== 'id') {
 
-            $field = ucwords(str_replace('_', ' ', $field));
+                $field = ucwords(str_replace('_', ' ', $field));
 
-            $fields .= "<tr>
+                $fields .= "<tr>
                     <th scope='row'>{$field}</th>
                     <td>{$value}</td>
                     </tr>";
@@ -182,14 +181,14 @@ class CreateVaccineModal
 
                 <div x-show="showModal" x-transition @click.away="showModal = false" @keydown.escape.window="showModal = false" class="modal" :class="{ 'show': showModal }">
                     <div class="modal-content">
-                        <h2>All Information</h2>
+                        <h2>Vaccine</h2>
                         <table>
                         <tbody>
                             {$fields}
                         </tbody>
                         </table>
                         <div class="endButton">
-                            <button @click="showModal = false" class="btn btn-outline-primary">Close</button>
+                            <button @click="showModal = false" class="btn btn-primary">Close</button>
                         </div>
                     </div>
                 </div>

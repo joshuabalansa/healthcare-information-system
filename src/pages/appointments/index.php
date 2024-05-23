@@ -90,7 +90,7 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 
 			<br />
 
-			<h1>Appointments</h1>
+			<h3>Appointments</h3>
 			<table class="table table-bordered datatable" id="table-1">
 				<thead>
 					<tr>
