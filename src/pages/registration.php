@@ -46,10 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
     <div class="container">
-        <div class="row flex justify-content-center w-full">
+        <div class="row" style="display: flex; justify-content:center">
             <div class="col-md-8">
 
-                <h1><?= $appointmentType == 'vaccination' ? 'Vaccination Online Registration' : 'Family Planning Online Registration' ?></h1>
+                <h1 style="margin-bottom: 1em;"><?= $appointmentType == 'vaccination' ? 'Register for Vaccination' : 'Register for Family Planning' ?></h1>
                 <div class="card-body">
                     <form method="POST" action="registration.php?registration=<?= $appointmentType ?>">
                         <?php
@@ -83,11 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="../assets/js/gsap/TweenMax.min.js"></script>
     <script src="../assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
     <script src="../assets/js/bootstrap.js"></script>
-    <!-- <script src="assets/js/joinable.js"></script>
-	<script src="assets/js/resizeable.js"></script>
-	<script src="assets/js/neon-api.js"></script>
-	<script src="assets/js/jquery.validate.min.js"></script>
-	<script src="assets/js/neon-login.js"></script> -->
 
 
     <!-- JavaScripts initializations and stuff -->

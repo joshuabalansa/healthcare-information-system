@@ -89,7 +89,6 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 	<link rel="stylesheet" href="../../assets/css/custom.css">
 
 	<script src="../../assets/js/jquery-1.11.3.min.js"></script>
-
 </head>
 
 <body class="page-body  page-fade">

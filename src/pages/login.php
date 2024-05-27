@@ -108,12 +108,10 @@ session_start();
 
                 <div class="form-group">
 
-                    <a href="pages/registration?appointment=<?= $_SESSION['vaccination'] = 'vaccination' ?>" class="btn btn-dark">
-                        Vaccination Appointment
+                    <a href="pages/registration-option" class="btn btn-dark">
+                       Registration
                     </a>
-                    <a href="pages/registration?appointment=<?= $_SESSION['vaccination'] = 'family_planning' ?>" class="btn btn-dark">
-                        Family Planning Appointment
-                    </a>
+
                 </div>
 
             </form>
