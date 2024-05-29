@@ -358,3 +358,28 @@ function storeVaccineData($connection, $controller)
 
     header('location: index.php');
 }
+
+function getMonthlyGraphData($conn) {
+    
+    $sql = "SELECT MONTH(created_at) as month, COUNT(*) as count 
+            FROM appointments 
+            WHERE YEAR(created_at) = YEAR(CURDATE()) AND status = 'approved'
+            GROUP BY MONTH(created_at)";
+
+    $stmt = $conn->query($sql);
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $monthlyData = array_fill(0, 12, 0);
+
+    foreach ($data as $row) {
+        $month = intval($row['month']) - 1;
+        $count = intval($row['count']);
+        $monthlyData[$month] = $count;
+    }
+
+    
+    return json_encode($monthlyData);
+}
+
+
+

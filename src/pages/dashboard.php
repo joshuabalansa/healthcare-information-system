@@ -17,6 +17,7 @@ $pendingFamData = Controllers::countData($connection->conn, 'family_planning', '
 $sideBar = new SideBar($_SESSION['routes']);
 $cards = new Cards($pendingVacData + $pendingFamData);
 
+$monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,15 +54,15 @@ $cards = new Cards($pendingVacData + $pendingFamData);
 			<div id="chart"></div>
 
 			<script>
-
+					var monthlyAppointmentsData = <?php echo $monthlyAppointmentsData; ?>;
 			var options = {
 				series: [{
-					name: "Desktops",
-					data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+					name: "Patients",
+					data: monthlyAppointmentsData
 				}],
 				chart: {
 				height: 350,
-				type: 'line',
+				type: 'area',
 				zoom: {
 					enabled: false
 				}
