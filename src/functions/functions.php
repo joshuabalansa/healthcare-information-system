@@ -359,6 +359,12 @@ function storeVaccineData($connection, $controller)
     header('location: index.php');
 }
 
+/**
+ * Get area chart data function
+ *
+ * @param object $conn
+ * @return object 
+ */
 function getMonthlyGraphData($conn) {
     
     $sql = "SELECT MONTH(created_at) as month, COUNT(*) as count 

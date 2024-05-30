@@ -99,45 +99,45 @@
 <script src="../../assets/datatable/datatable.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--  -->
-
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <?php
 // Define an array of notifications
 $notifications = array(
 	array(
-		'icon' => 'entypo-user-add',
-		'class' => 'notification-success',
-		'text' => 'New user registered',
-		'time' => '30 seconds ago'
-	),
-	array(
-		'icon' => 'entypo-heart',
-		'class' => 'notification-secondary',
-		'text' => 'Someone special liked this',
-		'time' => '2 minutes ago'
-	),
-	array(
-		'icon' => 'entypo-user',
-		'class' => 'notification-primary',
-		'text' => 'Privacy settings have been changed',
-		'time' => '3 hours ago'
-	),
-	array(
-		'icon' => 'entypo-cancel-circled',
-		'class' => 'notification-danger',
-		'text' => 'John cancelled the event',
-		'time' => '9 hours ago'
+		'icon' => 'entypo-info',
+		'class' => 'notification-info',
+		'text' => 'New vaccination appointment',
+		'time' => 'yesterday at 10:30am'
 	),
 	array(
 		'icon' => 'entypo-info',
 		'class' => 'notification-info',
-		'text' => 'The server status is stable',
+		'text' => 'New Family Planning Appointment',
 		'time' => 'yesterday at 10:30am'
 	),
 	array(
-		'icon' => 'entypo-rss',
-		'class' => 'notification-warning',
-		'text' => 'New comments waiting approval',
-		'time' => 'last week'
+		'icon' => 'entypo-info',
+		'class' => 'notification-info',
+		'text' => 'New Family Planning Appointment',
+		'time' => 'yesterday at 10:30am'
+	),
+	array(
+		'icon' => 'entypo-info',
+		'class' => 'notification-info',
+		'text' => 'New Family Planning Appointment',
+		'time' => 'yesterday at 10:30am'
+	),
+	array(
+		'icon' => 'entypo-info',
+		'class' => 'notification-info',
+		'text' => 'New Vaccination Appointment',
+		'time' => 'yesterday at 10:30am'
+	),
+	array(
+		'icon' => 'entypo-info',
+		'class' => 'notification-info',
+		'text' => 'New Vaccination Appointment',
+		'time' => 'yesterday at 10:30am'
 	)
 );
 

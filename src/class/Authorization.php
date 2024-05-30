@@ -21,7 +21,7 @@ class Authorization
                 'Appointments'          => [$baseUrl . 'pages/appointments', 'bell'],
                 'Patients'              => [$baseUrl . 'pages/patients', 'users'],
                 'Vaccine Management'    => [$baseUrl . 'pages/vaccine', 'archive'],
-                'Reports'               => [$baseUrl . 'pages/reports', 'chart-area'],
+                'Reports Analytics'     => [$baseUrl . 'pages/reports', 'chart-area'],
                 'Users'                 => [$baseUrl . 'pages/users', 'user']
             ],
             2 => [

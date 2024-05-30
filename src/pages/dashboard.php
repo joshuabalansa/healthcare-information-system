@@ -14,8 +14,19 @@ $connection = new Connection;
 $pendingVacData = Controllers::countData($connection->conn, 'vaccinations', 'status = ?', ['pending']);
 $pendingFamData = Controllers::countData($connection->conn, 'family_planning', 'status = ?', ['pending']);
 
+$pendingCount = $pendingVacData + $pendingFamData;
+
+$approvedVacData = Controllers::countData($connection->conn, 'vaccinations', 'status = ?', ['approved']);
+$approvedFamData = Controllers::countData($connection->conn, 'family_planning', 'status = ?', ['approved']);
+
+$vaccineCount = Controllers::countData($connection->conn, 'vaccines', 'status = ?', ['active']);
+$usersCount = Controllers::countData($connection->conn, 'users', 'status = ?', ['active']);
+
+$approvedCount = $approvedVacData + $approvedFamData;
+
 $sideBar = new SideBar($_SESSION['routes']);
-$cards = new Cards($pendingVacData + $pendingFamData);
+
+$cards = new Cards($pendingCount, $approvedCount, $vaccineCount, $usersCount);
 
 $monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
 ?>
@@ -29,7 +40,6 @@ $monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="description" content="Neon Admin Panel" />
 	<meta name="author" content="" />
-	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 	<title>Dashboard</title>
 
 </head>
@@ -51,46 +61,47 @@ $monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
 			<br />
 			<h1>Dashboard</h1>
 
-			<div id="chart"></div>
+			<div id="areaChart"></div>
 
 			<script>
-					var monthlyAppointmentsData = <?php echo $monthlyAppointmentsData; ?>;
-			var options = {
-				series: [{
-					name: "Patients",
-					data: monthlyAppointmentsData
-				}],
-				chart: {
-				height: 350,
-				type: 'area',
-				zoom: {
-					enabled: false
-				}
-				},
-				dataLabels: {
-				enabled: false
-				},
-				stroke: {
-				curve: 'straight'
-				},
-				title: {
-				text: 'Patients by Month',
-				align: 'left'
-				},
-				grid: {
-				row: {
-					colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-					opacity: 0.5
-				},
-				},
-				xaxis: {
-				categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-				}
+				var monthlyAppointmentsData = <?php echo $monthlyAppointmentsData; ?>;
+				var categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+				var options = {
+					series: [{
+						name: "Patients",
+						data: monthlyAppointmentsData
+					}],
+					chart: {
+						height: 350,
+						type: 'area',
+						zoom: {
+							enabled: false
+						}
+					},
+					dataLabels: {
+						enabled: false
+					},
+					stroke: {
+						curve: 'straight'
+					},
+					title: {
+						text: 'Patients by Month',
+						align: 'left'
+					},
+					grid: {
+						row: {
+							colors: ['#f3f3f3', 'transparent'],
+							opacity: 0.5
+						},
+					},
+					xaxis: {
+						categories: categories,
+					}
 				};
 
-				var chart = new ApexCharts(document.querySelector("#chart"), options);
-			chart.render();
-
+				var chart = new ApexCharts(document.querySelector("#areaChart"), options);
+				chart.render();
 			</script>
 		</div>
 </body>
