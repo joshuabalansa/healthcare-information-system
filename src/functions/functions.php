@@ -365,8 +365,9 @@ function storeVaccineData($connection, $controller)
  * @param object $conn
  * @return object 
  */
-function getMonthlyGraphData($conn) {
-    
+function getMonthlyGraphData($conn)
+{
+
     $sql = "SELECT MONTH(created_at) as month, COUNT(*) as count 
             FROM appointments 
             WHERE YEAR(created_at) = YEAR(CURDATE()) AND status = 'approved'
@@ -383,9 +384,96 @@ function getMonthlyGraphData($conn) {
         $monthlyData[$month] = $count;
     }
 
-    
+
     return json_encode($monthlyData);
 }
 
+function getSplineVaccinationData($conn)
+{
+    $sql = "SELECT 
+                DATE_FORMAT(created_at, '%Y-%m') as month, 
+                COUNT(*) as count 
+            FROM 
+                appointments 
+            WHERE 
+                YEAR(created_at) = YEAR(CURDATE()) 
+                AND appointment_type = 'vaccination' 
+            GROUP BY 
+                DATE_FORMAT(created_at, '%Y-%m')
+            ORDER BY 
+                month;
+            ";
+
+    $stmt = $conn->query($sql);
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $vaccinationData = array_fill(0, 12, 0);
+
+    foreach ($data as $row) {
+        $month = intval(date('m', strtotime($row['month']))) - 1;
+        $count = intval($row['count']);
+        $vaccinationData[$month] = $count;
+    }
+
+    return json_encode($vaccinationData);
+}
+
+function getSplineFamilyPlanningData($conn)
+{
+    $sql = "SELECT 
+                DATE_FORMAT(created_at, '%Y-%m') as month, 
+                COUNT(*) as count 
+            FROM 
+                appointments 
+            WHERE 
+                YEAR(created_at) = YEAR(CURDATE()) 
+                AND appointment_type = 'family_planning' 
+            GROUP BY 
+                DATE_FORMAT(created_at, '%Y-%m')
+            ORDER BY 
+                month;
+            ";
+
+    $stmt = $conn->query($sql);
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $familyPlanningData = array_fill(0, 12, 0);
+
+    foreach ($data as $row) {
+        $month = intval(date('m', strtotime($row['month']))) - 1;
+        $count = intval($row['count']);
+        $familyPlanningData[$month] = $count;
+    }
+
+    return json_encode($familyPlanningData);
+}
 
 
+function getSplineFamilyPlanningDataCount($conn)
+{
+    $sql = "SELECT 
+                DATE_FORMAT(created_at, '%Y-%m') as month, 
+                COUNT(*) as count 
+            FROM 
+                appointments 
+            WHERE 
+                YEAR(created_at) = YEAR(CURDATE())
+            GROUP BY 
+                DATE_FORMAT(created_at, '%Y-%m')
+            ORDER BY 
+                month;
+            ";
+
+    $stmt = $conn->query($sql);
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $familyPlanningData = array_fill(0, 12, 0);
+
+    foreach ($data as $row) {
+        $month = intval(date('m', strtotime($row['month']))) - 1;
+        $count = intval($row['count']);
+        $familyPlanningData[$month] = $count;
+    }
+
+    return json_encode($familyPlanningData);
+}

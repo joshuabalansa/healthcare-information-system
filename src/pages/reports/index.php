@@ -1,13 +1,9 @@
 <?php
 require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
-require_once '../../class/Authorization.php';
-require_once '../../class/Sms.php';
 require_once '../../functions/functions.php';
 require_once '../../components/SideBar.php';
 require_once '../../components/Header.php';
-require_once '../../components/VaccineModalComponent.php';
-require_once '../../class/Controllers.php';
 
 session_start();
 isAuthenticated();
@@ -18,13 +14,13 @@ $connection = new Connection();
 
 $sideBar    = new Sidebar($_SESSION['routes']);
 $header     = new Header();
-$render     = new CreateVaccineModal('New Record', 'Add Vaccine', 'Add a vaccine records');
 $controller = new Controllers;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$vaccinationData = getSplineVaccinationData($connection->conn);
+$familyPlanningData = getSplineFamilyPlanningData($connection->conn);
+$totalData = getSplineFamilyPlanningDataCount($connection->conn);
 
-    storeVaccineData($connection, $controller);
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -63,78 +59,168 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <br />
 
-            <h3>Reports</h3>
-
-            <?php $render->createModal() ?>
-            <div id="chart"></div>
-            <table class="table table-bordered datatable mt-5" id="table-1">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>Appointment Type</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($controller->get($connection->conn, 'vaccines') as $index => $vac) :  ?>
-                        <tr class="odd gradeX">
-                            <td><?= $index + 1 ?></td>
-                            <td><?= htmlspecialchars($vac['vaccine']) ?></td>
-                            <td><?= htmlspecialchars($vac['vaccine']) ?></td>
-                            <td><?= htmlspecialchars($vac['abbreviation']) ?></td>
-                            <td class="center">
-                                <?= $render->show($controller->getDataById($connection->conn, 'vaccines', 'id', $vac['id'])) ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>Appointment Type</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                </tfoot>
-            </table>
+            <h3>Reports</h3> <br>
+            <button class="btn btn-primary">Vaccination</button>
+            <button class="btn btn-primary">Family Planning</button>
+            <button class="btn btn-primary">Export</button>
+            <div id="lineChart"></div>
+            <div id="statisticData"></div>
             <br />
         </div>
         <script>
             var options = {
                 series: [{
-                    name: 'Vaccination',
-                    data: [31, 40, 28, 51, 42, 109, 100]
-                }, {
-                    name: 'Family Planning',
-                    data: [11, 32, 45, 32, 34, 52, 41]
-                }],
+                        name: "Vaccination",
+                        data: <?= $vaccinationData ?>
+                    },
+                    {
+                        name: "Family Planning",
+                        data: <?= $familyPlanningData ?>
+                    }
+                ],
                 chart: {
                     height: 350,
-                    type: 'area'
+                    type: 'line',
+                    dropShadow: {
+                        enabled: true,
+                        color: '#000',
+                        top: 18,
+                        left: 7,
+                        blur: 10,
+                        opacity: 0.2
+                    },
+                    zoom: {
+                        enabled: false
+                    },
+                    toolbar: {
+                        show: false
+                    }
+                },
+                colors: ['#77B6EA', '#545454'],
+                dataLabels: {
+                    enabled: true,
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                title: {
+                    text: 'Patients',
+                    align: 'left'
+                },
+                grid: {
+                    borderColor: '#e7e7e7',
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'],
+                        opacity: 0.5
+                    },
+                },
+                markers: {
+                    size: 1
+                },
+                xaxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+                    title: {
+                        text: 'Month'
+                    }
+                },
+                // yaxis: {
+                //     title: {
+                //         text: 'Temperature'
+                //     },
+                //     min: 5,
+                //     max: 40
+                // },
+                legend: {
+                    position: 'top',
+                    horizontalAlign: 'right',
+                    floating: true,
+                    offsetY: -25,
+                    offsetX: -5
+                }
+            };
+
+            var lineChart = new ApexCharts(document.querySelector("#lineChart"), options);
+            lineChart.render();
+
+            // Statistic chart
+            var options = {
+                series: [{
+                        name: "Vaccination",
+                        data: <?= $vaccinationData ?>
+                    },
+                    {
+                        name: "Family Planning",
+                        data: <?= $familyPlanningData ?>
+                    },
+                    {
+                        name: 'Total',
+                        data: <?= $totalData ?>
+                    }
+                ],
+                chart: {
+                    height: 350,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    },
                 },
                 dataLabels: {
                     enabled: false
                 },
                 stroke: {
-                    curve: 'smooth'
+                    width: [5, 7, 5],
+                    curve: 'straight',
+                    dashArray: [0, 8, 5]
+                },
+                title: {
+                    text: 'Statistics',
+                    align: 'left'
+                },
+                legend: {
+                    tooltipHoverFormatter: function(val, opts) {
+                        return val + ' - <strong>' + opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] + '</strong>'
+                    }
+                },
+                markers: {
+                    size: 0,
+                    hover: {
+                        sizeOffset: 6
+                    }
                 },
                 xaxis: {
-                    type: 'datetime',
-                    categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
                 },
                 tooltip: {
-                    x: {
-                        format: 'dd/MM/yy HH:mm'
-                    },
+                    y: [{
+                            title: {
+                                formatter: function(val) {
+                                    return val
+                                }
+                            }
+                        },
+                        {
+                            title: {
+                                formatter: function(val) {
+                                    return val
+                                }
+                            }
+                        },
+                        {
+                            title: {
+                                formatter: function(val) {
+                                    return val;
+                                }
+                            }
+                        }
+                    ]
                 },
+                grid: {
+                    borderColor: '#f1f1f1',
+                }
             };
 
-            var chart = new ApexCharts(document.querySelector("#chart"), options);
-            chart.render();
+            var statisticData = new ApexCharts(document.querySelector("#statisticData"), options);
+            statisticData.render();
         </script>
 </body>
 
