@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../../assets/css/neon-forms.css">
     <link rel="stylesheet" href="../../assets/css/custom.css">
     <script src="../../assets/js/jquery-1.11.3.min.js"></script>
-    
+
 </head>
 
 <body class="page-body  page-fade">
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <th>#</th>
                         <th>Name</th>
                         <th>Abbreviation</th>
-                        <th>Action</th>
+                        <th>Info</th>
                     </tr>
                 </thead>
                 <tbody>

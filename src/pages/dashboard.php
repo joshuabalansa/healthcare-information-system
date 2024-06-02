@@ -55,55 +55,88 @@ $monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
 			<?php include '../includes/header.php' ?>
 
 			<hr />
-
-			<?php $cards->render() ?>
-
+			<?php if ($_SESSION['role'] == 1) : ?>
+				<?php $cards->render() ?>
+			<?php endif; ?>
 			<br />
 			<h1>Dashboard</h1>
 
-			<div id="areaChart"></div>
+			<?php if ($_SESSION['role'] == 1) : ?>
+				<div id="areaChart"></div>
+
+				<script>
+					var monthlyAppointmentsData = <?php echo $monthlyAppointmentsData; ?>;
+					var categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+					var options = {
+						series: [{
+							name: "Patients",
+							data: monthlyAppointmentsData
+						}],
+						chart: {
+							height: 350,
+							type: 'area',
+							zoom: {
+								enabled: false
+							}
+						},
+						dataLabels: {
+							enabled: false
+						},
+						stroke: {
+							curve: 'straight'
+						},
+						title: {
+							text: 'Patients by Month',
+							align: 'left'
+						},
+						grid: {
+							row: {
+								colors: ['#f3f3f3', 'transparent'],
+								opacity: 0.5
+							},
+						},
+						xaxis: {
+							categories: categories,
+						}
+					};
+
+					var chart = new ApexCharts(document.querySelector("#areaChart"), options);
+					chart.render();
+				</script>
+			<?php endif; ?>
+
+
+
+			<!-- <script>
+				document.addEventListener('DOMContentLoaded', function() {
+					var calendarEl = document.getElementById('calendar');
+					var calendar = new FullCalendar.Calendar(calendarEl, {
+						initialView: 'resourceTimelineWeek'
+					});
+					calendar.render();
+				});
+			</script> -->
+
+			<div id='calendar'></div>
+
 
 			<script>
-				var monthlyAppointmentsData = <?php echo $monthlyAppointmentsData; ?>;
-				var categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+				document.addEventListener('DOMContentLoaded', function() {
+					var calendarEl = document.getElementById('calendar');
 
-				var options = {
-					series: [{
-						name: "Patients",
-						data: monthlyAppointmentsData
-					}],
-					chart: {
-						height: 350,
-						type: 'area',
-						zoom: {
-							enabled: false
-						}
-					},
-					dataLabels: {
-						enabled: false
-					},
-					stroke: {
-						curve: 'straight'
-					},
-					title: {
-						text: 'Patients by Month',
-						align: 'left'
-					},
-					grid: {
-						row: {
-							colors: ['#f3f3f3', 'transparent'],
-							opacity: 0.5
-						},
-					},
-					xaxis: {
-						categories: categories,
-					}
-				};
+					var calendar = new FullCalendar.Calendar(calendarEl, {
+						timeZone: 'UTC',
+						initialView: 'dayGridMonth',
+						events: 'https://fullcalendar.io/api/demo-feeds/events.json',
+						editable: true,
+						selectable: true
+					});
 
-				var chart = new ApexCharts(document.querySelector("#areaChart"), options);
-				chart.render();
+					calendar.render();
+				});
 			</script>
-		</div>
+
 </body>
 
 </html>

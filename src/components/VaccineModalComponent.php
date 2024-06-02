@@ -192,9 +192,8 @@ class CreateVaccineModal
                         </div>
                     </div>
                 </div>
-                    <button @click="showModal = true" class="btn btn-sm btn-primary"><i class="entypo-info"></i></button>
+                    <a href="#" @click="showModal = true"><i class="entypo-info"></i></a>
             </div>
-
         HTML;
     }
 

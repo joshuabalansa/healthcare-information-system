@@ -88,7 +88,7 @@
 
 <!-- Demo Settings -->
 <script src="../../assets/js/neon-demo.js"></script>
-
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.13/index.global.min.js'></script>
 <!-- Imported styles on this page -->
 <link rel="stylesheet" href="../../assets/js/datatables/datatables.css">
 <link rel="stylesheet" href="../../assets/js/select2/select2-bootstrap.css">
