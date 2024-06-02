@@ -1,5 +1,5 @@
 <?php
-class CreateVaccineModal
+class CreateMethodModal
 {
     private $btnName;
     private $title;
@@ -18,9 +18,7 @@ class CreateVaccineModal
         <style>
 
             [x-cloak] { display: none !important; }
-
             .modal {
-
                 display: none;
                 position: fixed;
                 top: 0;
@@ -103,31 +101,22 @@ class CreateVaccineModal
     private function scripts()
     {
         return <<<JS
-            <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
         JS;
     }
 
     private function create($fields)
     {
-
         $formFields = '';
         foreach ($fields as $field) {
             $required = $field['required'] ? 'required' : '';
-            if ($field['type'] === 'textarea') {
-                $formFields .= <<<HTML
-            <div class="form-group">
-                <label for="{$field['id']}">{$field['label']}</label>
-                <textarea id="{$field['id']}" name="{$field['name']}" rows="{$field['rows']}" {$required}></textarea>
-            </div>
-            HTML;
-            } else {
-                $formFields .= <<<HTML
+
+            $formFields .= <<<HTML
             <div class="form-group">
                 <label for="{$field['id']}">{$field['label']}</label>
                 <input type="{$field['type']}" id="{$field['id']}" name="{$field['name']}" {$required}>
             </div>
             HTML;
-            }
         }
 
         return <<<HTML
@@ -151,14 +140,13 @@ class CreateVaccineModal
     HTML;
     }
 
-
     private function showData($data)
     {
         $fields = '';
 
         foreach ($data[0] as $field => $value) {
 
-            if ($field !== 'id') {
+            if ($field !== 'id' && $field !== 'user_id' && $field !== 'status') {
 
                 $field = ucwords(str_replace('_', ' ', $field));
 
@@ -175,14 +163,14 @@ class CreateVaccineModal
 
                 <div x-show="showModal" x-transition @click.away="showModal = false" @keydown.escape.window="showModal = false" class="modal" :class="{ 'show': showModal }">
                     <div class="modal-content">
-                        <h2>Vaccine</h2>
+                        <h2>Method Details</h2>
                         <table>
                         <tbody>
                             {$fields}
                         </tbody>
                         </table>
                         <div class="endButton">
-                        <button @click="showModal = false" class="btn btn-danger">Remove</button>
+                            <button @click="showModal = false" class="btn btn-danger">Remove</button>
                             <button @click="showModal = false" class="btn btn-outline-primary">Close</button>
                         </div>
                     </div>

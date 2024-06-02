@@ -6,7 +6,7 @@ require_once '../../class/Sms.php';
 require_once '../../functions/functions.php';
 require_once '../../components/SideBar.php';
 require_once '../../components/Header.php';
-require_once '../../components/VaccineModalComponent.php';
+require_once '../../components/methodsModalComponent.php';
 require_once '../../class/Controllers.php';
 
 session_start();
@@ -18,12 +18,12 @@ $connection = new Connection();
 
 $sideBar    = new Sidebar($_SESSION['routes']);
 $header     = new Header();
-$render     = new CreateVaccineModal('New Record', 'Add Vaccine', 'Add a vaccine records');
+$render     = new CreateMethodModal('New Method', 'Add Method', 'Add a family planning method');
 $controller = new Controllers;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    storeVaccineData($connection, $controller);
+    storeMethod($connection, $controller);
 }
 ?>
 
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Neon Admin Panel" />
     <meta name="author" content="" />
-    <title>Vaccine</title>
+    <title>Methods Management</title>
     <link rel="stylesheet" href="../../assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
     <link rel="stylesheet" href="../../assets/css/font-icons/entypo/css/entypo.css">
     <link rel="stylesheet" href="../../assets/css/bootstrap.css">
@@ -63,34 +63,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <br />
 
-            <h3>Vaccine Management</h3>
+            <h3>Family Planning Methods</h3>
 
             <?php $render->createModal([
-                ['label' => 'Vaccine Name', 'id' => 'vaccine_name', 'name' => 'vaccine_name', 'type' => 'text', 'required' => true],
-                ['label' => 'Abbreviation', 'id' => 'abbreviation', 'name' => 'abbreviation', 'type' => 'text', 'required' => true],
-                ['label' => 'Manufacturer', 'id' => 'manufacturer', 'name' => 'manufacturer', 'type' => 'text', 'required' => true],
-                ['label' => 'Doses', 'id' => 'doses', 'name' => 'doses', 'type' => 'text', 'required' => false],
-                ['label' => 'Approved Ages', 'id' => 'approved_ages', 'name' => 'approved_ages', 'type' => 'text', 'required' => false],
-                ['label' => 'Description', 'id' => 'description', 'name' => 'description', 'type' => 'textarea', 'required' => false, 'rows' => 4],
+                ['label' => 'Method Name', 'id' => 'method_name', 'name' => 'method_name', 'type' => 'text', 'required' => true],
             ]) ?>
 
             <table class="table table-bordered datatable mt-5" id="table-1">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
-                        <th>Abbreviation</th>
+                        <th>Method</th>
                         <th>Info</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($controller->get($connection->conn, 'vaccines') as $index => $vac) :  ?>
+                    <?php foreach ($controller->get($connection->conn, 'family_planning_methods') as $index => $method) :  ?>
                         <tr class="odd gradeX">
                             <td><?= $index + 1 ?></td>
-                            <td><?= htmlspecialchars($vac['vaccine']) ?></td>
-                            <td><?= htmlspecialchars($vac['abbreviation']) ?></td>
+                            <td><?= $method['method_name'] ?></td>
                             <td class="center">
-                                <?= $render->show($controller->getDataById($connection->conn, 'vaccines', 'id', $vac['id'])) ?>
+                                <?= $render->show($controller->getDataById($connection->conn, 'family_planning_methods', 'id', $method['id'])) ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -98,9 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <tfoot>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
-                        <th>Abbreviation</th>
-                        <th>Action</th>
+                        <th>Method</th>
+                        <th>Info</th>
                     </tr>
                     </thead>
                 </tfoot>

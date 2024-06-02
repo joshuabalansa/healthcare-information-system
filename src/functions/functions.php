@@ -477,3 +477,25 @@ function getSplineFamilyPlanningDataCount($conn)
 
     return json_encode($familyPlanningData);
 }
+
+
+/**
+ * @param object $connection
+ * @param object $controller
+ * @return void
+ */
+function storeMethod($connection, $controller)
+{
+
+    $method_name   = sanitizeInput($_POST['method_name']);
+
+    $vaccineData = [
+        'method_name' => $method_name,
+    ];
+
+    $controller->store($connection->conn, 'family_planning_methods', $vaccineData);
+
+    $_POST = [];
+
+    header('location: index.php');
+}
