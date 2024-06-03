@@ -25,6 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     storeMethod($connection, $controller);
 }
+
+if (isset($_GET['remove'])) {
+    $id = $_GET['remove'];
+
+    Controllers::delete($connection->conn, 'family_planning_methods', $id, 'index.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -99,6 +105,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </table>
             <br />
         </div>
+
+        <script>
+            function removeBtn(id) {
+                window.location.href = 'index.php?remove=' + id
+            }
+        </script>
 
 </body>
 

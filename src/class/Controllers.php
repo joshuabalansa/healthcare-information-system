@@ -117,7 +117,6 @@ class Controllers
             $stmt = $conn->prepare($sql);
 
             $stmt->execute([$value, $id]);
-
         } catch (PDOException $e) {
 
             die($e->getMessage());
@@ -137,13 +136,18 @@ class Controllers
     {
         try {
             $sql = "SELECT COUNT(*) FROM $table";
+
             if (!empty($whereClause)) {
+
                 $sql .= " WHERE $whereClause";
             }
             $stmt = $conn->prepare($sql);
+
             $stmt->execute($params);
+
             return $stmt->fetchColumn();
         } catch (PDOException $e) {
+
             die($e->getMessage());
         }
     }

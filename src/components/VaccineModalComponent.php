@@ -182,7 +182,7 @@ class CreateVaccineModal
                         </tbody>
                         </table>
                         <div class="endButton">
-                        <button @click="showModal = false" class="btn btn-danger">Remove</button>
+                        <button onclick="removeBtn({$data[0]['id']})" @click="showModal = false" class="btn btn-danger">Remove</button>
                             <button @click="showModal = false" class="btn btn-outline-primary">Close</button>
                         </div>
                     </div>

@@ -6,6 +6,6 @@ $_SESSION = [];
 
 session_destroy();
 
-header('location: http://healthcare.test/src/index');
+header("location: ../");
 
 exit;
