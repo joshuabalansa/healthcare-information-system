@@ -48,7 +48,7 @@ class Sidebar
                         </a>
                         <ul>
                             <li>
-                                <a href="<?= $_SESSION['base_url'] ?>pages/profile/index.php">
+                                <a href="<?= $_SESSION['profile'] ?>">
                                     <span class="title">Edit Information</span>
                                 </a>
                             </li>

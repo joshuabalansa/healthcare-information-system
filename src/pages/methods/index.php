@@ -6,7 +6,7 @@ require_once '../../class/Sms.php';
 require_once '../../functions/functions.php';
 require_once '../../components/SideBar.php';
 require_once '../../components/Header.php';
-require_once '../../components/methodsModalComponent.php';
+require_once '../../components/modalComponent.php';
 require_once '../../class/Controllers.php';
 
 session_start();
@@ -18,9 +18,9 @@ $connection = new Connection();
 
 $sideBar    = new Sidebar($_SESSION['routes']);
 $header     = new Header();
-$render     = new CreateMethodModal('New Method', 'Add Method', 'Add a family planning method');
 $controller = new Controllers;
 
+$render = new ModalComponent('New Method', 'Add Method', 'Add a family planning method');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     storeMethod($connection, $controller);

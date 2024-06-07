@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['role']     = $user['role'];
 
         $_SESSION['base_url'] = 'http://healthcare.test/src/';
+        $_SESSION['profile'] =  $_SESSION['base_url'] . 'pages/profile/index.php';
 
         $_SESSION['routes'] = Authorization::routes($user['role']);
 

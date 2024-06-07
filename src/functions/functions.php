@@ -448,7 +448,11 @@ function getSplineFamilyPlanningData($conn)
     return json_encode($familyPlanningData);
 }
 
-
+/**
+ * Get Spline Chart Data function
+ *
+ * @param object $conn
+ */
 function getSplineFamilyPlanningDataCount($conn)
 {
     $sql = "SELECT 

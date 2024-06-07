@@ -26,9 +26,7 @@ if (isset($_GET['update'])) {
         Controllers::update($connection->conn, 'users', 'id', $user_id, 'password', sha1($_POST['username']));
     }
 
-    $_SESSION['notify'] = "SAVED";
-
-    header('location: index.php');
+    $notify = "SAVED!";
 }
 ?>
 
@@ -72,7 +70,7 @@ if (isset($_GET['update'])) {
             <form action="index.php?update=<?= $user[0]['id'] ?>" method="post" style="width: 40rem;">
                 <input type="text" value="<?= $user[0]['username'] ?>" placeholder="Username" class="form-control mb-5" name="username" required> <br>
                 <input type="password" value="" placeholder="Password" class="form-control" name="password"> <br>
-                <button type="submit" class="btn btn-primary">Update Information</button> &nbsp;<?= $_SESSION['notify'] . ' - ' .  date('Y-m-d H:i:s') ?? '' ?>
+                <button type="submit" class="btn btn-primary">Update Information</button> &nbsp;<?= $notify ?? '' ?>
             </form>
 
             <br />

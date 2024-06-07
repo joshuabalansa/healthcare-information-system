@@ -4,6 +4,8 @@ session_start();
 
 require_once '../../config/Connection.php';
 require_once '../../functions/functions.php';
+require_once '../../components/SideBar.php';
+require_once '../../components/Header.php';
 
 isAuthenticated();
 
@@ -31,6 +33,10 @@ $patients = joinTableWhereClause(
     $fields,
     "WHERE status = 'approved'"
 );
+
+
+$sideBar  = new Sidebar($_SESSION['routes']);
+$header   = new Header();
 
 ?>
 <!DOCTYPE html>
@@ -61,7 +67,7 @@ $patients = joinTableWhereClause(
 
     <div class="page-container">
 
-        <?php include '../../includes/sidebar-menu.php'; ?>
+        <?php $sideBar->render(); ?>
 
 
         <div class="main-content">
