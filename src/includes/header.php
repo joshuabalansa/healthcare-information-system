@@ -150,7 +150,7 @@ $numNotifications = count($notifications);
 		<ul class="user-info pull-left pull-right-xs pull-none-xsm">
 			<li class="notifications dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<i class="entypo-attention"></i>
+					<i class="entypo-bell"></i>
 					<span class="badge badge-info"><?php echo $numNotifications; ?></span>
 				</a>
 				<ul class="dropdown-menu">

@@ -1,13 +1,13 @@
 <?php
-
-session_start();
-
 require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
 require_once '../../class/Authorization.php';
 require_once '../../class/Sms.php';
 require_once '../../functions/functions.php';
+require_once '../../components/SideBar.php';
+require_once '../../components/Header.php';
 
+session_start();
 isAuthenticated();
 
 $user_id = $_SESSION['user_id'];
@@ -15,6 +15,8 @@ $user_id = $_SESSION['user_id'];
 $controller = new Controllers();
 $connection = new Connection();
 
+$sideBar    = new Sidebar($_SESSION['routes']);
+$header     = new Header();
 
 /**
  * Cancel Appointments based on thier user_id
@@ -40,10 +42,10 @@ if (isset($_GET['cancel'])) {
  */
 if (isset($_GET['confirm'])) {
 
-	 Controllers::update($connection->conn, 'vaccinations', 'status', 'pending', 'status', 'approved');
-	 Controllers::update($connection->conn, 'family_planning', 'status', 'pending', 'status', 'approved');
+	Controllers::update($connection->conn, 'vaccinations', 'status', 'pending', 'status', 'approved');
+	Controllers::update($connection->conn, 'family_planning', 'status', 'pending', 'status', 'approved');
 
-	 header('location: index.php');
+	header('location: index.php');
 }
 
 /**
@@ -95,7 +97,7 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 
 	<div class="page-container">
 
-		<?php include '../../includes/sidebar-menu.php'; ?>
+		<?php $sideBar->render(); ?>
 
 
 		<div class="main-content">
@@ -136,20 +138,17 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 								</span>
 							</td>
 							<td class="center">
-								<a
-									href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/appointments/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>"
-									class="btn btn-sm btn-info">
+								<a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/appointments/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>" class="btn btn-sm btn-info">
 									<i class="entypo-info"></i>
 								</a>
 
 								<?php if ($appointment['status'] !== 'approved') : ?>
-									<button onclick='confirmation(<?= json_encode($appointment['user_id']) ?>, <?= json_encode('approve') ?>)'
-										class="btn btn-sm btn-green btn-icon icon-left">
+									<button onclick='confirmation(<?= json_encode($appointment['user_id']) ?>, <?= json_encode('approve') ?>)' class="btn btn-sm btn-green btn-icon icon-left">
 										Approve<i class="entypo-check"></i>
 									</button>
 
-									<?php endif; ?>
-									<button class="btn btn-sm btn-secondary btn-secondary" onclick='confirmation(<?= json_encode($appointment['user_id']) ?>, <?= json_encode('cancel') ?>)'><i class="entypo-cancel"></i></button>
+								<?php endif; ?>
+								<button class="btn btn-sm btn-secondary btn-secondary" onclick='confirmation(<?= json_encode($appointment['user_id']) ?>, <?= json_encode('cancel') ?>)'><i class="entypo-cancel"></i></button>
 
 
 							</td>
@@ -173,7 +172,7 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 
 			<br />
 		</div>
- 		<script src="../../js/alert.js"></script>
+		<script src="../../js/alert.js"></script>
 </body>
 
 </html>

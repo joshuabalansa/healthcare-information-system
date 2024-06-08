@@ -319,7 +319,12 @@ function isAuthenticated()
 
     if (!isset($_SESSION['user_id'], $_SESSION['username'])) {
 
-        die("<center>401 Authorization Required</center>");
+        $html = "<div style='position: absolute; top: 50% ; left: 50%; transform: translate(-50%, -50%); text-align: center;'>
+                    <h1>Forbidden</h1
+                    <p>You don't have permission to access this page.</p>
+                </div>";
+
+        die($html);
     }
 }
 

@@ -99,7 +99,7 @@ class ModalComponent
                         </div>
                     </div>
                 </div>
-                    <a href="#" @click="showModal = true"><i class="entypo-info"></i></a>
+                    <a class='btn btn-info' href="#" @click="showModal = true"><i class="entypo-info"></i></a>
             </div>
         HTML;
     }

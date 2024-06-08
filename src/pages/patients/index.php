@@ -1,12 +1,10 @@
 <?php
-
-session_start();
-
 require_once '../../config/Connection.php';
 require_once '../../functions/functions.php';
 require_once '../../components/SideBar.php';
 require_once '../../components/Header.php';
 
+session_start();
 isAuthenticated();
 
 $user_id = $_SESSION['user_id'];

@@ -14,8 +14,7 @@ class Cards
 
     public function render()
     {
-        echo "
-        
+        echo <<<HTML
             <div class='row'>
         <div class='col-sm-3 col-xs-6'>
 
@@ -55,19 +54,19 @@ class Cards
 
         </div>
 
-        <div class='col-sm-3 col-xs-6'>
+            <div class='col-sm-3 col-xs-6'>
 
-            <div class='tile-stats tile-blue'>
-                <div class='icon'><i class='entypo-rss'></i></div>
-                <div class='num' data-start='0' data-end='$this->usersCount' data-postfix='' data-duration='1500' data-delay='1800'>0</div>
+                <div class='tile-stats tile-blue'>
+                    <div class='icon'><i class='entypo-rss'></i></div>
+                    <div class='num' data-start='0' data-end='$this->usersCount' data-postfix='' data-duration='1500' data-delay='1800'>0</div>
 
-                <h3>Users</h3>
-                <p>Total number of users</p>
+                    <h3>Users</h3>
+                    <p>Total number of users</p>
+                </div>
+
             </div>
-
         </div>
-    </div>
-            
-        ";
+        
+        HTML;
     }
 }
