@@ -23,7 +23,7 @@ if (isset($_GET['update'])) {
     }
 
     if (!empty($_POST['password'])) {
-        Controllers::update($connection->conn, 'users', 'id', $user_id, 'password', sha1($_POST['username']));
+        Controllers::update($connection->conn, 'users', 'id', $user_id, 'password', sha1($_POST['password']));
     }
 
     $notify = "SAVED!";
@@ -67,9 +67,10 @@ if (isset($_GET['update'])) {
             <br />
 
             <h3>Profile</h3> <br>
+
             <form action="index.php?update=<?= $user[0]['id'] ?>" method="post" style="width: 40rem;">
                 <input type="text" value="<?= $user[0]['username'] ?>" placeholder="Username" class="form-control mb-5" name="username" required> <br>
-                <input type="password" value="" placeholder="Password" class="form-control" name="password"> <br>
+                <input type="password" value="" placeholder="Update Password" class="form-control" name="password"> <br>
                 <button type="submit" class="btn btn-primary">Update Information</button> &nbsp;<?= $notify ?? '' ?>
             </form>
 

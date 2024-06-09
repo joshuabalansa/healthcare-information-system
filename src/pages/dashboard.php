@@ -1,13 +1,11 @@
 <?php
-
-session_start();
-
 require_once '../components/Cards.php';
 require_once '../components/SideBar.php';
 require_once '../class/Controllers.php';
 require_once '../config/Connection.php';
 require_once '../functions/functions.php';
 
+session_start();
 isAuthenticated();
 
 $connection = new Connection;
@@ -19,10 +17,10 @@ $pendingCount = $pendingVacData + $pendingFamData;
 $approvedVacData = Controllers::countData($connection->conn, 'vaccinations', 'status = ?', ['approved']);
 $approvedFamData = Controllers::countData($connection->conn, 'family_planning', 'status = ?', ['approved']);
 
-$vaccineCount = Controllers::countData($connection->conn, 'vaccines', 'status = ?', ['active']);
-$usersCount = Controllers::countData($connection->conn, 'users', 'status = ?', ['active']);
+$vaccineCount    = Controllers::countData($connection->conn, 'vaccines', 'status = ?', ['active']);
+$usersCount      = Controllers::countData($connection->conn, 'users', 'status = ?', ['active']);
 
-$approvedCount = $approvedVacData + $approvedFamData;
+$approvedCount   = $approvedVacData + $approvedFamData;
 
 $sideBar = new SideBar($_SESSION['routes']);
 
@@ -107,21 +105,8 @@ $monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
 			<?php endif; ?>
 
 
-
-			<!-- <script>
-				document.addEventListener('DOMContentLoaded', function() {
-					var calendarEl = document.getElementById('calendar');
-					var calendar = new FullCalendar.Calendar(calendarEl, {
-						initialView: 'resourceTimelineWeek'
-					});
-					calendar.render();
-				});
-			</script> -->
-
-
 			<?php if ($_SESSION['role'] !== 1) : ?>
 				<div id='calendar'></div>
-
 
 				<script>
 					document.addEventListener('DOMContentLoaded', function() {

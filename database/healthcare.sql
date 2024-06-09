@@ -123,7 +123,7 @@ INSERT INTO `family_planning_methods` (`id`, `user_id`, `method_name`, `status`,
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `appointment_id` varchar(255) DEFAULT NULL,
+  `user_id` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,

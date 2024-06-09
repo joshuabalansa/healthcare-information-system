@@ -72,7 +72,7 @@ if (isset($_GET['reactivate'])) {
             <br />
 
             <h3>User Management</h3>
-
+            <button class="btn btn-sm btn-primary" style="margin-bottom: 10px;">New User</button>
             <table class="table table-bordered datatable mt-5" id="table-1">
                 <thead>
                     <tr>

@@ -52,7 +52,7 @@ function getFormData($fields)
 function setUserData($appointmentData, $username, $password)
 {
     $data = [
-        'appointment_id' => $appointmentData[0]['user_id'],
+        'user_id' => $appointmentData[0]['user_id'],
         'name' => $appointmentData[0]['first_name'],
         'username' => $username,
         'role' => 2,

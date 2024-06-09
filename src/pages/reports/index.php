@@ -62,9 +62,8 @@ $totalData = getSplineFamilyPlanningDataCount($connection->conn);
             <h3>Reports</h3> <br>
             <button class="btn btn-primary">Vaccination</button>
             <button class="btn btn-primary">Family Planning</button>
-            <button class="btn btn-primary">Export</button>
-            <!-- <div id="lineChart"></div> -->
-            <div id="statisticData"></div>
+            <!-- <button class="btn btn-primary">Export</button> -->
+            <div style="margin-top: 30px;" id="statisticData"></div>
             <br />
         </div>
         <script>

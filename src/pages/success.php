@@ -53,6 +53,7 @@
 
 <body>
     <div class="container">
+        <img src="../assets/images/5063406.jpg" alt="healthcare image" width="300" height="200">
         <h2>Congratulations! Your Appointment Registration was Successful!</h2>
         <p>Thank you for choosing our online platform to schedule your appointment.</p>
     </div>

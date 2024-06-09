@@ -69,18 +69,7 @@ if (isset($_GET['remove'])) {
 
             <br />
 
-            <h3>Vaccine Management</h3>
-
-            <?php
-            $render->createModal([
-                ['label' => 'Vaccine Name', 'id' => 'vaccine_name', 'name' => 'vaccine_name', 'type' => 'text', 'required' => true],
-                ['label' => 'Abbreviation', 'id' => 'abbreviation', 'name' => 'abbreviation', 'type' => 'text', 'required' => true],
-                ['label' => 'Manufacturer', 'id' => 'manufacturer', 'name' => 'manufacturer', 'type' => 'text', 'required' => true],
-                ['label' => 'Doses', 'id' => 'doses', 'name' => 'doses', 'type' => 'text', 'required' => false],
-                ['label' => 'Approved Ages', 'id' => 'approved_ages', 'name' => 'approved_ages', 'type' => 'text', 'required' => false],
-                ['label' => 'Description', 'id' => 'description', 'name' => 'description', 'type' => 'textarea', 'required' => false, 'rows' => 4],
-            ])
-            ?>
+            <h3>My Vaccination Record</h3>
 
             <table class="table table-bordered datatable mt-5" id="table-1">
                 <thead>

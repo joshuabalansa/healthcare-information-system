@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row" style="display: flex; justify-content:center">
             <div class="col-md-8">
 
-                <h1 style="margin-bottom: 1em;"><?= $appointmentType == 'vaccination' ? 'Register for Vaccination' : 'Register for Family Planning' ?></h1>
+                <h3 style="margin-bottom: 1em;"><?= $appointmentType == 'vaccination' ? 'Register for Vaccination' : 'Register for Family Planning' ?></h3>
                 <div class="card-body">
                     <form method="POST" action="registration.php?registration=<?= $appointmentType ?>">
                         <?php
