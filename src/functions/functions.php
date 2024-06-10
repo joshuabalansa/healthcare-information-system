@@ -508,3 +508,25 @@ function storeMethod($connection, $controller)
 
     header('location: index.php');
 }
+
+function storeUsers($connection, $controller)
+{
+
+    $name   = sanitizeInput($_POST['name']);
+    $username   = sanitizeInput($_POST['username']);
+    $password         = sanitizeInput(sha1($_POST['password']));
+
+    $userData = [
+        'user_id' => null,
+        'name' => $name,
+        'username' => $username,
+        'password' => $password,
+        'role' => 4
+    ];
+
+    $controller->store($connection->conn, 'users', $userData);
+
+    $_POST = [];
+
+    header('location: index.php');
+}

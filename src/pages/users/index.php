@@ -3,8 +3,8 @@ require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
 require_once '../../functions/functions.php';
 require_once '../../components/SideBar.php';
-require_once '../../components/Header.php';
 require_once '../../class/Controllers.php';
+require_once '../../components/modalComponent.php';
 
 session_start();
 isAuthenticated();
@@ -14,13 +14,10 @@ $user_id    = $_SESSION['user_id'];
 $connection = new Connection();
 
 $sideBar    = new Sidebar($_SESSION['routes']);
-$header     = new Header();
 $controller = new Controllers;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$render = new ModalComponent('New User', 'New User', 'Add a user for head Doctor or Nurse.');
 
-    storeVaccineData($connection, $controller);
-}
 
 if (isset($_GET['deactivate'])) {
     $id = $_GET['deactivate'];
@@ -32,6 +29,11 @@ if (isset($_GET['reactivate'])) {
     $id = $_GET['reactivate'];
 
     Controllers::update($connection->conn, 'users', 'id', $id, 'status', 'active');
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    storeUsers($connection, $controller);
 }
 ?>
 
@@ -72,7 +74,30 @@ if (isset($_GET['reactivate'])) {
             <br />
 
             <h3>User Management</h3>
-            <button class="btn btn-sm btn-primary" style="margin-bottom: 10px;">New User</button>
+            <?php $render->createModal([
+                [
+                    'label' => 'Name',
+                    'id'    => 'name',
+                    'name' => 'name',
+                    'type' => 'text',
+                    'required' => true
+                ],
+                [
+                    'label' => 'Username or Email',
+                    'id'    => 'username',
+                    'name' => 'username',
+                    'type' => 'text',
+                    'required' => true
+                ],
+                [
+                    'label' => 'Password',
+                    'id'    => 'password',
+                    'name' => 'password',
+                    'type' => 'password',
+                    'required' => true
+                ],
+
+            ]) ?>
             <table class="table table-bordered datatable mt-5" id="table-1">
                 <thead>
                     <tr>
@@ -88,14 +113,14 @@ if (isset($_GET['reactivate'])) {
                         <?php if ($user['role'] !== 1) : ?>
                             <tr class="odd gradeX">
                                 <td><?= $index + 1 ?></td>
-                                <td><?= htmlspecialchars($user['name']) ?></td>
+                                <td><?= $user['name'] ?></td>
                                 <td><?= $user['role'] == 2 ? 'Patient' : 'Doctor' ?></td>
                                 <td><span class="badge badge-<?= $user['status'] == 'active' ? 'success' : 'secondary' ?>"><?= $user['status'] ?></span></td>
                                 <td class="center">
                                     <?php if ($user['status'] == 'active') : ?>
-                                        <a href="#" onclick="confirmation(<?= $user['id'] ?>, 'deactivate')"><i class="entypo-cancel"></i> Deactivate</a>
+                                        <a class="btn btn-sm btn-danger" href="#" onclick="confirmation(<?= $user['id'] ?>, 'deactivate')"><i class="entypo-cancel"></i> Deactivate</a>
                                     <?php else : ?>
-                                        <a href="#" onclick="confirmation(<?= $user['id'] ?>, 'reactivate')"><i class="entypo-check"></i> Reactivate</a>
+                                        <a class="btn btn-sm btn-info" href="#" onclick="confirmation(<?= $user['id'] ?>, 'reactivate')"><i class="entypo-check"></i> Reactivate</a>
                                     <?php endif ?>
                                 </td>
                             </tr>

@@ -35,10 +35,10 @@ class ModalComponent
             $required = $field['required'] ? 'required' : '';
 
             $formFields .= <<<HTML
-            <div class="form-group">
-                <label for="{$field['id']}">{$field['label']}</label>
-                <input type="{$field['type']}" id="{$field['id']}" name="{$field['name']}" {$required}>
-            </div>
+                <div class="form-group">
+                    <label for="{$field['id']}">{$field['label']}</label>
+                    <input type="{$field['type']}" id="{$field['id']}" name="{$field['name']}" {$required}>
+                </div>
             HTML;
         }
 

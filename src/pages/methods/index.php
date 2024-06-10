@@ -21,6 +21,7 @@ $header     = new Header();
 $controller = new Controllers;
 
 $render = new ModalComponent('New Method', 'Add Method', 'Add a family planning method: ex IUD');
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     storeMethod($connection, $controller);
