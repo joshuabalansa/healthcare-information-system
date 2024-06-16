@@ -55,15 +55,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php
                         $fields = ($appointmentType == 'vaccination') ? $form->vaccinationFields() : $form->familyPlanningFields();
 
+                        $selectField = [
+                            'Province'  => 'provincesSelect',
+                            'City'      => 'citiesSelect',
+                            'Barangay'  => 'barangaysSelect'
+                        ];
+
                         foreach ($fields as $field => [$label, $type, $isRequired]) :
                         ?>
-                            <div class="form-group row">
-                                <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
+                            <?php if ($label !== 'address') : ?>
+                                <div class="form-group row">
+                                    <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
 
-                                <div class="col-md-6 mb-3">
-                                    <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>" <?= $isRequired ?>>
+                                    <div class="col-md-6 mb-3">
+
+                                        <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>" <?= $isRequired ?>>
+
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endif ?>
+
+                            <?php if ($field == 'address') : ?>
+
+                                <?php foreach ($selectField as $label => $id) : ?>
+                                    <div class="form-group row">
+                                        <label for="<?= $label ?> " class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
+
+                                        <div class="col-md-6 mb-3">
+                                            <select class="form-control" name="" id="<?= $id ?>" required>
+                                                <option value="">-- Select a <?= $label ?> --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         <?php endforeach; ?>
 
                         <div class="form-group row mb-0">
@@ -79,6 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 
+    <!-- fetch address api -->
+    <script src="../js/fetchAddress.js"></script>
     <!-- Bottom scripts (common) -->
     <script src="../assets/js/gsap/TweenMax.min.js"></script>
     <script src="../assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>

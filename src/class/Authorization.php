@@ -17,32 +17,32 @@ class Authorization
 
         $permissions = [
             1 => [
-                'Dashboard'                 =>   [$baseUrl . 'dashboard', 'chart-pie'],
-                'Appointments'              =>   [$baseUrl . 'appointments', 'bell'],
-                'Patients'                  =>   [$baseUrl . 'patients', 'users'],
-                'Vaccine Management'        =>   [$baseUrl . 'vaccine', 'archive'],
-                'Family Planning Methods'   =>   [$baseUrl . 'methods', 'archive'],
-                'Reports Analytics'         =>   [$baseUrl . 'reports', 'chart-area'],
-                'Users'                     =>   [$baseUrl . 'users', 'user']
+                'Dashboard'                     =>   [$baseUrl . 'dashboard', 'chart-pie'],
+                'Appointments'                  =>   [$baseUrl . 'appointments', 'bell'],
+                'Patients'                      =>   [$baseUrl . 'patients', 'users'],
+                'Vaccine Management'            =>   [$baseUrl . 'vaccine', 'archive'],
+                'Family Planning Methods'       =>   [$baseUrl . 'methods', 'archive'],
+                'Reports Analytics'             =>   [$baseUrl . 'reports', 'chart-area'],
+                'Users'                         =>   [$baseUrl . 'users', 'user']
             ],
             2 => [
-                'Dashboard'                 =>   [$baseUrl . 'dashboard', 'folder'],
-                'Vaccinations'              =>   [$baseUrl . 'vaccination', 'archive'],
-                'Schedules'                 =>   [$baseUrl . 'schedule', 'clock'],
-                'Records'                   =>   [$baseUrl . 'records', 'folder']
+                'Dashboard'                     =>   [$baseUrl . 'dashboard', 'folder'],
+                'Vaccinations'                  =>   [$baseUrl . 'vaccination', 'archive'],
+                'Schedules'                     =>   [$baseUrl . 'schedule', 'clock'],
+                'Records'                       =>   [$baseUrl . 'records', 'folder']
             ],
             3 => [
-                'Dashboard'                 =>   [$baseUrl . 'general', 'folder'],
-                'Family Planning'           =>   [$baseUrl . 'family_planning', 'users'],
-                'Schedules'                 =>   [$baseUrl . 'schedules', 'clock'],
-                'Records'                   =>   [$baseUrl . 'records', 'folder']
+                'Dashboard'                     =>   [$baseUrl . 'dashboard', 'folder'],
+                'Family Planning'               =>   [$baseUrl . 'family_planning', 'users'],
+                'Schedules'                     =>   [$baseUrl . 'schedules', 'clock'],
+                'Records'                       =>   [$baseUrl . 'records', 'folder']
             ],
             4 => [
-                'Dashboard'                 =>   [$baseUrl . 'general', 'folder'],
-                'Schedules'                 =>   [$baseUrl . 'schedules', 'clock'],
-                'Records'                   =>   [$baseUrl . 'records', 'folder'],
-                'Family Planning'           =>   [$baseUrl . 'family_planning', 'users'],
-                'Vaccinations'              =>   [$baseUrl . 'vaccinations', 'archive']
+                'Dashboard'                     =>   [$baseUrl . 'dashboard', 'folder'],
+                'Schedules'                     =>   [$baseUrl . 'schedules', 'clock'],
+                'Records'                       =>   [$baseUrl . 'records', 'folder'],
+                'Family Planning Assessment'    =>   [$baseUrl . 'family_planning', 'users'],
+                'Vaccination Assessment'        =>   [$baseUrl . 'vaccinations', 'archive']
             ],
         ];
 

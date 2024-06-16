@@ -93,7 +93,8 @@ $header   = new Header();
                             <td><?= htmlspecialchars($appointment['first_name'] . ' ' . $appointment['last_name']) ?></td>
                             <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $appointment['appointment_type']))) ?></td>
                             <td class="center">
-                                <a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/appointments/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>" class="btn btn-sm btn-info"><i class="entypo-info"></i></a>
+                                <a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/patients/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>" class="btn btn-sm btn-info"><i class="entypo-info"></i></a>
+                                <a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/patients/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>" class="btn btn-sm btn-primary"><i class="entypo-menu"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
