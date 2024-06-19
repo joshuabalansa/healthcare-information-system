@@ -19,9 +19,9 @@ class Authorization
             1 => [
                 'Dashboard'                     =>   [$baseUrl . 'dashboard', 'chart-pie'],
                 'Appointments'                  =>   [$baseUrl . 'appointments', 'bell'],
-                'Patients'                      =>   [$baseUrl . 'patients', 'users'],
-                'Vaccine Management'            =>   [$baseUrl . 'vaccine', 'archive'],
-                'Family Planning Methods'       =>   [$baseUrl . 'methods', 'archive'],
+                'Patients Records'              =>   [$baseUrl . 'patients', 'users'],
+                'Vaccines Management'        =>   [$baseUrl . 'vaccine', 'archive'],
+                'Family Planning Methods'    =>   [$baseUrl . 'methods', 'archive'],
                 'Reports Analytics'             =>   [$baseUrl . 'reports', 'chart-area'],
                 'Users'                         =>   [$baseUrl . 'users', 'user']
             ],
