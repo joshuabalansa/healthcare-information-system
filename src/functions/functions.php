@@ -88,6 +88,14 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
 
         $data = getFormData($form->vaccinationFields());
 
+        $additionalAddress = [
+            'province'  =>  $_POST['provincesSelect']   ?? '',
+            'city'      =>  $_POST['citiesSelect']      ?? '',
+            'brgy'      =>  $_POST['barangaysSelect']   ?? ''
+        ];
+
+        $data = array_merge($data, $additionalAddress);
+
         $data['user_id'] = $uuid;
 
         $controller->store($connection->conn, 'vaccinations', $data);
@@ -109,6 +117,14 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
     if ($registrationType == 'family_planning') {
 
         $data = getFormData($form->familyPlanningFields());
+
+        $additionalAddress = [
+            'province'  =>  $_POST['provincesSelect']   ?? '',
+            'city'      =>  $_POST['citiesSelect']      ?? '',
+            'brgy'      =>  $_POST['barangaysSelect']   ?? ''
+        ];
+
+        $data = array_merge($data, $additionalAddress);
 
         $data['user_id'] = $uuid;
 

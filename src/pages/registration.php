@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row" style="display: flex; justify-content:center">
             <div class="col-md-8">
 
-                <h3 style="margin-bottom: 1em;"><?= $appointmentType == 'vaccination' ? 'Register for Vaccination' : 'Register for Family Planning' ?></h3>
+                <h3 style="margin-bottom: 1em;"><?= $appointmentType == 'vaccination' ? 'Register for Vaccination' : 'Register for   Planning' ?></h3>
                 <div class="card-body">
                     <form method="POST" action="registration.php?registration=<?= $appointmentType ?>">
                         <?php
@@ -63,17 +63,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         foreach ($fields as $field => [$label, $type, $isRequired]) :
                         ?>
-                            <?php if ($label !== 'address') : ?>
-                                <div class="form-group row">
-                                    <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
 
-                                    <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label == 'Address' ? 'Street, Purok or Subdvision' : $label ?>:</label>
 
-                                        <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>" <?= $isRequired ?>>
-
-                                    </div>
+                                <div class="col-md-6 mb-3">
+                                    <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>" <?= $isRequired ?>>
                                 </div>
-                            <?php endif ?>
+                            </div>
 
                             <?php if ($field == 'address') : ?>
 
@@ -82,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <label for="<?= $label ?> " class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
 
                                         <div class="col-md-6 mb-3">
-                                            <select class="form-control" name="" id="<?= $id ?>" required>
+                                            <select class="form-control" name="<?= $id ?>" id="<?= $id ?>" required>
                                                 <option value="">-- Select a <?= $label ?> --</option>
                                             </select>
                                         </div>
