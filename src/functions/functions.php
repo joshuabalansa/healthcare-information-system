@@ -88,11 +88,7 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
 
         $data = getFormData($form->vaccinationFields());
 
-        $additionalAddress = [
-            'province'  =>  $_POST['provincesSelect']   ?? '',
-            'city'      =>  $_POST['citiesSelect']      ?? '',
-            'brgy'      =>  $_POST['barangaysSelect']   ?? ''
-        ];
+        $additionalAddress = getRegistrationAdditionalAddress();
 
         $data = array_merge($data, $additionalAddress);
 
@@ -102,27 +98,21 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
 
         $appointmentData = $controller->getDataById($connection->conn, 'vaccinations', 'id', $connection->conn->lastInsertId());
 
-        $appointmentFields =  [
-            'patient_id' => $appointmentData[0]['user_id'],
-            'appointment_type' => $appointmentData[0]['appointment_type'],
-        ];
+        // $appointmentFields =  [
+        //     'patient_id' => $appointmentData[0]['user_id'],
+        //     'appointment_type' => $appointmentData[0]['appointment_type'],
+        // ];
 
-        $controller->store($connection->conn, 'appointments', $appointmentFields);
+        // $controller->store($connection->conn, 'appointments', $appointmentFields);
 
-        header('location: success.php');
-
-        exit;
+        storeAppointments($appointmentData, $connection, $controller);
     }
 
     if ($registrationType == 'family_planning') {
 
         $data = getFormData($form->familyPlanningFields());
 
-        $additionalAddress = [
-            'province'  =>  $_POST['provincesSelect']   ?? '',
-            'city'      =>  $_POST['citiesSelect']      ?? '',
-            'brgy'      =>  $_POST['barangaysSelect']   ?? ''
-        ];
+        $additionalAddress = getRegistrationAdditionalAddress();
 
         $data = array_merge($data, $additionalAddress);
 
@@ -132,17 +122,44 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
 
         $appointmentData = $controller->getDataById($connection->conn, 'family_planning', 'id', $connection->conn->lastInsertId());
 
-        $appointmentFields = [
-            'patient_id' => $appointmentData[0]['user_id'],
-            'appointment_type' => $appointmentData[0]['appointment_type'],
-        ];
-
-        $controller->store($connection->conn, 'appointments', $appointmentFields);
-
-        header('location: success.php');
-
-        exit;
+        storeAppointments($appointmentData, $connection, $controller);
     }
+
+    header('location: success.php');
+
+    exit;
+}
+
+/**
+ * get additional address for registration
+ *
+ * @return array
+ */
+function getRegistrationAdditionalAddress()
+{
+    return [
+        'province'  =>  $_POST['provincesSelect']   ?? '',
+        'city'      =>  $_POST['citiesSelect']      ?? '',
+        'brgy'      =>  $_POST['barangaysSelect']   ?? ''
+    ];
+}
+
+/**
+ * store appointments function
+ *
+ * @param array $appointmentData
+ * @param object $connection
+ * @param object $controller
+ * @return void
+ */
+function storeAppointments($appointmentData, $connection, $controller)
+{
+    $appointmentFields = [
+        'patient_id' => $appointmentData[0]['user_id'],
+        'appointment_type' => $appointmentData[0]['appointment_type'],
+    ];
+
+    $controller->store($connection->conn, 'appointments', $appointmentFields);
 }
 
 /**

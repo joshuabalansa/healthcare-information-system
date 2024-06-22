@@ -1,5 +1,6 @@
 <?php
 require_once '../components/Cards.php';
+require_once '../components/UsersCard.php';
 require_once '../components/SideBar.php';
 require_once '../class/Controllers.php';
 require_once '../config/Connection.php';
@@ -20,11 +21,15 @@ $approvedFamData = Controllers::countData($connection->conn, 'family_planning', 
 $vaccineCount    = Controllers::countData($connection->conn, 'vaccines', 'status = ?', ['active']);
 $usersCount      = Controllers::countData($connection->conn, 'users', 'status = ?', ['active']);
 
+$healthcareCount  = Controllers::countData($connection->conn, 'users', 'role = ?', [4]);
+
 $approvedCount   = $approvedVacData + $approvedFamData;
 
 $sideBar = new SideBar($_SESSION['routes']);
 
-$cards = new Cards($pendingCount, $approvedCount, $vaccineCount, $usersCount);
+$cards = new Cards($connection);
+
+$usersCard = new UsersCard($connection);
 
 $monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
 ?>
@@ -53,9 +58,14 @@ $monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
 			<?php include '../includes/header.php' ?>
 
 			<hr />
-			<?php if ($_SESSION['role'] == 1) : ?>
-				<?php $cards->render() ?>
-			<?php endif; ?>
+			<?php
+			if ($_SESSION['role'] == 1) {
+				$cards->render();
+			}
+			if ($_SESSION['role'] == 0) {
+				$usersCard->render();
+			}
+			?>
 			<br />
 			<h1>Dashboard</h1>
 
@@ -105,7 +115,7 @@ $monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
 			<?php endif; ?>
 
 
-			<?php if ($_SESSION['role'] !== 1 && $_SESSION['role'] !== 4) : ?>
+			<?php if ($_SESSION['role'] !== 1 && $_SESSION['role'] !== 4 && $_SESSION['role'] !== 0) : ?>
 				<div id='calendar'></div>
 
 				<script>

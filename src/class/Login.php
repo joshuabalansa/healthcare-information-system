@@ -3,6 +3,7 @@ session_start();
 
 require_once '../config/Connection.php';
 require_once 'Authorization.php';
+require_once 'Controllers.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -21,14 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user) {
 
-        $_SESSION['user_id']  = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['role']     = $user['role'];
+        setSessions($user);
 
-        $_SESSION['base_url'] = 'http://healthcare.test/src/';
-        $_SESSION['profile'] =  $_SESSION['base_url'] . 'pages/profile/index.php';
-
-        $_SESSION['routes'] = Authorization::routes($user['role']);
+        storeLoginLogs($connection, $user);
 
         header('location: ../pages/dashboard.php');
     } else {
@@ -39,4 +35,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     exit;
+}
+
+function setSessions($user)
+{
+
+    $_SESSION['user_id']  = $user['id'];
+    $_SESSION['username'] = $user['username'];
+    $_SESSION['role']     = $user['role'];
+
+    $_SESSION['base_url'] = 'http://healthcare.test/src/';
+    $_SESSION['profile'] =  $_SESSION['base_url'] . 'pages/profile/index.php';
+
+    $_SESSION['routes'] = Authorization::routes($user['role']);
+}
+
+
+function storeLoginLogs($connection, $user)
+{
+    $data = [
+        'name' => $user['name'],
+        'role' => $user['role']
+    ];
+
+    $controller = new Controllers;
+    $controller->store($connection->conn, 'logs', $data);
 }

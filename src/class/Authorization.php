@@ -16,14 +16,18 @@ class Authorization
         $baseUrl = $_SESSION['base_url'] . 'pages/';
 
         $permissions = [
+            0 => [
+                'Dashboard'                     =>   [$baseUrl . 'dashboard', 'chart-pie'],
+                'Users Management'              =>   [$baseUrl . 'users', 'users'],
+                'Logs'                          =>   [$baseUrl . 'users/logs', 'list'],
+            ],
             1 => [
                 'Dashboard'                     =>   [$baseUrl . 'dashboard', 'chart-pie'],
                 'Appointments'                  =>   [$baseUrl . 'appointments', 'bell'],
                 'Patients Records'              =>   [$baseUrl . 'patients', 'users'],
-                'Vaccines Management'        =>   [$baseUrl . 'vaccine', 'archive'],
-                'Family Planning Methods'    =>   [$baseUrl . 'methods', 'archive'],
-                'Reports Analytics'             =>   [$baseUrl . 'reports', 'chart-area'],
-                'Users'                         =>   [$baseUrl . 'users', 'user']
+                'Vaccines Management'           =>   [$baseUrl . 'vaccine', 'archive'],
+                'Family Planning Methods'       =>   [$baseUrl . 'methods', 'archive'],
+                'Reports Analytics'             =>   [$baseUrl . 'reports', 'chart-area']
             ],
             2 => [
                 'Dashboard'                     =>   [$baseUrl . 'dashboard', 'folder'],

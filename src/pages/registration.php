@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label == 'Address' ? 'Street, Purok or Subdvision' : $label ?>:</label>
 
                                 <div class="col-md-6 mb-3">
-                                    <input id="<?= $field ?>" type="<?= $type ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>" <?= $isRequired ?>>
+                                    <input id="<?= $field ?>" type="<?= $type ?>" onkeypress="<?= $type == 'number' ? 'return isNumberKey(event)' : '' ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>" <?= $isRequired ?>>
                                 </div>
                             </div>
 
@@ -100,6 +100,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
     </div>
+    <script>
+        function isNumberKey(evt) {
+            var charCode = evt.key;
+
+            if (!charCode.match(/[0-9]/)) {
+
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 
     <!-- fetch address api -->
     <script src="../js/fetchAddress.js"></script>

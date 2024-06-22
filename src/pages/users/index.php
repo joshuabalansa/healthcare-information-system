@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <br />
 
-            <h3>User Management</h3>
+            <h3>Users Management</h3>
             <?php $render->createModal([
                 [
                     'label' => 'Name',
