@@ -17,8 +17,6 @@ $fields = [
     'first_name',
     'last_name',
     'phone_number',
-    'appointment_date',
-    'appointment_time',
     'appointment_type',
     'status'
 ];
@@ -31,7 +29,6 @@ $patients = joinTableWhereClause(
     $fields,
     "WHERE status = 'approved'"
 );
-
 
 $sideBar  = new Sidebar($_SESSION['routes']);
 $header   = new Header();
@@ -50,7 +47,6 @@ $header   = new Header();
     <title></title>
     <link rel="stylesheet" href="../../assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
     <link rel="stylesheet" href="../../assets/css/font-icons/entypo/css/entypo.css">
-
     <link rel="stylesheet" href="../../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../../assets/css/neon-core.css">
     <link rel="stylesheet" href="../../assets/css/neon-theme.css">
@@ -112,7 +108,6 @@ $header   = new Header();
 
             <br />
         </div>
-
 </body>
 
 </html>

@@ -45,7 +45,9 @@ if (isset($_GET['confirm'])) {
 	Controllers::update($connection->conn, 'vaccinations', 'status', 'pending', 'status', 'approved');
 	Controllers::update($connection->conn, 'family_planning', 'status', 'pending', 'status', 'approved');
 
-	header('location: index.php');
+	// header('location: index.php');
+
+	$_SESSION['toast'] = 'All Pending Appointments has been approved.';
 }
 
 /**
@@ -65,6 +67,8 @@ if (isset($_GET['approve'])) {
 
 		checkAndUpdateAppointment($famData, $controller, $connection, $id);
 	}
+
+	$_SESSION['toast'] = 'Appointment has been approved.';
 }
 
 $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
@@ -116,8 +120,6 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 						<th>#</th>
 						<th>Name</th>
 						<th>Phone Number</th>
-						<th>Date Appointment</th>
-						<th>Time</th>
 						<th>Type</th>
 						<th>Status</th>
 						<th>Action</th>
@@ -129,8 +131,6 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 							<td><?= $index + 1 ?></td>
 							<td><?= htmlspecialchars($appointment['first_name'] . ' ' . $appointment['last_name']) ?></td>
 							<td><?= htmlspecialchars($appointment['phone_number']) ?></td>
-							<td><?= htmlspecialchars($appointment['appointment_date']) ?></td>
-							<td><?= htmlspecialchars($appointment['appointment_time']) ?></td>
 							<td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $appointment['appointment_type']))) ?></td>
 							<td>
 								<span class="badge <?= $appointment['status'] == 'approved' ? 'badge-success' : 'badge-danger' ?>">
@@ -160,8 +160,6 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 						<th>#</th>
 						<th>Name</th>
 						<th>Phone Number</th>
-						<th>Date Appointment</th>
-						<th>Time</th>
 						<th>Type</th>
 						<th>Status</th>
 						<th>Action</th>
@@ -172,6 +170,23 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 
 			<br />
 		</div>
+		<?php if (isset($_SESSION['toast'])) : ?>
+			<script>
+				Toastify({
+					text: "<?= $_SESSION['toast'] ?>",
+					duration: 3000,
+					destination: "https://github.com/apvarun/toastify-js",
+					newWindow: true,
+					close: true,
+					gravity: "top",
+					position: "right",
+					stopOnFocus: true,
+					// style: {
+					//     background: "linear-gradient(to right, #00b09b, #96c93d)",
+					// },
+				}).showToast();
+			</script>
+		<?php endif; ?>
 		<script src="../../js/alert.js"></script>
 </body>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 20, 2024 at 02:48 PM
+-- Generation Time: Jun 23, 2024 at 01:10 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `healthcare`
 --
+CREATE DATABASE IF NOT EXISTS `healthcare` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `healthcare`;
 
 -- --------------------------------------------------------
 
@@ -27,7 +29,6 @@ SET time_zone = "+00:00";
 -- Table structure for table `appointments`
 --
 
-DROP TABLE IF EXISTS `appointments`;
 CREATE TABLE IF NOT EXISTS `appointments` (
   `id` int NOT NULL AUTO_INCREMENT,
   `patient_id` varchar(255) NOT NULL,
@@ -36,24 +37,23 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `appointments`
 --
 
 INSERT INTO `appointments` (`id`, `patient_id`, `appointment_type`, `status`, `created_at`, `updated_at`) VALUES
-(23, 'bc4bd560-3360-4dbe-ba9a-8d19b4fd58c7', 'family_planning', 'approved', '2024-05-20 21:11:53', '2024-05-20 21:11:53'),
-(24, 'd35a7295-922e-47ee-aabb-38d70b13d9ae', 'vaccination', 'approved', '2024-06-11 22:16:02', '2024-05-22 22:16:02'),
 (25, '61518a32-6f23-4b0d-bad0-ce4d12f7560e', 'family_planning', 'pending', '2024-01-18 22:22:30', '2024-05-29 22:13:12'),
-(26, '4687e68a-e21e-4811-b907-82011eb2f3d7', 'vaccination', 'approved', '2024-06-12 13:26:00', '2024-05-29 22:14:25'),
-(27, '217db051-015b-4db6-8bb4-8e9217c8d197', 'family_planning', 'approved', '2024-05-29 22:14:28', '2024-05-29 22:14:28'),
 (28, 'd7f01670-c1c7-4d86-ae72-42344749a236', 'family_planning', 'pending', '2024-05-29 22:40:48', '2024-05-29 22:40:48'),
 (29, '867eb2ea-2bdb-488b-b404-10d061dfc1a4', 'family_planning', 'pending', '2024-06-01 14:16:45', '2024-06-01 14:16:45'),
 (30, '02b7ee85-6b80-4c3e-a2e9-6d486c219f6b', 'family_planning', 'pending', '2024-06-09 09:30:10', '2024-06-09 09:30:10'),
 (31, 'fffe0b6a-83ab-4e9f-8c5e-addf55554f3e', 'vaccination', 'pending', '2024-06-20 22:06:21', '2024-06-20 22:06:21'),
 (32, '56bf6cc2-41ce-4335-a2d2-3bf3476d8e7d', 'vaccination', 'pending', '2024-06-20 22:15:14', '2024-06-20 22:15:14'),
-(33, 'a8586277-3599-4fdf-8abe-d00e0c03afeb', 'family_planning', 'pending', '2024-06-20 22:29:52', '2024-06-20 22:29:52');
+(33, 'a8586277-3599-4fdf-8abe-d00e0c03afeb', 'family_planning', 'pending', '2024-06-20 22:29:52', '2024-06-20 22:29:52'),
+(34, '906fe89a-bc1b-4371-9e17-1452b5a3f7ca', 'family_planning', 'pending', '2024-06-22 21:22:51', '2024-06-22 21:22:51'),
+(35, 'a82388c3-02af-40a0-8ab9-03a4aa318a03', 'family_planning', 'pending', '2024-06-23 09:31:49', '2024-06-23 09:31:49'),
+(36, '84d036d2-43cf-445c-b194-3c46c63c1724', 'vaccination', 'pending', '2024-06-23 09:34:58', '2024-06-23 09:34:58');
 
 -- --------------------------------------------------------
 
@@ -61,7 +61,6 @@ INSERT INTO `appointments` (`id`, `patient_id`, `appointment_type`, `status`, `c
 -- Table structure for table `family_planning`
 --
 
-DROP TABLE IF EXISTS `family_planning`;
 CREATE TABLE IF NOT EXISTS `family_planning` (
   `id` int NOT NULL AUTO_INCREMENT,
   `first_name` varchar(255) DEFAULT NULL,
@@ -74,26 +73,28 @@ CREATE TABLE IF NOT EXISTS `family_planning` (
   `brgy` varchar(255) DEFAULT NULL,
   `phone_number` varchar(20) DEFAULT NULL,
   `appointment_type` varchar(20) NOT NULL DEFAULT 'family_planning',
-  `appointment_time` time DEFAULT NULL,
-  `appointment_date` date DEFAULT NULL,
   `status` varchar(255) NOT NULL DEFAULT 'pending',
   `user_id` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `family_planning`
 --
 
-INSERT INTO `family_planning` (`id`, `first_name`, `middle_name`, `last_name`, `birth_date`, `address`, `province`, `city`, `brgy`, `phone_number`, `appointment_type`, `appointment_time`, `appointment_date`, `status`, `user_id`) VALUES
-(38, 'helloworld', 'asda', 'asd', '2024-05-03', 'asda', NULL, NULL, NULL, '2234234', 'family_planning', '15:17:00', '2024-05-22', 'cancelled', 'd35a7295-922e-47ee-aabb-38d70b13d9ae'),
-(39, 'asdasd', 'asdasd', 'asdasd', '2024-05-29', 'klkjd', NULL, NULL, NULL, '098102301293', 'family_planning', '22:13:00', '2024-05-29', 'approved', '61518a32-6f23-4b0d-bad0-ce4d12f7560e'),
-(40, 'asdasd', 'asdasd', 'asdasd', '2024-05-29', 'klkjd', NULL, NULL, NULL, '098102301293', 'family_planning', '22:13:00', '2024-05-29', 'approved', '4687e68a-e21e-4811-b907-82011eb2f3d7'),
-(41, 'asdasd', 'asdasd', 'asdasd', '2024-05-29', 'klkjd', NULL, NULL, NULL, '098102301293', 'family_planning', '22:13:00', '2024-05-29', 'approved', '217db051-015b-4db6-8bb4-8e9217c8d197'),
-(42, 'helloworold', ';l', ';l', '2024-05-29', ';lkek', NULL, NULL, NULL, '012939012', 'family_planning', '22:40:00', '2024-05-29', 'approved', 'd7f01670-c1c7-4d86-ae72-42344749a236'),
-(43, 'asd', 'asd', 'asd', '2024-06-01', 'asuhd', NULL, NULL, NULL, '192738123', 'family_planning', '14:16:00', '2024-06-01', 'approved', '867eb2ea-2bdb-488b-b404-10d061dfc1a4'),
-(44, 'test name', 'd', 'test lastname', '2024-06-09', 'bacolod city', NULL, NULL, NULL, '09218287398', 'family_planning', '09:30:00', '2024-06-09', 'approved', '02b7ee85-6b80-4c3e-a2e9-6d486c219f6b'),
-(45, 'test familyPLanning', 'test familyPLanning', 'test familyPLanning', '2024-06-20', 'test familyPLanning', '041000000-batangas', '041005000-batangas_city', '041005011-maapas', '2133243244', 'family_planning', '22:29:00', '2024-06-20', 'pending', 'a8586277-3599-4fdf-8abe-d00e0c03afeb');
+INSERT INTO `family_planning` (`id`, `first_name`, `middle_name`, `last_name`, `birth_date`, `address`, `province`, `city`, `brgy`, `phone_number`, `appointment_type`, `status`, `user_id`, `created_at`, `updated_at`) VALUES
+(38, 'helloworld', 'asda', 'asd', '2024-05-03', 'asda', NULL, NULL, NULL, '2234234', 'family_planning', 'cancelled', 'd35a7295-922e-47ee-aabb-38d70b13d9ae', '2024-06-23 09:28:21', '2024-06-23 09:29:32'),
+(39, 'asdasd', 'asdasd', 'asdasd', '2024-05-29', 'klkjd', NULL, NULL, NULL, '098102301293', 'family_planning', 'cancelled', '61518a32-6f23-4b0d-bad0-ce4d12f7560e', '2024-06-23 09:28:21', '2024-06-23 09:50:52'),
+(40, 'asdasd', 'asdasd', 'asdasd', '2024-05-29', 'klkjd', NULL, NULL, NULL, '098102301293', 'family_planning', 'approved', '4687e68a-e21e-4811-b907-82011eb2f3d7', '2024-06-23 09:28:21', '2024-06-23 09:29:32'),
+(41, 'asdasd', 'asdasd', 'asdasd', '2024-05-29', 'klkjd', NULL, NULL, NULL, '098102301293', 'family_planning', 'approved', '217db051-015b-4db6-8bb4-8e9217c8d197', '2024-06-23 09:28:21', '2024-06-23 09:29:32'),
+(42, 'helloworold', ';l', ';l', '2024-05-29', ';lkek', NULL, NULL, NULL, '012939012', 'family_planning', 'approved', 'd7f01670-c1c7-4d86-ae72-42344749a236', '2024-06-23 09:28:21', '2024-06-23 09:29:32'),
+(43, 'asd', 'asd', 'asd', '2024-06-01', 'asuhd', NULL, NULL, NULL, '192738123', 'family_planning', 'approved', '867eb2ea-2bdb-488b-b404-10d061dfc1a4', '2024-06-23 09:28:21', '2024-06-23 09:29:32'),
+(44, 'test name', 'd', 'test lastname', '2024-06-09', 'bacolod city', NULL, NULL, NULL, '09218287398', 'family_planning', 'approved', '02b7ee85-6b80-4c3e-a2e9-6d486c219f6b', '2024-06-23 09:28:21', '2024-06-23 09:29:32'),
+(45, 'test familyPLanning', 'test familyPLanning', 'test familyPLanning', '2024-06-20', 'test familyPLanning', '041000000-batangas', '041005000-batangas_city', '041005011-maapas', '2133243244', 'family_planning', 'approved', 'a8586277-3599-4fdf-8abe-d00e0c03afeb', '2024-06-23 09:28:21', '2024-06-23 09:51:01'),
+(46, 'joshua balasa', 'lkdlkasjd', 'lkajsdljk', '2024-06-22', 'laksdlkasjl', '064500000-negros_occidental', '064501000-city_of_bacolod', '064501005-barangay_10_(pob.)', '1231231290909', 'family_planning', 'approved', '906fe89a-bc1b-4371-9e17-1452b5a3f7ca', '2024-06-23 09:28:21', '2024-06-23 09:51:01'),
+(47, 'ttest timestamp', 'qwhehqwe', 'kjhqwekjhqw', '2024-06-23', 'qwkjehqwkjhe', '064500000-negros_occidental', '064501000-city_of_bacolod', '064501002-alijis', '09120391239', 'family_planning', 'approved', 'a82388c3-02af-40a0-8ab9-03a4aa318a03', '2024-06-23 09:31:49', '2024-06-23 09:51:01');
 
 -- --------------------------------------------------------
 
@@ -101,7 +102,6 @@ INSERT INTO `family_planning` (`id`, `first_name`, `middle_name`, `last_name`, `
 -- Table structure for table `family_planning_methods`
 --
 
-DROP TABLE IF EXISTS `family_planning_methods`;
 CREATE TABLE IF NOT EXISTS `family_planning_methods` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` varchar(255) DEFAULT NULL,
@@ -124,10 +124,40 @@ INSERT INTO `family_planning_methods` (`id`, `user_id`, `method_name`, `status`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `logs`
+--
+
+CREATE TABLE IF NOT EXISTS `logs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `role` int NOT NULL,
+  `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `logs`
+--
+
+INSERT INTO `logs` (`id`, `name`, `role`, `timestamp`) VALUES
+(1, 'admin', 0, '2024-06-22 23:38:35'),
+(2, 'admin', 1, '2024-06-22 23:46:35'),
+(3, 'admin', 0, '2024-06-22 23:46:49'),
+(4, 'admin', 1, '2024-06-22 23:47:24'),
+(5, 'admin', 0, '2024-06-22 23:47:40'),
+(6, 'system admin', 0, '2024-06-23 07:32:55'),
+(7, 'system admin', 0, '2024-06-23 09:35:24'),
+(8, 'system admin', 0, '2024-06-23 09:38:35'),
+(9, 'system admin', 0, '2024-06-23 09:45:51'),
+(10, 'system admin', 0, '2024-06-23 09:49:51'),
+(11, 'system admin', 1, '2024-06-23 09:50:04');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
@@ -137,15 +167,21 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role` int DEFAULT NULL,
   `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'active',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=227 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=233 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `user_id`, `name`, `username`, `password`, `role`, `status`) VALUES
-(1, NULL, 'admin', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'active'),
-(226, NULL, 'test doctor account', 'doctor', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 4, 'inactive');
+(1, NULL, 'system admin', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'active'),
+(226, NULL, 'test doctor account', 'doctor', 'd033e22ae348aeb5660fc2140aec35850c4da997', 4, 'active'),
+(227, '2ca0620e-bdcb-4a1d-afce-35ab3b9ff617', 'tes', 'JTJ20240512', 'ef77861ffcc089a62f7ef540324f4fc9165ed35d', 2, 'active'),
+(228, NULL, 'healthcare admin', 'healthcare', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'active'),
+(229, 'b2a71a4c-0152-4d5c-8172-440c17d27677', 'helloworld', 'JHH20240517', '03954254417cf3311df414fbec539c853996e5f0', 2, 'active'),
+(230, '6e51e09c-6dea-46d6-8ba3-f8621449ab26', 'helloworld', 'JHH20240517', '24b86c266afbadfc7aeaf1e418f684eedaeb4c99', 2, 'active'),
+(231, '6e51e09c-6dea-46d6-8ba3-f8621449ab26', 'helloworld', 'JHH20240517', 'e21ba75fe9e2757ce540c414c2103c1939a9c82c', 2, 'active'),
+(232, 'ee2696d1-39a8-4d26-87d1-d213d54a7ae2', 'Joshua', 'BJD20240519', '1740f97d342c8181b7372732718a689d683bde2b', 2, 'active');
 
 -- --------------------------------------------------------
 
@@ -153,7 +189,6 @@ INSERT INTO `users` (`id`, `user_id`, `name`, `username`, `password`, `role`, `s
 -- Table structure for table `vaccinations`
 --
 
-DROP TABLE IF EXISTS `vaccinations`;
 CREATE TABLE IF NOT EXISTS `vaccinations` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` varchar(255) DEFAULT NULL,
@@ -180,22 +215,23 @@ CREATE TABLE IF NOT EXISTS `vaccinations` (
   `phone_number` varchar(20) DEFAULT NULL,
   `status` varchar(11) NOT NULL DEFAULT 'pending',
   `appointment_type` varchar(20) NOT NULL DEFAULT 'vaccination',
-  `appointment_time` time DEFAULT NULL,
-  `appointment_date` date DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `vaccinations`
 --
 
-INSERT INTO `vaccinations` (`id`, `user_id`, `first_name`, `middle_name`, `last_name`, `birth_date`, `body_weight`, `body_length`, `province`, `city`, `brgy`, `address`, `philhealth`, `4ps_number`, `mother_maiden_name`, `mother_birth_date`, `mother_age`, `mother_occupation`, `father_name`, `father_birth_date`, `father_age`, `father_occupation`, `phone_number`, `status`, `appointment_type`, `appointment_time`, `appointment_date`) VALUES
-(32, '2ca0620e-bdcb-4a1d-afce-35ab3b9ff617', 'tes', 'jhqgwj', 'jhgjhqwg', '2024-05-12', 'j', 'hgj', '', '', '', NULL, 'wqehqwe', 'kqwhek', 'kqjehqw', '2024-05-12', 26, 'kjqweqhjw', 'kqwjeh', '2024-05-12', 123, 'kqwje', '817263812', 'cancelled', 'vaccination', '17:58:00', '2024-05-12'),
-(33, 'b2a71a4c-0152-4d5c-8172-440c17d27677', 'helloworld', 'helloworld', 'jklh', '2024-05-17', '129837', '982739', '', '', '', NULL, 'kjqhwe', 'kjhek', 'kjh', '2024-05-17', 1928739, 'kjh', 'kjh', '2024-05-17', 1231, 'lkjlkj', '192031902390', 'cancelled', 'vaccination', '20:19:00', '2024-05-17'),
-(34, '6e51e09c-6dea-46d6-8ba3-f8621449ab26', 'helloworld', 'helloworld', 'jklh', '2024-05-17', '129837', '982739', '', '', '', NULL, 'kjqhwe', 'kjhek', 'kjh', '2024-05-17', 1928739, 'kjh', 'kjh', '2024-05-17', 1231, 'lkjlkj', '192031902390', 'cancelled', 'vaccination', '20:19:00', '2024-05-17'),
-(35, 'ee2696d1-39a8-4d26-87d1-d213d54a7ae2', 'Joshua', 'Desabelle', 'Balansa', '2024-05-19', '2831', '19823', '', '', '', NULL, '91823791273', '17232832', 'Marites', '2024-05-19', 29, 'none', 'Josepth', '2024-05-19', 82, 'none', '09101791954', 'cancelled', 'vaccination', '08:52:00', '2024-05-19'),
-(36, 'fffe0b6a-83ab-4e9f-8c5e-addf55554f3e', 'qwe', 'qweqw', 'qwe', '2024-06-20', '09', '09', '012900000-ilocos_sur', '012906000-city_of_candon', '012906018-caterman', NULL, 'qwe', 'qwe', 'aklsdj', '2024-06-20', 9, ';kwe', ';lwje', '2024-06-20', 2, ';k', '928392', 'pending', 'vaccination', '21:57:00', '2024-06-20'),
-(37, '56bf6cc2-41ce-4335-a2d2-3bf3476d8e7d', 'josh', 'josh', 'josh', '2024-06-20', '12', '23', '031400000-bulacan', '031410000-city_of_malolos', '031410006-balayong', 'josh', '2131321', 'o123u', 'wqkle', '2024-06-20', 4, 'klej', 'lwke', '2024-06-20', 98, 's;dlkf', '03294802384028', 'pending', 'vaccination', '22:15:00', '2024-06-20');
+INSERT INTO `vaccinations` (`id`, `user_id`, `first_name`, `middle_name`, `last_name`, `birth_date`, `body_weight`, `body_length`, `province`, `city`, `brgy`, `address`, `philhealth`, `4ps_number`, `mother_maiden_name`, `mother_birth_date`, `mother_age`, `mother_occupation`, `father_name`, `father_birth_date`, `father_age`, `father_occupation`, `phone_number`, `status`, `appointment_type`, `created_at`, `updated_at`) VALUES
+(32, '2ca0620e-bdcb-4a1d-afce-35ab3b9ff617', 'tes', 'jhqgwj', 'jhgjhqwg', '2024-05-12', 'j', 'hgj', '', '', '', NULL, 'wqehqwe', 'kqwhek', 'kqjehqw', '2024-05-12', 26, 'kjqweqhjw', 'kqwjeh', '2024-05-12', 123, 'kqwje', '817263812', 'approved', 'vaccination', '2024-06-23 09:30:21', '2024-06-23 09:30:21'),
+(33, 'b2a71a4c-0152-4d5c-8172-440c17d27677', 'helloworld', 'helloworld', 'jklh', '2024-05-17', '129837', '982739', '', '', '', NULL, 'kjqhwe', 'kjhek', 'kjh', '2024-05-17', 1928739, 'kjh', 'kjh', '2024-05-17', 1231, 'lkjlkj', '192031902390', 'approved', 'vaccination', '2024-06-23 09:30:21', '2024-06-23 09:50:56'),
+(34, '6e51e09c-6dea-46d6-8ba3-f8621449ab26', 'helloworld', 'helloworld', 'jklh', '2024-05-17', '129837', '982739', '', '', '', NULL, 'kjqhwe', 'kjhek', 'kjh', '2024-05-17', 1928739, 'kjh', 'kjh', '2024-05-17', 1231, 'lkjlkj', '192031902390', 'approved', 'vaccination', '2024-06-23 09:30:21', '2024-06-23 10:06:10'),
+(35, 'ee2696d1-39a8-4d26-87d1-d213d54a7ae2', 'Joshua', 'Desabelle', 'Balansa', '2024-05-19', '2831', '19823', '', '', '', NULL, '91823791273', '17232832', 'Marites', '2024-05-19', 29, 'none', 'Josepth', '2024-05-19', 82, 'none', '09101791954', 'approved', 'vaccination', '2024-06-23 09:30:21', '2024-06-23 10:08:19'),
+(36, 'fffe0b6a-83ab-4e9f-8c5e-addf55554f3e', 'qwe', 'qweqw', 'qwe', '2024-06-20', '09', '09', '012900000-ilocos_sur', '012906000-city_of_candon', '012906018-caterman', NULL, 'qwe', 'qwe', 'aklsdj', '2024-06-20', 9, ';kwe', ';lwje', '2024-06-20', 2, ';k', '928392', 'approved', 'vaccination', '2024-06-23 09:30:21', '2024-06-23 09:51:01'),
+(37, '56bf6cc2-41ce-4335-a2d2-3bf3476d8e7d', 'josh', 'josh', 'josh', '2024-06-20', '12', '23', '031400000-bulacan', '031410000-city_of_malolos', '031410006-balayong', 'josh', '2131321', 'o123u', 'wqkle', '2024-06-20', 4, 'klej', 'lwke', '2024-06-20', 98, 's;dlkf', '03294802384028', 'approved', 'vaccination', '2024-06-23 09:30:21', '2024-06-23 09:51:01'),
+(38, '84d036d2-43cf-445c-b194-3c46c63c1724', 'test timestampo', 'qjwkhehqwk', 'jhkjqhwekjh', '2024-06-23', 'kqwjhekjqhw', 'kjqhwekjh', '064500000-negros_occidental', '064502000-city_of_bago', '064502001-abuanan', 'kjhwkqjhekjh', 'qwkejhqwkje', 'kqwjhekqjwhe', 'qwkjehqwkje', '2024-06-23', 198273, 'kjqwhekqwk', 'qwekjhqw', '2024-06-23', 1892371, 'qwebjhj', '123123', 'approved', 'vaccination', '2024-06-23 09:34:58', '2024-06-23 09:51:01');
 
 -- --------------------------------------------------------
 
@@ -203,7 +239,6 @@ INSERT INTO `vaccinations` (`id`, `user_id`, `first_name`, `middle_name`, `last_
 -- Table structure for table `vaccines`
 --
 
-DROP TABLE IF EXISTS `vaccines`;
 CREATE TABLE IF NOT EXISTS `vaccines` (
   `id` int NOT NULL AUTO_INCREMENT,
   `vaccine` varchar(255) NOT NULL,
@@ -224,14 +259,9 @@ CREATE TABLE IF NOT EXISTS `vaccines` (
 
 INSERT INTO `vaccines` (`id`, `vaccine`, `abbreviation`, `manufacturer`, `doses`, `approved_ages`, `description`, `status`, `created_at`, `updated_at`) VALUES
 (8, 'helloworld', 'helloworld', 'helqwej', 'lkqwjel', 'lkqwje', 'elk', 'active', '2024-05-21 14:26:29', '2024-05-21 14:26:29'),
-(11, 'qwe', 'qwe', 'jhg', 'jhg', 'jhg', 'jhg', 'active', '2024-05-22 13:39:21', '2024-05-22 13:39:21'),
-(13, 'test', 'tets', 'test', 'test', 'test', 'test', 'active', '2024-05-22 13:43:43', '2024-05-22 13:43:43'),
 (14, 'test', 'tets', 'test', 'test', 'test', 'test', 'active', '2024-05-22 13:45:21', '2024-05-22 13:45:21'),
-(15, 'test', 'tets', 'test', 'test', 'test', 'test', 'active', '2024-05-22 13:45:43', '2024-05-22 13:45:43'),
 (16, 'test', 'tets', 'test', 'test', 'test', 'test', 'active', '2024-05-22 13:46:13', '2024-05-22 13:46:13'),
-(17, 'test', 'tets', 'test', 'test', 'test', 'test', 'active', '2024-05-22 13:48:49', '2024-05-22 13:48:49'),
 (18, 'test', 'tets', 'test', 'test', 'test', 'test', 'active', '2024-05-22 13:50:05', '2024-05-22 13:50:05'),
-(19, 'test', 'tets', 'test', 'test', 'test', 'test', 'active', '2024-05-22 13:51:07', '2024-05-22 13:51:07'),
 (20, 'test', 'tets', 'test', 'test', 'test', 'test', 'active', '2024-05-22 13:51:20', '2024-05-22 13:51:20'),
 (21, 'test', 'tets', 'test', 'test', 'test', 'test', 'active', '2024-05-22 13:57:28', '2024-05-22 13:57:28'),
 (22, 'test', 'tets', 'test', 'test', 'test', 'test', 'active', '2024-05-22 14:00:35', '2024-05-22 14:00:35'),

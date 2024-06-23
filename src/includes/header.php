@@ -100,6 +100,10 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--  -->
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<!-- Toaster CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<!-- Toaster JS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <?php
 // Define an array of notifications
 $notifications = array(
