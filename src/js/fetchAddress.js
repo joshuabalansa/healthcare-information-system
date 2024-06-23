@@ -16,17 +16,17 @@ function fetchProvincesData() {
       const selectElement = document.getElementById('provincesSelect');
 
 
-      // data.forEach(province => {
-      //   const option = document.createElement('option');
-      //   option.value = `${province.code}-${province.name.toLowerCase().replace(/ /g, "_")}`;
-      //   option.textContent = province.name;
-      //   selectElement.appendChild(option);
-      // });
+      data.forEach(province => {
+        const option = document.createElement('option');
+        option.value = `${province.code}-${province.name.toLowerCase().replace(/ /g, "_")}`;
+        option.textContent = province.name;
+        selectElement.appendChild(option);
+      });
 
-      const option = document.createElement('option');
-      option.value = "064500000-negros_occidental";
-      option.textContent = "Negros Occidental";
-      selectElement.appendChild(option);
+      // const option = document.createElement('option');
+      // option.value = "064500000-negros_occidental";
+      // option.textContent = "Negros Occidental";
+      // selectElement.appendChild(option);
       
       selectElement.addEventListener('change', event => {
         const selectedValue = event.target.value;
@@ -45,8 +45,6 @@ function fetchProvincesData() {
 }
 
 /**
- * Fetches cities data
- *
  * @param {string} provinceCode
  */
 function fetchCitiesData(provinceCode) {
@@ -92,6 +90,9 @@ function fetchCitiesData(provinceCode) {
     });
 }
 
+/**
+ * @param {string} cityCode 
+ */
 function fetchBarangaysData(cityCode) {
   const apiEndpoint = `https://psgc.gitlab.io/api/cities/${cityCode}/barangays/`;
 

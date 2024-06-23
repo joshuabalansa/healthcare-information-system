@@ -30,8 +30,6 @@ class Forms
             'father_age'            =>  ['Father Age', 'number', ''],
             'father_occupation'     =>  ['Father Occupation', 'text', ''],
             'phone_number'          =>  ['Phone Number', 'number', 'required'],
-            'appointment_time'      =>  ['Appointment Time', 'time', 'required'],
-            'appointment_date'      =>  ['Appointment Date', 'date', 'required'],
         ];
 
         return $fields;
@@ -53,8 +51,6 @@ class Forms
             'birth_date'        =>  ['Birth Date', 'date', 'required'],
             'address'           =>  ['address', 'text', 'required'],
             'phone_number'      =>  ['Phone Number', 'number', 'required'],
-            'appointment_time'  =>  ['Appointment Time', 'time', 'required'],
-            'appointment_date'  =>  ['Appointment Date', 'date', 'required'],
         ];
 
         return $fields;

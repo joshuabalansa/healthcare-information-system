@@ -51,7 +51,7 @@ class Sidebar
                                 </a>
                             </li>
                             <li>
-                                <a href="../class/Logout">
+                                <a href="<?= $_SESSION['base_url'] ?>class/Logout.php">
                                     <span class="title">Logout</span>
                                 </a>
                             </li>

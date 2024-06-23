@@ -76,7 +76,7 @@ session_start();
                             <i class="entypo-user"></i>
                         </div>
 
-                        <input type="text" class="form-control" name="username" id="username" placeholder="Username" autocomplete="off" />
+                        <input type="text" class="form-control" name="username" id="username" placeholder="Username" autocomplete="off" required />
                     </div>
 
                 </div>
@@ -88,7 +88,7 @@ session_start();
                             <i class="entypo-key"></i>
                         </div>
 
-                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off" />
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off" required />
                     </div>
 
                 </div>
@@ -108,8 +108,8 @@ session_start();
 
                 <div class="form-group">
 
-                    <a href="pages/registration-option" class="btn btn-dark">
-                       Registration
+                    <a href="pages/registration-option" class="btn btn-dark" onmouseout="this.style.textDecorationLine = 'none'" onmouseover="this.style.textDecorationLine = 'underline'">
+                        Register
                     </a>
 
                 </div>
@@ -119,7 +119,7 @@ session_start();
 
             <div class="login-bottom-links">
 
-                <a href="extra-forgot-password.html" class="link">Forgot your password?</a>
+                <!-- <a href="#" class="link">Forgot your password?</a> -->
 
                 <br />
 
