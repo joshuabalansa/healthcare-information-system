@@ -171,6 +171,7 @@ CREATE TABLE IF NOT EXISTS `patient_vaccination_records` (
   `temp` varchar(255) DEFAULT NULL,
   `remarks` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT 'not approve',
+  `patient_id` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

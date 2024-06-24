@@ -20,16 +20,20 @@ $patientData = [];
 $render = new ModalComponent('Add Vaccination Record', 'Add Vaccination Record', 'Add vaccination record to patient');
 
 if (!empty($vacId)) {
-    $patientData = $controller->get($connection->conn, 'patient_vaccination_records');
+
+    $patientData = $controller->getDataById($connection->conn, 'patient_vaccination_records', 'patient_id', $vacId);
 }
 
 if (!empty($famId)) {
+
     $patientData = $controller->get($connection->conn, 'family_planning_methods');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    storePatientRecords($connection, $controller);
+    $patientId = !empty($vacId) ? $vacId : (!empty($famId) ? $famId : '');
+
+    storePatientRecords($connection, $controller, $patientId);
 
     header('Refresh:0');
 }

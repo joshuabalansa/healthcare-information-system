@@ -562,7 +562,9 @@ function storeUsers($connection, $controller)
     header('location: index.php');
 }
 
-function storePatientRecords($connection, $controller)
+function storePatientRecords($connection, $controller, $patientId)
 {
+    $_POST['patient_id'] = $patientId;
+
     $controller->store($connection->conn, 'patient_vaccination_records', $_POST);
 }
