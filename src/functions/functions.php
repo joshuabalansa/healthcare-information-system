@@ -222,8 +222,6 @@ function updateAppointment($appointmentData, $appointment_type, $controller, $co
     sendSms($appointmentData, $message);
 
     Controllers::update($connection->conn, $appointment_type, 'user_id', $id, 'status', 'approved');
-
-    header('location: index.php');
 }
 
 
@@ -562,4 +560,9 @@ function storeUsers($connection, $controller)
     $_POST = [];
 
     header('location: index.php');
+}
+
+function storePatientRecords($connection, $controller)
+{
+    $controller->store($connection->conn, 'patient_vaccination_records', $_POST);
 }

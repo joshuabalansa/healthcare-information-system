@@ -5,6 +5,7 @@ session_start();
 require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
 require_once '../../functions/functions.php';
+require_once '../../components/ModalComponent.php';
 
 isAuthenticated();
 
@@ -16,12 +17,21 @@ $connection = new Connection();
 
 $patientData = [];
 
+$render = new ModalComponent('Add Vaccination Record', 'Add Vaccination Record', 'Add vaccination record to patient');
+
 if (!empty($vacId)) {
-    $patientData = $controller->get($connection->conn, 'vaccines');
+    $patientData = $controller->get($connection->conn, 'patient_vaccination_records');
 }
 
 if (!empty($famId)) {
     $patientData = $controller->get($connection->conn, 'family_planning_methods');
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    storePatientRecords($connection, $controller);
+
+    header('Refresh:0');
 }
 
 ?>
@@ -70,7 +80,53 @@ if (!empty($famId)) {
                     <tr>
                         <th scope="col">
                             <a href="index.php" class="btn btn-sm btn-secondary">Back</a>
-                            <a href="#" class="btn btn-sm btn-primary">Add New</a>
+                        </th>
+                        <th scope="col">
+                            <?php $render->createModal([
+                                [
+                                    'label' => 'Vaccine Name',
+                                    'id' => 'vaccine',
+                                    'name' => 'vaccine',
+                                    'type' => 'text',
+                                    'required' => true
+                                ],
+                                [
+                                    'label' => 'Age',
+                                    'id' => 'age',
+                                    'name' => 'age',
+                                    'type' => 'text',
+                                    'required' => true
+                                ],
+                                [
+                                    'label' => 'Weight',
+                                    'id' => 'wt',
+                                    'name' => 'wt',
+                                    'type' => 'text',
+                                    'required' => true
+                                ],
+                                [
+                                    'label' => 'Height',
+                                    'id' => 'ht',
+                                    'name' => 'ht',
+                                    'type' => 'text',
+                                    'required' => true
+                                ],
+                                [
+                                    'label' => 'Temperature',
+                                    'id' => 'temp',
+                                    'name' => 'temp',
+                                    'type' => 'text',
+                                    'required' => true
+                                ],
+                                [
+                                    'label' => 'Remarks',
+                                    'id' => 'remarks',
+                                    'name' => 'remarks',
+                                    'type' => 'text',
+                                    'required' => true
+                                ],
+                            ]) ?>
+
                         </th>
                     </tr>
                 </thead>

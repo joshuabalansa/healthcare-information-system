@@ -35,6 +35,8 @@ if (isset($_GET['cancel'])) {
 
 		Controllers::update($connection->conn, 'family_planning', 'user_id', $id, 'status', 'cancelled');
 	}
+
+	$toastMsg = 'Appointment has been cancelled.';
 }
 
 /**
@@ -47,7 +49,7 @@ if (isset($_GET['confirm'])) {
 
 	// header('location: index.php');
 
-	$_SESSION['toast'] = 'All Pending Appointments has been approved.';
+	$toastMsg = 'All Pending Appointments has been approved.';
 }
 
 /**
@@ -68,7 +70,7 @@ if (isset($_GET['approve'])) {
 		checkAndUpdateAppointment($famData, $controller, $connection, $id);
 	}
 
-	$_SESSION['toast'] = 'Appointment has been approved.';
+	$toastMsg = 'Appointment has been approved.';
 }
 
 $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
@@ -170,21 +172,23 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 
 			<br />
 		</div>
-		<?php if (isset($_SESSION['toast'])) : ?>
+		<?php if (!empty($toastMsg)) : ?>
 			<script>
-				Toastify({
-					text: "<?= $_SESSION['toast'] ?>",
-					duration: 3000,
-					destination: "https://github.com/apvarun/toastify-js",
-					newWindow: true,
-					close: true,
-					gravity: "top",
-					position: "right",
-					stopOnFocus: true,
-					// style: {
-					//     background: "linear-gradient(to right, #00b09b, #96c93d)",
-					// },
-				}).showToast();
+				document.addEventListener('DOMContentLoaded', function() {
+					Toastify({
+						text: "Test Toast Notification",
+						duration: 3000,
+						destination: 'https://github.com/apvarun/toastify-js',
+						newWindow: true,
+						close: true,
+						gravity: 'top',
+						position: 'right',
+						stopOnFocus: true,
+						style: {
+							background: '#198754',
+						},
+					}).showToast();
+				});
 			</script>
 		<?php endif; ?>
 		<script src="../../js/alert.js"></script>

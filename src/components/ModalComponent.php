@@ -41,7 +41,6 @@ class ModalComponent
                 </div>
             HTML;
         }
-
         return <<<HTML
 
         <div  x-data="{ showModal: false }" class="bottom-margin">
