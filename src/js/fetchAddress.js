@@ -27,7 +27,7 @@ function fetchProvincesData() {
       // option.value = "064500000-negros_occidental";
       // option.textContent = "Negros Occidental";
       // selectElement.appendChild(option);
-      
+
       selectElement.addEventListener('change', event => {
         const selectedValue = event.target.value;
         if (selectedValue) {
@@ -91,7 +91,7 @@ function fetchCitiesData(provinceCode) {
 }
 
 /**
- * @param {string} cityCode 
+ * @param {string} cityCode
  */
 function fetchBarangaysData(cityCode) {
   const apiEndpoint = `https://psgc.gitlab.io/api/cities/${cityCode}/barangays/`;

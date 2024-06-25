@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </thead>
                 <tbody>
                     <?php foreach ($controller->get($connection->conn, 'users') as $index => $user) :  ?>
-                        <?php if ($user['role'] !== 1) : ?>
+                        <?php if ($user['role'] !== 0) : ?>
                             <tr class="odd gradeX">
                                 <td><?= $index + 1 ?></td>
                                 <td><?= $user['name'] ?></td>

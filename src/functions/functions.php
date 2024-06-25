@@ -399,13 +399,13 @@ function storeVaccineData($connection, $controller)
  * Get area chart data function
  *
  * @param object $conn
- * @return object 
+ * @return object
  */
 function getMonthlyGraphData($conn)
 {
 
-    $sql = "SELECT MONTH(created_at) as month, COUNT(*) as count 
-            FROM appointments 
+    $sql = "SELECT MONTH(created_at) as month, COUNT(*) as count
+            FROM appointments
             WHERE YEAR(created_at) = YEAR(CURDATE()) AND status = 'approved'
             GROUP BY MONTH(created_at)";
 
@@ -426,17 +426,17 @@ function getMonthlyGraphData($conn)
 
 function getSplineVaccinationData($conn)
 {
-    $sql = "SELECT 
-                DATE_FORMAT(created_at, '%Y-%m') as month, 
-                COUNT(*) as count 
-            FROM 
-                appointments 
-            WHERE 
-                YEAR(created_at) = YEAR(CURDATE()) 
-                AND appointment_type = 'vaccination' 
-            GROUP BY 
+    $sql = "SELECT
+                DATE_FORMAT(created_at, '%Y-%m') as month,
+                COUNT(*) as count
+            FROM
+                appointments
+            WHERE
+                YEAR(created_at) = YEAR(CURDATE())
+                AND appointment_type = 'vaccination'
+            GROUP BY
                 DATE_FORMAT(created_at, '%Y-%m')
-            ORDER BY 
+            ORDER BY
                 month;
             ";
 
@@ -456,17 +456,17 @@ function getSplineVaccinationData($conn)
 
 function getSplineFamilyPlanningData($conn)
 {
-    $sql = "SELECT 
-                DATE_FORMAT(created_at, '%Y-%m') as month, 
-                COUNT(*) as count 
-            FROM 
-                appointments 
-            WHERE 
-                YEAR(created_at) = YEAR(CURDATE()) 
-                AND appointment_type = 'family_planning' 
-            GROUP BY 
+    $sql = "SELECT
+                DATE_FORMAT(created_at, '%Y-%m') as month,
+                COUNT(*) as count
+            FROM
+                appointments
+            WHERE
+                YEAR(created_at) = YEAR(CURDATE())
+                AND appointment_type = 'family_planning'
+            GROUP BY
                 DATE_FORMAT(created_at, '%Y-%m')
-            ORDER BY 
+            ORDER BY
                 month;
             ";
 
@@ -491,16 +491,16 @@ function getSplineFamilyPlanningData($conn)
  */
 function getSplineFamilyPlanningDataCount($conn)
 {
-    $sql = "SELECT 
-                DATE_FORMAT(created_at, '%Y-%m') as month, 
-                COUNT(*) as count 
-            FROM 
-                appointments 
-            WHERE 
+    $sql = "SELECT
+                DATE_FORMAT(created_at, '%Y-%m') as month,
+                COUNT(*) as count
+            FROM
+                appointments
+            WHERE
                 YEAR(created_at) = YEAR(CURDATE())
-            GROUP BY 
+            GROUP BY
                 DATE_FORMAT(created_at, '%Y-%m')
-            ORDER BY 
+            ORDER BY
                 month;
             ";
 
@@ -562,9 +562,18 @@ function storeUsers($connection, $controller)
     header('location: index.php');
 }
 
-function storePatientRecords($connection, $controller, $patientId)
+/**
+ * store patient records function
+ *
+ * @param object $connection
+ * @param object $controller
+ * @param string $patientId
+ * @param string $table
+ * @return void
+ */
+function storePatientRecords($connection, $controller, $patientId, $table)
 {
     $_POST['patient_id'] = $patientId;
 
-    $controller->store($connection->conn, 'patient_vaccination_records', $_POST);
+    $controller->store($connection->conn, $table, $_POST);
 }

@@ -17,7 +17,7 @@ $connection = new Connection();
 
 $patientData = [];
 
-$render = new ModalComponent('Add Vaccination Record', 'Add Vaccination Record', 'Add vaccination record to patient');
+$render = new ModalComponent('Add New Record', 'Add New Record', 'Add new record to patient');
 
 if (!empty($vacId)) {
 
@@ -33,7 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $patientId = !empty($vacId) ? $vacId : (!empty($famId) ? $famId : '');
 
-    storePatientRecords($connection, $controller, $patientId);
+    if(!empty($vacId)) {
+
+        storePatientRecords($connection, $controller, $patientId, 'patient_vaccination_records');
+    }
+
+    if(!empty($famId)) {
+        storePatientRecords($connection, $controller, $patientId, 'patient_family_planning_records');
+    }
 
     header('Refresh:0');
 }
@@ -70,23 +77,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php include '../../includes/sidebar-menu.php'; ?>
 
 
-        <div class="main-content">
+    <div class="main-content">
 
-            <?php include '../../includes/header.php'; ?>
+        <?php include '../../includes/header.php'; ?>
 
-            <hr />
+        <hr />
 
-            <br />
+        <br />
 
-            <h3>Patient Data</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">
-                            <a href="index.php" class="btn btn-sm btn-secondary">Back</a>
-                        </th>
-                        <th scope="col">
-                            <?php $render->createModal([
+        <h3>Patient Data</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <a href="index.php" class="btn btn-sm btn-secondary">Back</a>
+                        <?php
+                        if(!empty($vacId)) {
+
+                            $render->createModal([
                                 [
                                     'label' => 'Vaccine Name',
                                     'id' => 'vaccine',
@@ -129,26 +137,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     'type' => 'text',
                                     'required' => true
                                 ],
-                            ]) ?>
+                            ]);
+                        }
 
-                        </th>
+                            if (!empty($famId)) {
+
+                                $render->createModal([
+                                    [
+                                        'label' => 'Family Planning Method Name',
+                                        'id' => 'method',
+                                        'name' => 'method',
+                                        'type' => 'text',
+                                        'required' => true
+                                    ],
+                                ]);
+                            }
+                        ?>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($patientData as $data) : ?>
+
+                    <tr>
+                        <th scope="row"><?= strtoupper(isset($data['vaccine']) ? $data['vaccine'] : $data['method_name']) ?>:</th>
+                        <td>
+                            <span class="badge badge-<?= $data['status'] == 'incomplete' ? 'danger' : 'success' ?>">
+                                <?= $data['status'] ?>
+                            </span>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($patientData as $data) : ?>
-                        <tr>
-                            <th scope="row"><?= strtoupper(isset($data['vaccine']) ? $data['vaccine'] : $data['method_name']) ?>:</th>
-                            <td>
-                                <span class="badge badge-<?= $data['status'] == 'incomplete' ? 'danger' : 'success' ?>">
-                                    <?= $data['status'] ?>
-                                </span>
-                            </td>
-                        </tr>
                     <?php endforeach ?>
-                </tbody>
-            </table>
-            <br />
-        </div>
+            </tbody>
+        </table>
+        <br />
+    </div>
 </body>
-
 </html>

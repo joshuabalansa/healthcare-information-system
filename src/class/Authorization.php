@@ -19,7 +19,7 @@ class Authorization
             0 => [
                 'Dashboard'                     =>   [$baseUrl . 'dashboard', 'chart-pie'],
                 'Users Management'              =>   [$baseUrl . 'users', 'users'],
-                'Logs'                          =>   [$baseUrl . 'users/logs', 'list'],
+                'Logs Monitoring'               =>   [$baseUrl . 'users/logs', 'list'],
             ],
             1 => [
                 'Dashboard'                     =>   [$baseUrl . 'dashboard', 'chart-pie'],
