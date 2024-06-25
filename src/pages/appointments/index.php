@@ -176,7 +176,7 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 			<script>
 				document.addEventListener('DOMContentLoaded', function() {
 					Toastify({
-						text: "Test Toast Notification",
+						text: "<?= $toastMsg ?>",
 						duration: 3000,
 						destination: 'https://github.com/apvarun/toastify-js',
 						newWindow: true,

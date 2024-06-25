@@ -26,19 +26,19 @@ if (!empty($vacId)) {
 
 if (!empty($famId)) {
 
-    $patientData = $controller->get($connection->conn, 'family_planning_methods');
+    $patientData = $controller->getDataById($connection->conn, 'patient_family_planning_records', 'patient_id', $famId);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $patientId = !empty($vacId) ? $vacId : (!empty($famId) ? $famId : '');
 
-    if(!empty($vacId)) {
+    if (!empty($vacId)) {
 
         storePatientRecords($connection, $controller, $patientId, 'patient_vaccination_records');
     }
 
-    if(!empty($famId)) {
+    if (!empty($famId)) {
         storePatientRecords($connection, $controller, $patientId, 'patient_family_planning_records');
     }
 
@@ -77,100 +77,102 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php include '../../includes/sidebar-menu.php'; ?>
 
 
-    <div class="main-content">
+        <div class="main-content">
 
-        <?php include '../../includes/header.php'; ?>
+            <?php include '../../includes/header.php'; ?>
 
-        <hr />
+            <hr />
 
-        <br />
+            <br />
 
-        <h3>Patient Data</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">
-                        <a href="index.php" class="btn btn-sm btn-secondary">Back</a>
-                        <?php
-                        if(!empty($vacId)) {
+            <h3>Patient Data</h3>
 
-                            $render->createModal([
-                                [
-                                    'label' => 'Vaccine Name',
-                                    'id' => 'vaccine',
-                                    'name' => 'vaccine',
-                                    'type' => 'text',
-                                    'required' => true
-                                ],
-                                [
-                                    'label' => 'Age',
-                                    'id' => 'age',
-                                    'name' => 'age',
-                                    'type' => 'text',
-                                    'required' => true
-                                ],
-                                [
-                                    'label' => 'Weight',
-                                    'id' => 'wt',
-                                    'name' => 'wt',
-                                    'type' => 'text',
-                                    'required' => true
-                                ],
-                                [
-                                    'label' => 'Height',
-                                    'id' => 'ht',
-                                    'name' => 'ht',
-                                    'type' => 'text',
-                                    'required' => true
-                                ],
-                                [
-                                    'label' => 'Temperature',
-                                    'id' => 'temp',
-                                    'name' => 'temp',
-                                    'type' => 'text',
-                                    'required' => true
-                                ],
-                                [
-                                    'label' => 'Remarks',
-                                    'id' => 'remarks',
-                                    'name' => 'remarks',
-                                    'type' => 'text',
-                                    'required' => true
-                                ],
-                            ]);
-                        }
+            <div style="display: flex; justify-content: space-between; align-items: center;">
 
-                            if (!empty($famId)) {
+                <a href="index.php" class="btn btn-sm btn-secondary" style="font-size: 18px;">Back</a>
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <?php
+                    if (!empty($vacId)) {
 
-                                $render->createModal([
-                                    [
-                                        'label' => 'Family Planning Method Name',
-                                        'id' => 'method',
-                                        'name' => 'method',
-                                        'type' => 'text',
-                                        'required' => true
-                                    ],
-                                ]);
-                            }
-                        ?>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($patientData as $data) : ?>
+                        $render->createModal([
+                            [
+                                'label' => 'Vaccine Name',
+                                'id' => 'vaccine',
+                                'name' => 'vaccine',
+                                'type' => 'text',
+                                'required' => true
+                            ],
+                            [
+                                'label' => 'Age',
+                                'id' => 'age',
+                                'name' => 'age',
+                                'type' => 'text',
+                                'required' => true
+                            ],
+                            [
+                                'label' => 'Weight',
+                                'id' => 'wt',
+                                'name' => 'wt',
+                                'type' => 'text',
+                                'required' => true
+                            ],
+                            [
+                                'label' => 'Height',
+                                'id' => 'ht',
+                                'name' => 'ht',
+                                'type' => 'text',
+                                'required' => true
+                            ],
+                            [
+                                'label' => 'Temperature',
+                                'id' => 'temp',
+                                'name' => 'temp',
+                                'type' => 'text',
+                                'required' => true
+                            ],
+                            [
+                                'label' => 'Remarks',
+                                'id' => 'remarks',
+                                'name' => 'remarks',
+                                'type' => 'text',
+                                'required' => true
+                            ],
+                        ]);
+                    }
 
-                    <tr>
-                        <th scope="row"><?= strtoupper(isset($data['vaccine']) ? $data['vaccine'] : $data['method_name']) ?>:</th>
-                        <td>
-                            <span class="badge badge-<?= $data['status'] == 'incomplete' ? 'danger' : 'success' ?>">
-                                <?= $data['status'] ?>
-                            </span>
-                        </td>
-                    </tr>
+                    if (!empty($famId)) {
+
+                        $render->createModal([
+                            [
+                                'label' => 'Family Planning Method Name',
+                                'id' => 'method',
+                                'name' => 'method',
+                                'type' => 'text',
+                                'required' => true
+                            ],
+                        ]);
+                    }
+                    ?>
+                </div>
+            </div>
+
+            <table class="table">
+                <tbody>
+                    <?php foreach ($patientData as $data) : ?>
+
+                        <tr>
+                            <th scope="row"><?= strtoupper(isset($data['vaccine']) ? $data['vaccine'] : $data['method']) ?>:</th>
+                            <td>
+                                <span class="badge badge-<?= $data['status'] == 'not approved' ? 'danger' : 'success' ?>">
+                                    <?= ucwords($data['status']) ?>
+                                </span>
+                            </td>
+                        </tr>
                     <?php endforeach ?>
-            </tbody>
-        </table>
-        <br />
-    </div>
+                </tbody>
+            </table>
+            <br />
+        </div>
 </body>
+
 </html>

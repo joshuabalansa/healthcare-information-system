@@ -199,6 +199,17 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
+DROP TABLE IF EXISTS `patient_family_planning_records`;
+CREATE TABLE IF NOT EXISTS `patient_family_planning_records` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `method` varchar(255) DEFAULT NULL,
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'not approved',
+  `patient_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 INSERT INTO `users` (`id`, `user_id`, `name`, `username`, `password`, `role`, `status`) VALUES
 (1, NULL, 'system admin', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'active'),
 (226, NULL, 'test doctor account', 'doctor', 'd033e22ae348aeb5660fc2140aec35850c4da997', 4, 'active'),
