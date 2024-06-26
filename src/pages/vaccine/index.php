@@ -79,7 +79,7 @@ if (isset($_GET['remove'])) {
                     ['label' => 'Doses', 'id' => 'doses', 'name' => 'doses', 'type' => 'text', 'required' => false],
                     ['label' => 'Approved Ages', 'id' => 'approved_ages', 'name' => 'approved_ages', 'type' => 'text', 'required' => false],
                     ['label' => 'Description', 'id' => 'description', 'name' => 'description', 'type' => 'textarea', 'required' => false, 'rows' => 4],
-                ])
+                ], [])
             ?>
 
             <table class="table table-bordered datatable mt-5" id="table-1">

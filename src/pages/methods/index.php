@@ -74,7 +74,7 @@ if (isset($_GET['remove'])) {
 
             <?php $render->createModal([
                 ['label' => 'Method Name', 'id' => 'method_name', 'name' => 'method_name', 'type' => 'text', 'required' => true],
-            ]) ?>
+            ],[]) ?>
 
             <table class="table table-bordered datatable mt-5" id="table-1">
                 <thead>

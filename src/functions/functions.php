@@ -546,13 +546,14 @@ function storeUsers($connection, $controller)
     $name   = sanitizeInput($_POST['name']);
     $username   = sanitizeInput($_POST['username']);
     $password         = sanitizeInput(sha1($_POST['password']));
+    $role         = sanitizeInput(sha1($_POST['userSelect']));
 
     $userData = [
-        'user_id' => null,
-        'name' => $name,
-        'username' => $username,
-        'password' => $password,
-        'role' => 4
+        'user_id'   => null,
+        'name'      => $name,
+        'username'  => $username,
+        'password'  => $password,
+        'role'      => $role
     ];
 
     $controller->store($connection->conn, 'users', $userData);

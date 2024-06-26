@@ -77,7 +77,7 @@ function getRole($role)
 
             <br />
 
-            <h3>Login Logs</h3>
+            <h3>Login Logs Management</h3>
 
             <table class="table table-bordered datatable mt-5" id="table-1">
                 <thead>

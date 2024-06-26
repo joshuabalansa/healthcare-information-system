@@ -96,7 +96,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'type' => 'password',
                     'required' => true
                 ],
-
+            ], [
+                'label' => 'Select Option',
+                'id' => 'select_option',
+                'name' => 'userSelect',
+                'required' => true,
+                'options' => [
+                    [
+                        'label' => 'Healthcare Volunteers',
+                        'value' =>  1
+                    ],
+                    [
+                        'label' => 'Doctor or Nurse',
+                        'value' =>  4
+                    ]
+                ]
             ]) ?>
             <table class="table table-bordered datatable mt-5" id="table-1">
                 <thead>

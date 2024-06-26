@@ -28,7 +28,7 @@ class ModalComponent
         JS;
     }
 
-    private function create($fields)
+    private function create($fields, $selectOption)
     {
         $formFields = '';
         foreach ($fields as $field) {
@@ -41,6 +41,29 @@ class ModalComponent
                 </div>
             HTML;
         }
+
+        if(!empty($selectOption)) {
+
+            $options = '';
+
+            foreach($selectOption['options'] as $option) {
+
+              $options .= <<<HTML
+                            <option value="{$option['value']}">{$option['label']}</option>
+                         HTML;
+
+            }
+
+            $formFields .= <<<HTML
+
+                    <label for="{$selectOption['id']}">{$selectOption['label']}</label>
+                    <select class="form-control" name="{$selectOption['name']}" id="{$selectOption['id']}">
+                        {$options}
+                    </select>
+                    <br />
+                HTML;
+        }
+
         return <<<HTML
 
         <div  x-data="{ showModal: false }" class="bottom-margin">
@@ -49,7 +72,7 @@ class ModalComponent
                 <div class="modal-content">
                     <h2>{$this->title}</h2>
                     <p>{$this->content}</p>
-                    <form method="post">
+                    <form id="form-fields" method="post">
                         {$formFields}
                         <div>
                             <button type="submit" class="btn btn-primary">Save</button>
@@ -89,7 +112,7 @@ class ModalComponent
                         <table>
                         <tbody>
                             {$fields}
-                       
+
                         </tbody>
                         </table>
                         <div class="endButton">
@@ -103,11 +126,11 @@ class ModalComponent
         HTML;
     }
 
-    public function createModal($fields)
+    public function createModal($fields, $selectOption)
     {
         echo $this->styles();
         echo $this->scripts();
-        echo $this->create($fields);
+        echo $this->create($fields, $selectOption);
     }
 
     public function show($data)

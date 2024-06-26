@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 'type' => 'text',
                                 'required' => true
                             ],
-                        ]);
+                        ],[]);
                     }
 
                     if (!empty($famId)) {
@@ -150,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 'type' => 'text',
                                 'required' => true
                             ],
-                        ]);
+                        ],[]);
                     }
                     ?>
                 </div>
