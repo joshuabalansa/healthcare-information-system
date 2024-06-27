@@ -22,11 +22,13 @@ $render = new ModalComponent('Add New Record', 'Add New Record', 'Add new record
 if (!empty($vacId)) {
 
     $patientData = $controller->getDataById($connection->conn, 'patient_vaccination_records', 'patient_id', $vacId);
+    $datas =  $controller->get($connection->conn, 'vaccines');
 }
 
 if (!empty($famId)) {
 
     $patientData = $controller->getDataById($connection->conn, 'patient_family_planning_records', 'patient_id', $famId);
+    $datas =  $controller->get($connection->conn, 'family_planning_methods');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -39,11 +41,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!empty($famId)) {
+
         storePatientRecords($connection, $controller, $patientId, 'patient_family_planning_records');
     }
 
     header('Refresh:0');
 }
+
+    $selectOptions = [];
+
+    foreach($datas as $data) {
+
+        $selectOptions[] =[
+            'label' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method_name']) ? $data['method_name'] : []),
+            'value' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method_name']) ? $data['method_name'] : [])
+        ];
+    }
+
+    $selectOptionsData = [
+        'label' => 'Select Option',
+        'id' => 'select_option',
+        'name' => 'userSelect',
+        'required' => true,
+        'options' => [
+            $selectOptions
+        ]
+    ];
 
 ?>
 <!DOCTYPE html>
@@ -137,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 'type' => 'text',
                                 'required' => true
                             ],
-                        ],[]);
+                        ], []);
                     }
 
                     if (!empty($famId)) {
@@ -150,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 'type' => 'text',
                                 'required' => true
                             ],
-                        ],[]);
+                        ], []);
                     }
                     ?>
                 </div>
