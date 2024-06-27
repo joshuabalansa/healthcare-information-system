@@ -6,12 +6,13 @@ require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
 require_once '../../functions/functions.php';
 require_once '../../components/ModalComponent.php';
+require_once '../../components/SideBar.php';
 
 isAuthenticated();
 
 $vacId = $_GET['vaccination'] ?? '';
 $famId = $_GET['family_planning'] ?? '';
-
+$sideBar = new SideBar($_SESSION['routes']);
 $controller = new Controllers();
 $connection = new Connection();
 
@@ -48,25 +49,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Refresh:0');
 }
 
-    $selectOptions = [];
+$selectOptions = [];
 
-    foreach($datas as $data) {
+foreach ($datas as $data) {
 
-        $selectOptions[] =[
-            'label' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method_name']) ? $data['method_name'] : []),
-            'value' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method_name']) ? $data['method_name'] : [])
-        ];
-    }
-
-    $selectOptionsData = [
-        'label' => 'Select Option',
-        'id' => 'select_option',
-        'name' => 'userSelect',
-        'required' => true,
-        'options' => [
-            $selectOptions
-        ]
+    $selectOptions[] = [
+        'label' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method_name']) ? $data['method_name'] : []),
+        'value' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method_name']) ? $data['method_name'] : [])
     ];
+}
+
+$selectOptionsData = [
+    'label' => 'Select Option',
+    'id' => 'select_option',
+    'name' => 'userSelect',
+    'required' => true,
+    'options' => [
+        $selectOptions
+    ]
+];
 
 ?>
 <!DOCTYPE html>
@@ -97,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="page-container">
 
-        <?php include '../../includes/sidebar-menu.php'; ?>
+        <?php $sideBar->render() ?>
 
 
         <div class="main-content">
