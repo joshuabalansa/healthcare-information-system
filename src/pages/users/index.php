@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <?php if ($user['status'] == 'active') : ?>
                                         <a class="btn btn-sm btn-danger" href="#" onclick="confirmation(<?= $user['id'] ?>, 'deactivate')"><i class="entypo-cancel"></i> Deactivate</a>
                                     <?php else : ?>
-                                        <a class="btn btn-sm btn-info" href="#" onclick="confirmation(<?= $user['id'] ?>, 'reactivate')"><i class="entypo-check"></i> Reactivate</a>
+                                        <a class="btn btn-sm btn-primary" href="#" onclick="confirmation(<?= $user['id'] ?>, 'reactivate')"><i class="entypo-check"></i> Reactivate</a>
                                     <?php endif ?>
                                 </td>
                             </tr>

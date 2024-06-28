@@ -540,6 +540,11 @@ function storeMethod($connection, $controller)
     header('location: index.php');
 }
 
+/**
+ * @param object $connection
+ * @param object $controller
+ * @return void
+ */
 function storeUsers($connection, $controller)
 {
 
@@ -564,8 +569,6 @@ function storeUsers($connection, $controller)
 }
 
 /**
- * store patient records function
- *
  * @param object $connection
  * @param object $controller
  * @param string $patientId
@@ -577,4 +580,16 @@ function storePatientRecords($connection, $controller, $patientId, $table)
     $_POST['patient_id'] = $patientId;
 
     $controller->store($connection->conn, $table, $_POST);
+}
+
+/**
+ * @return void string
+ */
+function getPatientDataTypeDB()
+{
+    $vacId = $_GET['vaccination'] ?? '';
+    $famId = $_GET['family_planning'] ?? '';
+
+    return !empty($vacId) ? 'vaccine'
+        : (!empty($famId) ? 'method' : '');
 }

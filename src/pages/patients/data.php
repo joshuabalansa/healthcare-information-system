@@ -60,15 +60,14 @@ foreach ($datas as $data) {
 }
 
 $selectOptionsData = [
-    'label' => 'Select Option',
+    'label' => 'Select an Option',
     'id' => 'select_option',
-    'name' => 'userSelect',
+    'name' => getPatientDataTypeDB(),
     'required' => true,
     'options' => [
         $selectOptions
     ]
 ];
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -113,26 +112,12 @@ $selectOptionsData = [
 
             <div style="display: flex; justify-content: space-between; align-items: center;">
 
-                <a href="index.php" class="btn btn-sm btn-secondary" style="font-size: 18px;">Back</a>
+                <a href="index.php" class="btn btn-sm btn-primary">Back to patient</a>
                 <div style="display: flex; align-items: center; justify-content: center;">
                     <?php
                     if (!empty($vacId)) {
 
                         $render->createModal([
-                            [
-                                'label' => 'Vaccine Name',
-                                'id' => 'vaccine',
-                                'name' => 'vaccine',
-                                'type' => 'text',
-                                'required' => true
-                            ],
-                            [
-                                'label' => 'Age',
-                                'id' => 'age',
-                                'name' => 'age',
-                                'type' => 'text',
-                                'required' => true
-                            ],
                             [
                                 'label' => 'Weight',
                                 'id' => 'wt',
@@ -161,36 +146,32 @@ $selectOptionsData = [
                                 'type' => 'text',
                                 'required' => true
                             ],
-                        ], []);
+                        ], $selectOptionsData);
                     }
 
                     if (!empty($famId)) {
 
-                        $render->createModal([
-                            [
-                                'label' => 'Family Planning Method Name',
-                                'id' => 'method',
-                                'name' => 'method',
-                                'type' => 'text',
-                                'required' => true
-                            ],
-                        ], []);
+                        $render->createModal([], $selectOptionsData);
                     }
                     ?>
                 </div>
             </div>
 
-            <table class="table">
+            <table class="table table-hover">
                 <tbody>
                     <?php foreach ($patientData as $data) : ?>
-
                         <tr>
-                            <th scope="row"><?= strtoupper(isset($data['vaccine']) ? $data['vaccine'] : $data['method']) ?>:</th>
+                            <th scope="row">
+                                <a class="btn-sm btn btn-secondary" onclick=""><i class="entypo-cancel"></i></a>
+                                <?= strtoupper(isset($data['vaccine']) ? $data['vaccine'] : $data['method']) ?>
+                            </th>
                             <td>
-                                <span class="badge badge-<?= $data['status'] == 'not approved' ? 'danger' : 'success' ?>">
+
+                                <span class="badge badge-<?= $data['status'] == 'not approved' ? 'danger' : 'info' ?>">
                                     <?= ucwords($data['status']) ?>
                                 </span>
                             </td>
+                            <td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>

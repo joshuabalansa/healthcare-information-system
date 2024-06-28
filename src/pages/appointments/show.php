@@ -5,9 +5,11 @@ session_start();
 require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
 require_once '../../functions/functions.php';
-
+require_once '../../components/SideBar.php';
 isAuthenticated();
 
+
+$sideBar = new SideBar($_SESSION['routes']);
 $vacId = $_GET['vaccination'] ?? '';
 $famId = $_GET['family_planning'] ?? '';
 
@@ -47,8 +49,7 @@ $famData = $controller->getDataById($connection->conn, 'family_planning', 'user_
 
     <div class="page-container">
 
-        <?php include '../../includes/sidebar-menu.php'; ?>
-
+        <?php $sideBar->render() ?>
 
         <div class="main-content">
 

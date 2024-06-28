@@ -31,33 +31,34 @@ class ModalComponent
     private function create($fields, $selectOption)
     {
         $formFields = '';
-        foreach ($fields as $field) {
-            $required = $field['required'] ? 'required' : '';
+        if (!empty($fields)) {
+            foreach ($fields as $field) {
+                $required = $field['required'] ? 'required' : '';
 
-            $formFields .= <<<HTML
+                $formFields .= <<<HTML
                 <div class="form-group">
                     <label for="{$field['id']}">{$field['label']}</label>
                     <input type="{$field['type']}" id="{$field['id']}" name="{$field['name']}" {$required}>
                 </div>
-            HTML;
+                HTML;
+            }
         }
 
-        if(!empty($selectOption)) {
+        if (!empty($selectOption)) {
 
             $options = '';
+            foreach ($selectOption['options'][0] as $option) {
 
-            foreach($selectOption['options'] as $option) {
-
-              $options .= <<<HTML
-                            <option value="{$option['value']}">{$option['label']}</option>
-                         HTML;
-
+                $options .= <<<HTML
+                <option value="{$option['value']}">{$option['label']}</option>
+                HTML;
             }
 
             $formFields .= <<<HTML
 
                     <label for="{$selectOption['id']}">{$selectOption['label']}</label>
-                    <select class="form-control" name="{$selectOption['name']}" id="{$selectOption['id']}">
+                    <select required class="form-control" name="{$selectOption['name']}" id="{$selectOption['id']}">
+                        <option value="">Select a</option>
                         {$options}
                     </select>
                     <br />
@@ -121,7 +122,7 @@ class ModalComponent
                         </div>
                     </div>
                 </div>
-                    <a class='btn btn-info' href="#" @click="showModal = true"><i class="entypo-info"></i></a>
+                    <a class='btn btn-primary' href="#" @click="showModal = true"><i class="entypo-info"></i></a>
             </div>
         HTML;
     }
