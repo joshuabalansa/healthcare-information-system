@@ -31,6 +31,20 @@ if (!empty($famId)) {
     $patientData = $controller->getDataById($connection->conn, 'patient_family_planning_records', 'patient_id', $famId);
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $id = $_POST['id'];
+    $status = $_POST['status'];
+
+    if ($_POST['type'] == 'vaccination') {
+
+        Controllers::update($connection->conn, 'patient_vaccination_records', 'id', $id, 'status', 'approved');
+    }
+    if ($_POST['type'] == 'family_planning') {
+
+        Controllers::update($connection->conn, 'patient_family_planning_records', 'id', $id, 'status', 'approved');
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +64,7 @@ if (!empty($famId)) {
     <link rel="stylesheet" href="../../assets/css/neon-theme.css">
     <link rel="stylesheet" href="../../assets/css/neon-forms.css">
     <link rel="stylesheet" href="../../assets/css/custom.css">
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../assets/js/jquery-1.11.3.min.js"></script>
 
 </head>
@@ -102,9 +116,9 @@ if (!empty($famId)) {
                                     </span>
                                 </td>
                                 <td class="center">
-                                    <a href="#" class="btn btn-sm btn-info btn-icon icon-left">
+                                    <button onclick="updateVaccinationAssessment(<?= $assessment['id'] ?>)" class="btn btn-sm btn-info btn-icon icon-left">
                                         Approve<i class="entypo-check"></i>
-                                    </a>
+                                    </button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -117,7 +131,7 @@ if (!empty($famId)) {
                             <th>Weight</th>
                             <th>Height</th>
                             <th>Temperature</th>
-                            <th>Status</th>
+                            <th>Status</th>99
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -146,9 +160,9 @@ if (!empty($famId)) {
                                     </span>
                                 </td>
                                 <td class="center">
-                                    <a href="#" class="btn btn-sm btn-info btn-icon icon-left">
+                                    <button onclick="updateFamilyPlanningAssessment(<?= $assessment['id'] ?>)" class="btn btn-sm btn-info btn-icon icon-left">
                                         Approve<i class="entypo-check"></i>
-                                    </a>
+                                    </button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -166,7 +180,45 @@ if (!empty($famId)) {
             <?php endif; ?>
             <br />
         </div>
+        <script>
+            function updateVaccinationAssessment(id) {
+                $.ajax({
+                    url: '<?php echo $_SERVER["PHP_SELF"]; ?>',
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        status: 'approved',
+                        type: 'vaccination'
+                    },
+                    success: function(response) {
+                        alert('approved');
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Failed to update status');
+                    }
+                });
+            }
 
+            function updateFamilyPlanningAssessment(id) {
+                $.ajax({
+                    url: '<?php echo $_SERVER["PHP_SELF"]; ?>',
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        status: 'approved',
+                        type: 'family_planning'
+                    },
+                    success: function(response) {
+                        alert('approved');
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Failed to update status');
+                    }
+                });
+            }
+        </script>
 </body>
 
 </html>
