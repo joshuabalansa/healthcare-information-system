@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * @param mixed $data
  * @return void
@@ -583,7 +582,7 @@ function storePatientRecords($connection, $controller, $patientId, $table)
 }
 
 /**
- * @return void string
+ * @return string
  */
 function getPatientDataTypeDB()
 {

@@ -60,7 +60,7 @@ foreach ($datas as $data) {
 }
 
 $selectOptionsData = [
-    'label' => 'Select an Option',
+    'label' => 'Select ' . ucfirst(getPatientDataTypeDB()),
     'id' => 'select_option',
     'name' => getPatientDataTypeDB(),
     'required' => true,
@@ -109,11 +109,11 @@ $selectOptionsData = [
             <br />
 
             <h3>Patient Data</h3>
-
-            <div style="display: flex; justify-content: space-between; align-items: center;">
+            <p>This shows the patient Data</p>
+            <!-- <p>Appointment Schedule: june, 20, 2021 wed 2:20PM</p> -->
+            <div style="display: flex; justify-content: space-between; align-items: start;">
 
                 <a href="index.php" class="btn btn-sm btn-primary">Back to patient</a>
-                <div style="display: flex; align-items: center; justify-content: center;">
                     <?php
                     if (!empty($vacId)) {
 
@@ -154,7 +154,7 @@ $selectOptionsData = [
                         $render->createModal([], $selectOptionsData);
                     }
                     ?>
-                </div>
+                <a href="#" class="btn btn-primary" title="Patient Schedules"><i class="entypo-clock"></i>Create Schedule</a>
             </div>
 
             <table class="table table-hover">
@@ -162,7 +162,6 @@ $selectOptionsData = [
                     <?php foreach ($patientData as $data) : ?>
                         <tr>
                             <th scope="row">
-                                <a class="btn-sm btn btn-secondary" onclick=""><i class="entypo-cancel"></i></a>
                                 <?= strtoupper(isset($data['vaccine']) ? $data['vaccine'] : $data['method']) ?>
                             </th>
                             <td>
@@ -172,6 +171,9 @@ $selectOptionsData = [
                                 </span>
                             </td>
                             <td>
+                                <a href="#" class="btn btn-sm btn-info">Edit</a>
+                                <a href="#">Delete</a>
+                            </td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>

@@ -27,7 +27,7 @@ function notify(type) {
         confirmButtonText: `Yes, ${type} it!`
 
     }).then((result) => {
-
+  
         if (result.isConfirmed) {
             window.location.href = `index.php?${type}=approve`;
         }

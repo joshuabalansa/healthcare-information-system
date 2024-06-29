@@ -17,7 +17,7 @@ class Sidebar
                 <header class="logo-env">
                     <div class="logo">
                         <p class="lead">ADMIN</p>
-                        <p>@<?= $_SESSION['username'] ?></p>
+                        <p>Welcome <?= ucfirst($_SESSION['username']) ?></p>
                     </div>
                     <div class="sidebar-collapse">
                         <a href="#" class="sidebar-collapse-icon">
