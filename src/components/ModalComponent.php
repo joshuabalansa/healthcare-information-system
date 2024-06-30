@@ -97,9 +97,9 @@ class ModalComponent
                 $field = ucwords(str_replace('_', ' ', $field));
 
                 $fields .= "<tr>
-                    <th scope='row'>{$field}</th>
-                    <td>{$value}</td>
-                    </tr>";
+                                <th scope='row'>{$field}</th>
+                                <td>{$value}</td>
+                            </tr>";
             }
         }
 

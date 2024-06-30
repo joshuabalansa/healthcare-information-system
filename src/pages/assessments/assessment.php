@@ -64,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="../../assets/css/neon-theme.css">
     <link rel="stylesheet" href="../../assets/css/neon-forms.css">
     <link rel="stylesheet" href="../../assets/css/custom.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../assets/js/jquery-1.11.3.min.js"></script>
 
 </head>
@@ -131,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <th>Weight</th>
                             <th>Height</th>
                             <th>Temperature</th>
-                            <th>Status</th>99
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -146,6 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <th>#</th>
                             <th>Method</th>
                             <th>Status</th>
+                            <th>Updated at</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -159,6 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <?= $assessment['status'] ?>
                                     </span>
                                 </td>
+                                <td><?= $assessment['updated_at'] ?></td>
                                 <td class="center">
                                     <button onclick="updateFamilyPlanningAssessment(<?= $assessment['id'] ?>)" class="btn btn-sm btn-info btn-icon icon-left">
                                         Approve<i class="entypo-check"></i>
@@ -172,6 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <th>#</th>
                             <th>Method</th>
                             <th>Status</th>
+                            <th>Updated at</th>
                             <th>Action</th>
                         </tr>
                         </thead>

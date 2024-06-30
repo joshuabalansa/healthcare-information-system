@@ -71,7 +71,7 @@ $famData = $controller->getDataById($connection->conn, 'family_planning', 'user_
                         <?php if ($field !== 'id' && $field !== 'user_id') : ?>
                             <tr>
                                 <th scope="row"><?= ucwords(str_replace('_', ' ', $field)) ?>:</th>
-                                <td><?= $value ?></td>
+                                <td><?= $value ?? '?' ?></td>
                             </tr>
                         <?php endif ?>
                     <?php endforeach ?>

@@ -31,15 +31,13 @@ class Authorization
             ],
             2 => [
                 'Dashboard'                     =>   [$baseUrl . 'dashboard', 'folder'],
-                'Vaccinations'                  =>   [$baseUrl . 'vaccination', 'archive'],
                 'Schedules'                     =>   [$baseUrl . 'schedule', 'clock'],
-                'Records'                       =>   [$baseUrl . 'records', 'folder']
+                'Records'                       =>   [$baseUrl . 'patient_user/records', 'folder']
             ],
             3 => [
                 'Dashboard'                     =>   [$baseUrl . 'dashboard', 'folder'],
-                'Family Planning'               =>   [$baseUrl . 'family_planning', 'users'],
-                'Schedules'                     =>   [$baseUrl . 'schedules', 'clock'],
-                'Records'                       =>   [$baseUrl . 'records', 'folder']
+                'Schedules'                     =>   [$baseUrl . 'schedule', 'clock'],
+                'Records'                       =>   [$baseUrl . 'patient_user/records', 'folder']
             ],
             4 => [
                 'Dashboard'                     =>   [$baseUrl . 'dashboard', 'folder'],

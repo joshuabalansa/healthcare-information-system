@@ -41,6 +41,7 @@ function setSessions($user)
 {
 
     $_SESSION['user_id']  = $user['id'];
+    $_SESSION['patient_id']  =  $user['user_id'];
     $_SESSION['username'] = $user['username'];
     $_SESSION['role']     = $user['role'];
 

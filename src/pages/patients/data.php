@@ -12,6 +12,7 @@ isAuthenticated();
 
 $vacId = $_GET['vaccination'] ?? '';
 $famId = $_GET['family_planning'] ?? '';
+
 $sideBar = new SideBar($_SESSION['routes']);
 $controller = new Controllers();
 $connection = new Connection();
@@ -24,14 +25,15 @@ if (!empty($vacId)) {
 
     $patientData = $controller->getDataById($connection->conn, 'patient_vaccination_records', 'patient_id', $vacId);
     $datas =  $controller->get($connection->conn, 'vaccines');
+    $table = 'patient_vaccination_records';
 }
 
 if (!empty($famId)) {
 
     $patientData = $controller->getDataById($connection->conn, 'patient_family_planning_records', 'patient_id', $famId);
     $datas =  $controller->get($connection->conn, 'family_planning_methods');
+    $table = 'patient_family_planning_records';
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $patientId = !empty($vacId) ? $vacId : (!empty($famId) ? $famId : '');
@@ -46,7 +48,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         storePatientRecords($connection, $controller, $patientId, 'patient_family_planning_records');
     }
 
-    header('Refresh:0');
+
+    $id = $_POST['id'] ?? '';
+    $type = $_POST['status'] ?? '';
+
+    if ($type == 'vaccination') {
+
+        Controllers::delete($connection->conn, 'patient_vaccination_records', $id, '');
+    } else {
+        Controllers::delete($connection->conn, 'patient_family_planning_records', $id, '');
+    }
+
+    header('refresh: 0');
 }
 
 $selectOptions = [];
@@ -68,6 +81,11 @@ $selectOptionsData = [
         $selectOptions
     ]
 ];
+
+// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,107 +97,134 @@ $selectOptionsData = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Neon Admin Panel" />
     <meta name="author" content="" />
-    <title></title>
+    <title>Patient Data</title>
     <link rel="stylesheet" href="../../assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
     <link rel="stylesheet" href="../../assets/css/font-icons/entypo/css/entypo.css">
-
     <link rel="stylesheet" href="../../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../../assets/css/neon-core.css">
     <link rel="stylesheet" href="../../assets/css/neon-theme.css">
     <link rel="stylesheet" href="../../assets/css/neon-forms.css">
     <link rel="stylesheet" href="../../assets/css/custom.css">
-
     <script src="../../assets/js/jquery-1.11.3.min.js"></script>
 
 </head>
 
 <body class="page-body  page-fade">
 
-    <div class="page-container">
+    <div class="page-container" x-data="{ showModal: false }">
 
-        <?php $sideBar->render() ?>
 
+        <?php $sideBar->render(); ?>
 
         <div class="main-content">
 
             <?php include '../../includes/header.php'; ?>
-
             <hr />
 
             <br />
 
             <h3>Patient Data</h3>
-            <p>This shows the patient Data</p>
-            <!-- <p>Appointment Schedule: june, 20, 2021 wed 2:20PM</p> -->
-            <div style="display: flex; justify-content: space-between; align-items: start;">
 
-                <a href="index.php" class="btn btn-sm btn-primary">Back to patient</a>
-                    <?php
-                    if (!empty($vacId)) {
+            <?php
+            if (!empty($vacId)) {
 
-                        $render->createModal([
-                            [
-                                'label' => 'Weight',
-                                'id' => 'wt',
-                                'name' => 'wt',
-                                'type' => 'text',
-                                'required' => true
-                            ],
-                            [
-                                'label' => 'Height',
-                                'id' => 'ht',
-                                'name' => 'ht',
-                                'type' => 'text',
-                                'required' => true
-                            ],
-                            [
-                                'label' => 'Temperature',
-                                'id' => 'temp',
-                                'name' => 'temp',
-                                'type' => 'text',
-                                'required' => true
-                            ],
-                            [
-                                'label' => 'Remarks',
-                                'id' => 'remarks',
-                                'name' => 'remarks',
-                                'type' => 'text',
-                                'required' => true
-                            ],
-                        ], $selectOptionsData);
-                    }
+                $render->createModal([
+                    [
+                        'label' => 'Weight',
+                        'id' => 'wt',
+                        'name' => 'wt',
+                        'type' => 'text',
+                        'required' => true
+                    ],
+                    [
+                        'label' => 'Height',
+                        'id' => 'ht',
+                        'name' => 'ht',
+                        'type' => 'text',
+                        'required' => true
+                    ],
+                    [
+                        'label' => 'Temperature',
+                        'id' => 'temp',
+                        'name' => 'temp',
+                        'type' => 'text',
+                        'required' => true
+                    ],
+                    [
+                        'label' => 'Remarks',
+                        'id' => 'remarks',
+                        'name' => 'remarks',
+                        'type' => 'text',
+                        'required' => true
+                    ],
+                ], $selectOptionsData);
+            }
 
-                    if (!empty($famId)) {
+            if (!empty($famId)) {
 
-                        $render->createModal([], $selectOptionsData);
-                    }
-                    ?>
-                <a href="#" class="btn btn-primary" title="Patient Schedules"><i class="entypo-clock"></i>Create Schedule</a>
-            </div>
+                $render->createModal([], $selectOptionsData);
+            }
+            ?>
 
-            <table class="table table-hover">
+            <table class="table table-bordered datatable mt-5" id="table-1">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Method</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <?php foreach ($patientData as $data) : ?>
-                        <tr>
-                            <th scope="row">
-                                <?= strtoupper(isset($data['vaccine']) ? $data['vaccine'] : $data['method']) ?>
-                            </th>
-                            <td>
-
+                    <?php foreach ($patientData as  $index => $data) : ?>
+                        <tr class="odd gradeX">
+                            <td><?= $index + 1 ?></td>
+                            <td><?= strtoupper(isset($data['vaccine']) ? $data['vaccine'] : $data['method']) ?></td>
+                            <td class="center">
                                 <span class="badge badge-<?= $data['status'] == 'not approved' ? 'danger' : 'info' ?>">
                                     <?= ucwords($data['status']) ?>
                                 </span>
                             </td>
                             <td>
-                                <a href="#" class="btn btn-sm btn-info">Edit</a>
-                                <a href="#">Delete</a>
+                                <?= $render->show($controller->getDataById($connection->conn, $table, 'id', $data['id'])) ?>
                             </td>
                         </tr>
-                    <?php endforeach ?>
+                    <?php endforeach; ?>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Method</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                </tfoot>
             </table>
             <br />
         </div>
+
+        <script>
+            function removeBtn(id) {
+                $.ajax({
+                    url: '<?php echo $_SERVER["PHP_SELF"]; ?>',
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        type: 'vaccination'
+                    },
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+
+                        alert(error);
+                        console.error(error)
+                    }
+                });
+            }
+        </script>
+
 </body>
 
 </html>

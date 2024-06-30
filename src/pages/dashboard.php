@@ -115,7 +115,8 @@ $monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
 			<?php endif; ?>
 
 
-			<?php if ($_SESSION['role'] !== 1 && $_SESSION['role'] !== 4 && $_SESSION['role'] !== 0) : ?>
+			<?php if (false) : // if ($_SESSION['role'] !== 1 && $_SESSION['role'] !== 4 && $_SESSION['role'] !== 0) : 
+			?>
 				<div id='calendar'></div>
 
 				<script>
