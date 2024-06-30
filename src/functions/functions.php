@@ -557,7 +557,7 @@ function storeUsers($connection, $controller)
         'name'      => $name,
         'username'  => $username,
         'password'  => $password,
-        'role'      => $role
+        'role'      => intval($role)
     ];
 
     $controller->store($connection->conn, 'users', $userData);

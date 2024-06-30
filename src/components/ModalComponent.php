@@ -45,24 +45,21 @@ class ModalComponent
         }
 
         if (!empty($selectOption)) {
-
-            $options = '';
-            foreach ($selectOption['options'][0] as $option) {
-
-                $options .= <<<HTML
-                <option value="{$option['value']}">{$option['label']}</option>
-                HTML;
+            $optionsHtml = '';
+            foreach ($selectOption['options'] as $option) {
+                $optionsHtml .= <<<HTML
+                <option value='{$option['value']}'>{$option['label']}</option>
+            HTML;
             }
 
             $formFields .= <<<HTML
-
-                    <label for="{$selectOption['id']}">{$selectOption['label']}</label>
-                    <select required class="form-control" name="{$selectOption['name']}" id="{$selectOption['id']}">
-                        <option value="">Select a</option>
-                        {$options}
-                    </select>
-                    <br />
-                HTML;
+            <label for="{$selectOption['id']}">{$selectOption['label']}</label>
+            <select required class="form-control" name="{$selectOption['name']}" id="{$selectOption['id']}">
+                <option value="">Select an option</option>
+                {$optionsHtml}
+            </select>
+            <br />
+        HTML;
         }
 
         return <<<HTML
