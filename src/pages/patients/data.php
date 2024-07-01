@@ -130,6 +130,13 @@ $selectOptionsData = [
 
                 $render->createModal([
                     [
+                        'label' => 'Age',
+                        'id' => 'age',
+                        'name' => 'age',
+                        'type' => 'text',
+                        'required' => true
+                    ],
+                    [
                         'label' => 'Weight',
                         'id' => 'wt',
                         'name' => 'wt',
@@ -155,7 +162,7 @@ $selectOptionsData = [
                         'id' => 'remarks',
                         'name' => 'remarks',
                         'type' => 'text',
-                        'required' => true
+                        'required' => false
                     ],
                 ], $selectOptionsData);
             }

@@ -46,7 +46,7 @@ class ModalComponent
 
         if (!empty($selectOption)) {
             $optionsHtml = '';
-            foreach ($selectOption['options'] as $option) {
+            foreach ($selectOption['options'][0] as $option) {
                 $optionsHtml .= <<<HTML
                 <option value='{$option['value']}'>{$option['label']}</option>
             HTML;
