@@ -45,21 +45,39 @@ class ModalComponent
         }
 
         if (!empty($selectOption)) {
-            $optionsHtml = '';
-            foreach ($selectOption['options'][0] as $option) {
-                $optionsHtml .= <<<HTML
-                <option value='{$option['value']}'>{$option['label']}</option>
+            if (count($selectOption['options'][0]) == 2) {
+                $optionsHtml = '';
+                foreach ($selectOption['options'] as $option) {
+                    $optionsHtml .= <<<HTML
+                    <option value='{$option['value']}'>{$option['label']}</option>
+                HTML;
+                }
+
+                $formFields .= <<<HTML
+                <label for="{$selectOption['id']}">{$selectOption['label']}</label>
+                <select required class="form-control" name="{$selectOption['name']}" id="{$selectOption['id']}">
+                    <option value="">Select an option</option>
+                    {$optionsHtml}
+                </select>
+                <br />
+            HTML;
+            } else {
+                $optionsHtml = '';
+                foreach ($selectOption['options'][0] as $option) {
+                    $optionsHtml .= <<<HTML
+                    <option value='{$option['value']}'>{$option['label']}</option>
+                HTML;
+                }
+
+                $formFields .= <<<HTML
+                <label for="{$selectOption['id']}">{$selectOption['label']}</label>
+                <select required class="form-control" name="{$selectOption['name']}" id="{$selectOption['id']}">
+                    <option value="">Select an option</option>
+                    {$optionsHtml}
+                </select>
+                <br />
             HTML;
             }
-
-            $formFields .= <<<HTML
-            <label for="{$selectOption['id']}">{$selectOption['label']}</label>
-            <select required class="form-control" name="{$selectOption['name']}" id="{$selectOption['id']}">
-                <option value="">Select an option</option>
-                {$optionsHtml}
-            </select>
-            <br />
-        HTML;
         }
 
         return <<<HTML
