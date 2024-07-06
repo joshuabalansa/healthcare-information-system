@@ -7,9 +7,9 @@ class ModalComponent
 
     public function __construct($btnName, $title, $content)
     {
-        $this->btnName = $btnName;
-        $this->title = $title;
-        $this->content = $content;
+        $this->btnName  = $btnName;
+        $this->title    = $title;
+        $this->content  = $content;
     }
 
     private function styles()

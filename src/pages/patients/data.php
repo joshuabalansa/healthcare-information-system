@@ -34,6 +34,7 @@ if (!empty($famId)) {
     $datas =  $controller->get($connection->conn, 'family_planning_methods');
     $table = 'patient_family_planning_records';
 }
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $patientId = !empty($vacId) ? $vacId : (!empty($famId) ? $famId : '');
@@ -48,18 +49,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         storePatientRecords($connection, $controller, $patientId, 'patient_family_planning_records');
     }
 
+    header('refresh: 0');
+}
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $input = json_decode(file_get_contents('php://input'), true); // Read raw input data
 
-    $id = $_POST['id'] ?? '';
-    $type = $_POST['status'] ?? '';
+    $id = $input['id'] ?? '';
+    $type = $input['type'] ?? '';
 
     if ($type == 'vaccination') {
 
-        Controllers::delete($connection->conn, 'patient_vaccination_records', $id, '');
+        Controllers::delete($connection->conn, 'patient_vaccination_records', $id, 'data.php');
     } else {
-        Controllers::delete($connection->conn, 'patient_family_planning_records', $id, '');
-    }
 
-    header('refresh: 0');
+        Controllers::delete($connection->conn, 'patient_family_planning_records', $id, 'data.php');
+    }
 }
 
 $selectOptions = [];
@@ -81,11 +85,6 @@ $selectOptionsData = [
         $selectOptions
     ]
 ];
-
-// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-
-// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -215,18 +214,18 @@ $selectOptionsData = [
             function removeBtn(id) {
                 $.ajax({
                     url: '<?php echo $_SERVER["PHP_SELF"]; ?>',
-                    type: 'POST',
-                    data: {
+                    type: 'DELETE',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
                         id: id,
                         type: 'vaccination'
-                    },
+                    }),
                     success: function(response) {
+                        console.log('Delete Success');
                         location.reload();
                     },
                     error: function(xhr, status, error) {
-
                         alert(error);
-                        console.error(error)
                     }
                 });
             }

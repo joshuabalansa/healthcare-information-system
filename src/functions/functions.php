@@ -547,9 +547,9 @@ function storeMethod($connection, $controller)
 function storeUsers($connection, $controller)
 {
 
-    $name   = sanitizeInput($_POST['name']);
-    $username   = sanitizeInput($_POST['username']);
-    $password         = sanitizeInput(sha1($_POST['password']));
+    $name         = sanitizeInput($_POST['name']);
+    $username     = sanitizeInput($_POST['username']);
+    $password     = sanitizeInput(sha1($_POST['password']));
     $role         = sanitizeInput(sha1($_POST['userSelect']));
 
     $userData = [

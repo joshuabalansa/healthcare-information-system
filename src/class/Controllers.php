@@ -91,6 +91,8 @@ class Controllers
 
             $stmt->execute([$id]);
 
+            exit;
+
             header("location: $redirect");
         } catch (PDOException $e) {
 
