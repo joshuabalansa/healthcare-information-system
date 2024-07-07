@@ -81,7 +81,7 @@ class Controllers
      * @param int $id
      * @return void
      */
-    public static function delete($conn, $table, $id, $redirect)
+    public static function delete($conn, $table, $id)
     {
 
         try {
@@ -91,9 +91,6 @@ class Controllers
 
             $stmt->execute([$id]);
 
-            exit;
-
-            header("location: $redirect");
         } catch (PDOException $e) {
 
             die($e->getMessage());

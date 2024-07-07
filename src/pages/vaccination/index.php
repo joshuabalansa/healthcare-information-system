@@ -27,10 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (isset($_GET['remove'])) {
-    
+
     $id = $_GET['remove'];
 
-    Controllers::delete($connection->conn, 'vaccines', $id, 'index.php');
+    Controllers::delete($connection->conn, 'vaccines', $id);
+
+    header('location: index.php');
 }
 ?>
 
