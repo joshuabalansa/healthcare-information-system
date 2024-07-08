@@ -39,52 +39,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $patientId = !empty($vacId) ? $vacId : (!empty($famId) ? $famId : '');
 
-    if (!empty($vacId)) {
+    storePatientData($connection, $controller, $patientId, $vacId, $famId);
 
-        storePatientRecords($connection, $controller, $patientId, 'patient_vaccination_records');
-    }
-
-    if (!empty($famId)) {
-
-        storePatientRecords($connection, $controller, $patientId, 'patient_family_planning_records');
-    }
-
-    header('refresh: 0');
-}
-if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    $input = json_decode(file_get_contents('php://input'), true); // Read raw input data
-
-    $id = $input['id'] ?? '';
-    $type = $input['type'] ?? '';
-
-    if ($type == 'vaccination') {
-
-        Controllers::delete($connection->conn, 'patient_vaccination_records', $id, 'data.php');
-    } else {
-
-        Controllers::delete($connection->conn, 'patient_family_planning_records', $id, 'data.php');
-    }
 }
 
-$selectOptions = [];
+if (isset($_GET['removeMethod'])) {
 
-foreach ($datas as $data) {
-
-    $selectOptions[] = [
-        'label' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method_name']) ? $data['method_name'] : []),
-        'value' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method_name']) ? $data['method_name'] : [])
-    ];
+    removePatientData($connection, $controller, $_GET['removeMethod']);
 }
 
-$selectOptionsData = [
-    'label' => 'Select ' . ucfirst(getPatientDataTypeDB()),
-    'id' => 'select_option',
-    'name' => getPatientDataTypeDB(),
-    'required' => true,
-    'options' => [
-        $selectOptions
-    ]
-];
+
+$selectOptionsData = formatSelectedOptions($datas);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -192,7 +159,10 @@ $selectOptionsData = [
                                 </span>
                             </td>
                             <td>
-                                <?= $render->show($controller->getDataById($connection->conn, $table, 'id', $data['id'])) ?>
+                                <div style="display: flex;">
+                                    <?= $render->show($controller->getDataById($connection->conn, $table, 'id', $data['id'])) ?>
+                                    <button onclick="removeMethod(<?= $data['id'] ?>)" style="margin-left: 10px;" class="btn btn-sm btn-secondary">Remove</button>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -211,23 +181,17 @@ $selectOptionsData = [
         </div>
 
         <script>
-            function removeBtn(id) {
-                $.ajax({
-                    url: '<?php echo $_SERVER["PHP_SELF"]; ?>',
-                    type: 'DELETE',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        id: id,
-                        type: 'vaccination'
-                    }),
-                    success: function(response) {
-                        console.log('Delete Success');
-                        location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        alert(error);
-                    }
-                });
+            function removeMethod(id) {
+                const confirmation = confirm("Are you sure you want to remove this patient data?");
+
+                if (confirmation) {
+
+                    const url = new URL(window.location.href);
+                    const params = new URLSearchParams(url.search);
+
+                    params.set('removeMethod', id);
+                    window.location.href = `${url.pathname}?${params.toString()}`;
+                }
             }
         </script>
 

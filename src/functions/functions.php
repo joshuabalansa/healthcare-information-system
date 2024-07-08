@@ -592,3 +592,83 @@ function getPatientDataTypeDB()
     return !empty($vacId) ? 'vaccine'
         : (!empty($famId) ? 'method' : '');
 }
+
+/**
+ * @param object $connection
+ * @param object $controller
+ * @param string $patientId
+ */
+function storePatientData($connection, $controller, $patientId, $vacId, $famId) {
+
+    if (!empty($vacId)) {
+
+        storePatientRecords($connection, $controller, $patientId, 'patient_vaccination_records');
+    }
+
+    if (!empty($famId)) {
+
+        storePatientRecords($connection, $controller, $patientId, 'patient_family_planning_records');
+    }
+
+    header('refresh: 0');
+}
+/**
+ * @param object $connection
+ * @param object $controllers
+ * @param int $id
+ */
+function removePatientData($connection, $controllers, $id) {
+
+    if (!empty($id)) {
+        try {
+
+            if (isset($_GET['vaccination'])) {
+
+                Controllers::delete($connection->conn, 'patient_vaccination_records', $id);
+
+            } elseif (isset($_GET['family_planning'])) {
+
+                Controllers::delete($connection->conn, 'patient_family_planning_records', $id);
+            }
+
+            $currentUrl = strtok($_SERVER["REQUEST_URI"], '?');
+            $params = $_GET;
+
+            unset($params['removeMethod']);
+
+            $queryString = http_build_query($params);
+
+            header("Location: $currentUrl?$queryString");
+
+            exit();
+
+        } catch (Exception $e) {
+
+            echo "Error: " . $e->getMessage();
+        }
+    }
+}
+
+function formatSelectedOptions($datas) {
+    $selectOptions = [];
+
+    foreach ($datas as $data) {
+
+        $selectOptions[] = [
+            'label' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method_name']) ? $data['method_name'] : []),
+            'value' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method_name']) ? $data['method_name'] : [])
+        ];
+    }
+
+    $selectOptionsData = [
+        'label' => 'Select ' . ucfirst(getPatientDataTypeDB()),
+        'id' => 'select_option',
+        'name' => getPatientDataTypeDB(),
+        'required' => true,
+        'options' => [
+            $selectOptions
+        ]
+    ];
+
+    return $selectOptionsData;
+}

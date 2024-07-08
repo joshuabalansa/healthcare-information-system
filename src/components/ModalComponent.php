@@ -112,10 +112,19 @@ class ModalComponent
                 $field = ucwords(str_replace('_', ' ', $field));
 
                 $fields .= "<tr>
-                                <th scope='row'>{$field}</th>
-                                <td>{$value}</td>
-                            </tr>";
+                    <th scope='row'>{$field}</th>
+                    <td>{$value}</td>
+                    </tr>";
             }
+        }
+
+        $removeBtn = "";
+
+        if(basename($_SERVER['PHP_SELF']) !== 'data.php') {
+
+            $removeBtn = <<<HTML
+                        <button onclick="removeBtn({$data[0]['id']})" @click="showModal = false" class="btn btn-danger">Remove</button>
+                    HTML;
         }
 
         return <<<HTML
@@ -128,11 +137,10 @@ class ModalComponent
                         <table>
                         <tbody>
                             {$fields}
-
                         </tbody>
                         </table>
                         <div class="endButton">
-                            <button onclick="removeBtn({$data[0]['id']})" @click="showModal = false" class="btn btn-danger">Remove</button>
+                            {$removeBtn}
                             <button @click="showModal = false" class="btn btn-outline-primary">Close</button>
                         </div>
                     </div>
