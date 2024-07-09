@@ -598,7 +598,8 @@ function getPatientDataTypeDB()
  * @param object $controller
  * @param string $patientId
  */
-function storePatientData($connection, $controller, $patientId, $vacId, $famId) {
+function storePatientData($connection, $controller, $patientId, $vacId, $famId)
+{
 
     if (!empty($vacId)) {
 
@@ -617,7 +618,8 @@ function storePatientData($connection, $controller, $patientId, $vacId, $famId) 
  * @param object $controllers
  * @param int $id
  */
-function removePatientData($connection, $controllers, $id) {
+function removePatientData($connection, $controllers, $id)
+{
 
     if (!empty($id)) {
         try {
@@ -625,7 +627,6 @@ function removePatientData($connection, $controllers, $id) {
             if (isset($_GET['vaccination'])) {
 
                 Controllers::delete($connection->conn, 'patient_vaccination_records', $id);
-
             } elseif (isset($_GET['family_planning'])) {
 
                 Controllers::delete($connection->conn, 'patient_family_planning_records', $id);
@@ -641,7 +642,6 @@ function removePatientData($connection, $controllers, $id) {
             header("Location: $currentUrl?$queryString");
 
             exit();
-
         } catch (Exception $e) {
 
             echo "Error: " . $e->getMessage();
@@ -649,7 +649,8 @@ function removePatientData($connection, $controllers, $id) {
     }
 }
 
-function formatSelectedOptions($datas) {
+function formatSelectedOptions($datas)
+{
     $selectOptions = [];
 
     foreach ($datas as $data) {
@@ -671,4 +672,18 @@ function formatSelectedOptions($datas) {
     ];
 
     return $selectOptionsData;
+}
+
+function convertTime($time24)
+{
+    $time12 = date("h:i A", strtotime($time24));
+
+    return $time12;
+}
+
+function convertMonth($date)
+{
+    $formatted_date = date("F d, Y", strtotime($date));
+
+    return $formatted_date;
 }

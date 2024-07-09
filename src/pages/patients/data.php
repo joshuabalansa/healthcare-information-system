@@ -17,9 +17,11 @@ $sideBar = new SideBar($_SESSION['routes']);
 $controller = new Controllers();
 $connection = new Connection();
 
+$patientId = !empty($vacId) ? $vacId : (!empty($famId) ? $famId : '');
+
 $patientData = [];
 
-$render = new ModalComponent('Add New Record', 'Add New Record', 'Add new record to patient');
+$render = new ModalComponent('Add New', 'Add New', 'Add new data to patient');
 
 if (!empty($vacId)) {
 
@@ -37,17 +39,22 @@ if (!empty($famId)) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $patientId = !empty($vacId) ? $vacId : (!empty($famId) ? $famId : '');
+    if (!empty($_POST['vaccine']) || !empty($_POST['method'])) {
 
-    storePatientData($connection, $controller, $patientId, $vacId, $famId);
+        storePatientData($connection, $controller, $patientId, $vacId, $famId);
+    }
 
+    if (!empty($_POST['date']) || !empty($_POST['time'])) {
+
+        storePatientRecords($connection, $controller, $patientId, 'schedules');
+    }
+    header("Refresh:0");
 }
 
 if (isset($_GET['removeMethod'])) {
 
     removePatientData($connection, $controller, $_GET['removeMethod']);
 }
-
 
 $selectOptionsData = formatSelectedOptions($datas);
 
@@ -177,7 +184,59 @@ $selectOptionsData = formatSelectedOptions($datas);
                     </thead>
                 </tfoot>
             </table>
-            <br />
+            <br /> <br />
+            <h2>Schedule</h2>
+            <?php
+            $render->createModal([
+                [
+                    'label' => 'Date',
+                    'id' => 'date',
+                    'name' => 'date',
+                    'type' => 'date',
+                    'required' => true
+                ],
+                [
+                    'label' => 'Time',
+                    'id' => 'time',
+                    'name' => 'time',
+                    'type' => 'time',
+                    'required' => true
+                ],
+            ], []);
+            ?>
+            <table class="table table-bordered datatable mt-5" id="table-1">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($controller->getDataById($connection->conn, 'schedules', 'patient_id', $patientId) as $index => $schedule) : ?>
+                        <tr class="odd gradeX">
+                            <td><?= $index + 1 ?></td>
+                            <td><?= convertMonth($schedule['date']) ?></td>
+                            <td>
+                                <?= convertTime($schedule['time']) ?>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                </tfoot>
+            </table>
         </div>
 
         <script>
