@@ -40,17 +40,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 function setSessions($user)
 {
 
-    $_SESSION['user_id']  = $user['id'];
+    $_SESSION['user_id']     =  $user['id'];
     $_SESSION['patient_id']  =  $user['user_id'];
-    $_SESSION['username'] = $user['username'];
-    $_SESSION['role']     = $user['role'];
-
-    $_SESSION['base_url'] = 'http://localhost/healthcare/src/';
-    $_SESSION['profile'] =  $_SESSION['base_url'] . 'pages/profile/index.php';
-
-    $_SESSION['routes'] = Authorization::routes($user['role']);
+    $_SESSION['username']    =  $user['username'];
+    $_SESSION['role']        =  $user['role'];
+    $_SESSION['base_url']    =  'http://healthcare.test/src/';
+    $_SESSION['profile']     =  $_SESSION['base_url'] . 'pages/profile/index.php';
+    $_SESSION['routes']      =  Authorization::routes($user['role']);
 }
-
 
 function storeLoginLogs($connection, $user)
 {
@@ -60,5 +57,6 @@ function storeLoginLogs($connection, $user)
     ];
 
     $controller = new Controllers;
+
     $controller->store($connection->conn, 'logs', $data);
 }
