@@ -75,28 +75,18 @@ if (isset($_GET['remove'])) {
             <h3>Schedules</h3>
             <p>Shows your schedules</p>
 
+            <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js'></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var calendarEl = document.getElementById('calendar');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth'
+                    });
+                    calendar.render();
+                });
+            </script>
 
-            <!-- <table class="table table-bordered datatable mt-5" id="table-1">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Method</th>
-                        <th>Info</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>#</th>
-                        <th>Method</th>
-                        <th>Info</th>
-                    </tr>
-                    </thead>
-                </tfoot>
-            </table> -->
-            <br />
+            <div id='calendar'></div>
         </div>
 
 </body>

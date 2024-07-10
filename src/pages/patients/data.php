@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         storePatientRecords($connection, $controller, $patientId, 'schedules');
     }
+
     header("Refresh:0");
 }
 
@@ -57,6 +58,8 @@ if (isset($_GET['removeMethod'])) {
 }
 
 $selectOptionsData = formatSelectedOptions($datas);
+
+$formatSelectedOptionsMethod = formatSelectedOptionsMethod($datas);
 
 
 ?>
@@ -185,7 +188,7 @@ $selectOptionsData = formatSelectedOptions($datas);
                 </tfoot>
             </table>
             <br /> <br />
-            <h2>Schedule</h2>
+            <h2>Patient Schedules</h2>
             <?php
             $render->createModal([
                 [
@@ -202,12 +205,13 @@ $selectOptionsData = formatSelectedOptions($datas);
                     'type' => 'time',
                     'required' => true
                 ],
-            ], []);
+            ], $formatSelectedOptionsMethod);
             ?>
             <table class="table table-bordered datatable mt-5" id="table-1">
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Title</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Action</th>
@@ -217,6 +221,7 @@ $selectOptionsData = formatSelectedOptions($datas);
                     <?php foreach ($controller->getDataById($connection->conn, 'schedules', 'patient_id', $patientId) as $index => $schedule) : ?>
                         <tr class="odd gradeX">
                             <td><?= $index + 1 ?></td>
+                            <td><?= $schedule['title'] ?? '?' ?></td>
                             <td><?= convertMonth($schedule['date']) ?></td>
                             <td>
                                 <?= convertTime($schedule['time']) ?>
@@ -230,6 +235,7 @@ $selectOptionsData = formatSelectedOptions($datas);
                 <tfoot>
                     <tr>
                         <th>#</th>
+                        <th>Title</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Action</th>

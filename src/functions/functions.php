@@ -674,6 +674,31 @@ function formatSelectedOptions($datas)
     return $selectOptionsData;
 }
 
+function formatSelectedOptionsMethod($datas)
+{
+    $selectOptions = [];
+
+    foreach ($datas as $data) {
+
+        $selectOptions[] = [
+            'label' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method_name']) ? $data['method_name'] : []),
+            'value' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method_name']) ? $data['method_name'] : [])
+        ];
+    }
+
+    $selectOptionsData = [
+        'label' => 'Select ' . ucfirst(getPatientDataTypeDB()),
+        'id' => 'select_option',
+        'name' => 'title',
+        'required' => true,
+        'options' => [
+            $selectOptions
+        ]
+    ];
+
+    return $selectOptionsData;
+}
+
 function convertTime($time24)
 {
     $time12 = date("h:i A", strtotime($time24));
