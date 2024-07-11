@@ -16,7 +16,9 @@ $sideBar    = new Sidebar($_SESSION['routes']);
 $header     = new Header();
 $controller = new Controllers;
 
-$schedules = fetchPatientSchedules($connection->conn, $controller);
+$role       = $_SESSION['role'];
+$patientId  = $_SESSION['patient_id'];
+$schedules  = fetchPatientSchedules($connection->conn, $controller, $role, $patientId);
 
 ?>
 
@@ -30,7 +32,7 @@ $schedules = fetchPatientSchedules($connection->conn, $controller);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Neon Admin Panel" />
     <meta name="author" content="" />
-    <title>Methods Management</title>
+    <title>Schedules</title>
     <link rel="stylesheet" href="../../assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
     <link rel="stylesheet" href="../../assets/css/font-icons/entypo/css/entypo.css">
     <link rel="stylesheet" href="../../assets/css/bootstrap.css">
@@ -64,8 +66,8 @@ $schedules = fetchPatientSchedules($connection->conn, $controller);
                 document.addEventListener('DOMContentLoaded', function() {
                     var calendarEl = document.getElementById('calendar');
                     var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'dayGridMonth',
-                    events: <?= $schedules ?>
+                        initialView: 'dayGridMonth',
+                        events: <?= $schedules ?>
                     });
                     calendar.render();
                 });

@@ -31,12 +31,12 @@ class Authorization
             ],
             2 => [
                 'Dashboard'                     =>   [$baseUrl . 'dashboard', 'folder'],
-                'Schedules'                     =>   [$baseUrl . 'schedule', 'clock'],
+                'Schedules'                     =>   [$baseUrl . 'schedules', 'clock'],
                 'Records'                       =>   [$baseUrl . 'patient_user/records', 'folder']
             ],
             3 => [
                 'Dashboard'                     =>   [$baseUrl . 'dashboard', 'folder'],
-                'Schedules'                     =>   [$baseUrl . 'schedule', 'clock'],
+                'Schedules'                     =>   [$baseUrl . 'schedules', 'clock'],
                 'Records'                       =>   [$baseUrl . 'patient_user/records', 'folder']
             ],
             4 => [

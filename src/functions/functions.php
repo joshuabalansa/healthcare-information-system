@@ -718,13 +718,20 @@ function convertMonth($date)
  * @param object $controller
  * @return object $calendarSchedules
  */
-function fetchPatientSchedules($connection, $controller) {
+function fetchPatientSchedules($connection, $controller, $role, $patientId)
+{
+    if ($role == 2 || $role == 3) {
 
-    $schedules =  $controller->get($connection, "schedules");
+        
+        $schedules =  $controller->getDataById($connection, 'schedules', 'patient_Id', $patientId);
+    } else {
+        
+        $schedules =  $controller->get($connection, "schedules");
+    }
 
     $calendarSchedules = [];
 
-    foreach($schedules as $schedule) {
+    foreach ($schedules as $schedule) {
 
         $calendarSchedules[] = [
             "id" => $schedule['id'],
