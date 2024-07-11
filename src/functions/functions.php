@@ -712,3 +712,26 @@ function convertMonth($date)
 
     return $formatted_date;
 }
+
+/**
+ * @param object $connection
+ * @param object $controller
+ * @return object $calendarSchedules
+ */
+function fetchPatientSchedules($connection, $controller) {
+
+    $schedules =  $controller->get($connection, "schedules");
+
+    $calendarSchedules = [];
+
+    foreach($schedules as $schedule) {
+
+        $calendarSchedules[] = [
+            "id" => $schedule['id'],
+            "title" => $schedule['title'],
+            "start" => $schedule['date'] . 'T' . $schedule['time']
+        ];
+    }
+
+    return json_encode($calendarSchedules);
+}

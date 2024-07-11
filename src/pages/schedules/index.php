@@ -1,13 +1,9 @@
 <?php
 require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
-require_once '../../class/Authorization.php';
-require_once '../../class/Sms.php';
 require_once '../../functions/functions.php';
 require_once '../../components/SideBar.php';
 require_once '../../components/Header.php';
-require_once '../../components/modalComponent.php';
-require_once '../../class/Controllers.php';
 
 session_start();
 isAuthenticated();
@@ -20,20 +16,8 @@ $sideBar    = new Sidebar($_SESSION['routes']);
 $header     = new Header();
 $controller = new Controllers;
 
-$render = new ModalComponent('New Method', 'Add Method', 'Add a family planning method: ex IUD');
+$schedules = fetchPatientSchedules($connection->conn, $controller);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    storeMethod($connection, $controller);
-}
-
-if (isset($_GET['remove'])) {
-    $id = $_GET['remove'];
-
-    Controllers::delete($connection->conn, 'family_planning_methods', $id);
-
-    header('location: index.php');
-}
 ?>
 
 <!DOCTYPE html>
@@ -80,7 +64,8 @@ if (isset($_GET['remove'])) {
                 document.addEventListener('DOMContentLoaded', function() {
                     var calendarEl = document.getElementById('calendar');
                     var calendar = new FullCalendar.Calendar(calendarEl, {
-                        initialView: 'dayGridMonth'
+                    initialView: 'dayGridMonth',
+                    events: <?= $schedules ?>
                     });
                     calendar.render();
                 });
