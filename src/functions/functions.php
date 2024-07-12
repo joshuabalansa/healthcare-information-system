@@ -681,8 +681,8 @@ function formatSelectedOptionsMethod($datas)
     foreach ($datas as $data) {
 
         $selectOptions[] = [
-            'label' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method_name']) ? $data['method_name'] : []),
-            'value' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method_name']) ? $data['method_name'] : [])
+            'label' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method']) ? $data['method'] : []),
+            'value' => !empty($data['vaccine']) ? $data['vaccine'] : (!empty($data['method']) ? $data['method'] : [])
         ];
     }
 
@@ -722,10 +722,10 @@ function fetchPatientSchedules($connection, $controller, $role, $patientId)
 {
     if ($role == 2 || $role == 3) {
 
-        
-        $schedules =  $controller->getDataById($connection, 'schedules', 'patient_Id', $patientId);
+
+        $schedules =  $controller->getDataById($connection, 'schedules', 'patient_id', $patientId);
     } else {
-        
+
         $schedules =  $controller->get($connection, "schedules");
     }
 

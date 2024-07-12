@@ -13,28 +13,32 @@ isAuthenticated();
 $vacId = $_GET['vaccination'] ?? '';
 $famId = $_GET['family_planning'] ?? '';
 
-$sideBar = new SideBar($_SESSION['routes']);
+$sideBar    = new SideBar($_SESSION['routes']);
 $controller = new Controllers();
 $connection = new Connection();
 
-$patientId = !empty($vacId) ? $vacId : (!empty($famId) ? $famId : '');
+$patientId  = !empty($vacId) ? $vacId : (!empty($famId) ? $famId : '');
 
-$patientData = [];
+$patientData    = [];
+$dataById       = [];
+$patientInfo    = [];
 
 $render = new ModalComponent('Add New', 'Add New', 'Add new data to patient');
 
 if (!empty($vacId)) {
 
-    $patientData = $controller->getDataById($connection->conn, 'patient_vaccination_records', 'patient_id', $vacId);
-    $datas =  $controller->get($connection->conn, 'vaccines');
-    $table = 'patient_vaccination_records';
+    $patientData    =   $controller->getDataById($connection->conn, 'patient_vaccination_records', 'patient_id', $vacId);
+    $datas          =   $controller->get($connection->conn, 'vaccines');
+    $table          =   'patient_vaccination_records';
+    $patientInfo        =   $controller->getDataById($connection->conn, 'vaccinations', 'user_id', $vacId);
 }
 
 if (!empty($famId)) {
 
-    $patientData = $controller->getDataById($connection->conn, 'patient_family_planning_records', 'patient_id', $famId);
-    $datas =  $controller->get($connection->conn, 'family_planning_methods');
-    $table = 'patient_family_planning_records';
+    $patientData    =   $controller->getDataById($connection->conn, 'patient_family_planning_records', 'patient_id', $famId);
+    $datas          =   $controller->get($connection->conn, 'family_planning_methods');
+    $table          =   'patient_family_planning_records';
+    $patientInfo    =   $controller->getDataById($connection->conn, 'family_planning', 'user_id', $famId);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -56,11 +60,9 @@ if (isset($_GET['removeMethod'])) {
 
     removePatientData($connection, $controller, $_GET['removeMethod']);
 }
-
 $selectOptionsData = formatSelectedOptions($datas);
 
-$formatSelectedOptionsMethod = formatSelectedOptionsMethod($datas);
-
+$formatSelectedOptionsMethod = formatSelectedOptionsMethod($patientData);
 
 ?>
 <!DOCTYPE html>
@@ -98,9 +100,11 @@ $formatSelectedOptionsMethod = formatSelectedOptionsMethod($datas);
             <hr />
 
             <br />
-
             <h3>Patient Data</h3>
+            <p><b>Patient Name:</b> <?= ucfirst($patientInfo[0]['first_name']) . " " . ucfirst($patientInfo[0]['last_name']) ?></p>
+            <p><b>Appointment Type:</b> <span class="badge badge-info"><?= ucfirst($patientInfo[0]['appointment_type']) ?></span></p>
 
+        <br>
             <?php
             if (!empty($vacId)) {
 
