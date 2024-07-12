@@ -67,7 +67,13 @@ $schedules  = fetchPatientSchedules($connection->conn, $controller, $role, $pati
                     var calendarEl = document.getElementById('calendar');
                     var calendar = new FullCalendar.Calendar(calendarEl, {
                         initialView: 'dayGridMonth',
-                        events: <?= $schedules ?>
+                        events: <?= $schedules ?>,
+                        eventClick: function(info) {
+                            info.jsEvent.preventDefault();
+                            alert('Event: ' + info.event.title + '\n' +
+                                'Start: ' + info.event.start.toISOString() + '\n' +
+                                'Patient Name: ' + info.event.patient_id);
+                        }
                     });
                     calendar.render();
                 });

@@ -30,7 +30,7 @@ if (!empty($vacId)) {
     $patientData    =   $controller->getDataById($connection->conn, 'patient_vaccination_records', 'patient_id', $vacId);
     $datas          =   $controller->get($connection->conn, 'vaccines');
     $table          =   'patient_vaccination_records';
-    $patientInfo        =   $controller->getDataById($connection->conn, 'vaccinations', 'user_id', $vacId);
+    $patientInfo    =   $controller->getDataById($connection->conn, 'vaccinations', 'user_id', $vacId);
 }
 
 if (!empty($famId)) {
@@ -50,7 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!empty($_POST['date']) || !empty($_POST['time'])) {
 
-        storePatientRecords($connection, $controller, $patientId, 'schedules');
+        $name = $patientInfo[0]['first_name'];
+        storePatientSchedule($connection, $controller, $patientId, 'schedules', $name);
     }
 
     header("Refresh:0");
@@ -60,6 +61,7 @@ if (isset($_GET['removeMethod'])) {
 
     removePatientData($connection, $controller, $_GET['removeMethod']);
 }
+
 $selectOptionsData = formatSelectedOptions($datas);
 
 $formatSelectedOptionsMethod = formatSelectedOptionsMethod($patientData);
@@ -104,7 +106,7 @@ $formatSelectedOptionsMethod = formatSelectedOptionsMethod($patientData);
             <p><b>Patient Name:</b> <?= ucfirst($patientInfo[0]['first_name']) . " " . ucfirst($patientInfo[0]['last_name']) ?></p>
             <p><b>Appointment Type:</b> <span class="badge badge-info"><?= ucfirst($patientInfo[0]['appointment_type']) ?></span></p>
 
-        <br>
+            <br>
             <?php
             if (!empty($vacId)) {
 

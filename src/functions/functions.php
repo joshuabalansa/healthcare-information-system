@@ -582,6 +582,20 @@ function storePatientRecords($connection, $controller, $patientId, $table)
 }
 
 /**
+ * @param object $connection
+ * @param object $controller
+ * @param string $patientId
+ * @param string $table
+ * @param string $name
+ * @return void
+ */
+function storePatientSchedule($connection, $controller, $patientId, $table, $name)
+{
+    $_POST['patient_id'] = $patientId;
+    $_POST['name'] = $name;
+    $controller->store($connection->conn, $table, $_POST);
+}
+/**
  * @return string
  */
 function getPatientDataTypeDB()
@@ -720,6 +734,7 @@ function convertMonth($date)
  */
 function fetchPatientSchedules($connection, $controller, $role, $patientId)
 {
+
     if ($role == 2 || $role == 3) {
 
 
@@ -736,7 +751,8 @@ function fetchPatientSchedules($connection, $controller, $role, $patientId)
         $calendarSchedules[] = [
             "id" => $schedule['id'],
             "title" => $schedule['title'],
-            "start" => $schedule['date'] . 'T' . $schedule['time']
+            "start" => $schedule['date'] . 'T' . $schedule['time'],
+            "name" => $schedule['name']
         ];
     }
 

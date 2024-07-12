@@ -388,6 +388,7 @@ DROP TABLE IF EXISTS `schedules`;
 CREATE TABLE IF NOT EXISTS `schedules` (
   `id` int NOT NULL AUTO_INCREMENT,
   `patient_id` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
