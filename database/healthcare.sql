@@ -2,6 +2,10 @@ DROP TABLE IF EXISTS `appointments`;
 CREATE TABLE IF NOT EXISTS `appointments` (
   `id` int NOT NULL AUTO_INCREMENT,
   `patient_id` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `province` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `brgy` varchar(255) NOT NULL,
   `appointment_type` varchar(20) NOT NULL,
   `status` varchar(20)  NOT NULL DEFAULT 'pending',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,

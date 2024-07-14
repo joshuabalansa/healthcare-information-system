@@ -154,11 +154,29 @@ function getRegistrationAdditionalAddress()
 function storeAppointments($appointmentData, $connection, $controller)
 {
     $appointmentFields = [
-        'patient_id' => $appointmentData[0]['user_id'],
-        'appointment_type' => $appointmentData[0]['appointment_type'],
+        'patient_id'        =>  $appointmentData[0]['user_id'],
+        'appointment_type'  =>  $appointmentData[0]['appointment_type'],
+        'address'           =>  formatAddress($appointmentData[0]['address']),
+        'brgy'              =>  formatAddress($appointmentData[0]['brgy']),
+        'province'          =>  formatAddress($appointmentData[0]['province']),
+        'city'              =>  formatAddress($appointmentData[0]['city']),
     ];
 
     $controller->store($connection->conn, 'appointments', $appointmentFields);
+}
+
+/** 
+ *
+ * @param string $address
+ * @return void
+ */
+function formatAddress($address)
+{
+
+    list(, $city) = explode('-', $address);
+    $city = str_replace('_', '_', $city);
+
+    return $city;
 }
 
 /**

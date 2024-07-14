@@ -90,7 +90,6 @@ class Controllers
             $stmt = $conn->prepare($sql);
 
             $stmt->execute([$id]);
-
         } catch (PDOException $e) {
 
             die($e->getMessage());
@@ -145,6 +144,35 @@ class Controllers
             $stmt->execute($params);
 
             return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+
+            die($e->getMessage());
+        }
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param object $conn
+     * @param string $table
+     * @param string $group
+     * @return array
+     */
+    public static function getDataByGroup($conn, $table, $field, $field2 = null)
+    {
+        try {
+
+            if ($field2) {
+                $sql = "SELECT $field, $field2, COUNT(*) as count FROM $table GROUP BY $field, $field2";
+            } else {
+
+                $sql = "SELECT $field, COUNT(*) as count FROM $table GROUP BY $field";
+            }
+            $stmt = $conn->prepare($sql);
+
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
 
             die($e->getMessage());

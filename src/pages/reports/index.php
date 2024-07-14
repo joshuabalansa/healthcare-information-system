@@ -20,7 +20,6 @@ $vaccinationData = getSplineVaccinationData($connection->conn);
 $familyPlanningData = getSplineFamilyPlanningData($connection->conn);
 $totalData = getSplineFamilyPlanningDataCount($connection->conn);
 
-
 ?>
 
 <!DOCTYPE html>
@@ -65,6 +64,32 @@ $totalData = getSplineFamilyPlanningDataCount($connection->conn);
             <!-- <button class="btn btn-primary">Export</button> -->
             <div style="margin-top: 30px;" id="statisticData"></div>
             <br />
+            <table class="table table-bordered datatable mt-5" id="table-1">
+                <thead>
+                    <tr>
+                        <th>Brgy</th>
+                        <th>Type</th>
+                        <th>Patient Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach (Controllers::getDataByGroup($connection->conn, 'appointments', 'brgy', 'appointment_type') as $index => $address) : ?>
+                        <tr class="odd gradeX">
+                            <td><?= ucwords($address['brgy']) ?? '' ?></td>
+                            <td><?= $address['appointment_type'] ?? '' ?></td>
+                            <td><?= $address['count'] ?? '' ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Brgy</th>
+                        <th>Type</th>
+                        <th>Patient Count</th>
+                    </tr>
+                    </thead>
+                </tfoot>
+            </table>
         </div>
         <script>
             var options = {
@@ -141,7 +166,6 @@ $totalData = getSplineFamilyPlanningDataCount($connection->conn);
             var lineChart = new ApexCharts(document.querySelector("#lineChart"), options);
             lineChart.render();
 
-            // Statistic chart
             var options = {
                 series: [{
                         name: "Vaccination",
