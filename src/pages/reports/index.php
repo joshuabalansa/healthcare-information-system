@@ -16,12 +16,15 @@ $sideBar    = new Sidebar($_SESSION['routes']);
 $header     = new Header();
 $controller = new Controllers;
 
-$vaccinationData = getSplineVaccinationData($connection->conn);
-$familyPlanningData = getSplineFamilyPlanningData($connection->conn);
-$totalData = getSplineFamilyPlanningDataCount($connection->conn);
+$vaccinationData    =   getSplineVaccinationData($connection->conn);
+$familyPlanningData =   getSplineFamilyPlanningData($connection->conn);
+$totalData          =   getSplineFamilyPlanningDataCount($connection->conn);
+
+if (!isset($_GET['familyplanning']) && !isset($_GET['vaccination'])) {
+    $_GET['familyplanning'] = true;
+}
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +35,7 @@ $totalData = getSplineFamilyPlanningDataCount($connection->conn);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Neon Admin Panel" />
     <meta name="author" content="" />
-    <title>Reports</title>
+    <title>Reports Generated - <?= date("Y/m/d")?></title>
     <link rel="stylesheet" href="../../assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
     <link rel="stylesheet" href="../../assets/css/font-icons/entypo/css/entypo.css">
     <link rel="stylesheet" href="../../assets/css/bootstrap.css">
@@ -59,37 +62,51 @@ $totalData = getSplineFamilyPlanningDataCount($connection->conn);
             <br />
 
             <h3>Reports</h3> <br>
-            <!-- <button class="btn btn-primary">Vaccination</button>
-            <button class="btn btn-primary">Family Planning</button> -->
-            <!-- <button class="btn btn-primary">Export</button> -->
-            <div style="margin-top: 30px;" id="statisticData"></div>
+            <p>This shows the report and summary of data</p>
+                <div style="margin-top: 30px;" id="statisticData"></div>
             <br />
-            <table class="table table-bordered datatable mt-5" id="table-1">
-                <thead>
-                    <tr>
-                        <th>Brgy</th>
-                        <th>Type</th>
-                        <th>Patient Count</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach (Controllers::getDataByGroup($connection->conn, 'appointments', 'brgy', 'appointment_type') as $index => $address) : ?>
+
+            <a href="<?= $_SESSION['base_url'] . 'pages/reports/' ?>?familyplanning=true" class="btn btn-primary">View Family Planning</a>
+        <a href="<?= $_SESSION['base_url'] . 'pages/reports/' ?>?vaccination=true" class="btn btn-primary">View Vaccination</a> <br /><br />
+        <p>This shows the patient appointment in every barangay</p>
+        <table class="table table-bordered datatable mt-5" id="table-reports">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Brgy</th>
+                    <th>Type</th>
+                    <th>No. of Appointments</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach (Controllers::getDataByGroup($connection->conn, 'appointments', 'brgy', 'appointment_type') as $index => $address) : ?>
+                    <?php if (isset($_GET['vaccination']) && $_GET['vaccination'] && $address['appointment_type'] === 'vaccination') : ?>
                         <tr class="odd gradeX">
+                            <td><?= $index + 1 ?></td>
                             <td><?= ucwords($address['brgy']) ?? '' ?></td>
-                            <td><?= $address['appointment_type'] ?? '' ?></td>
+                            <td><span class="badge badge-info"><?= ucwords(str_replace('_', ' ', $address['appointment_type'])) ?? '' ?></span></td>
                             <td><?= $address['count'] ?? '' ?></td>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Brgy</th>
-                        <th>Type</th>
-                        <th>Patient Count</th>
-                    </tr>
-                    </thead>
-                </tfoot>
-            </table>
+                    <?php endif; ?>
+                    <?php if (isset($_GET['familyplanning']) && $_GET['familyplanning'] && $address['appointment_type'] === 'family_planning') : ?>
+                        <tr class="odd gradeX">
+                            <td><?= $index + 1 ?></td>
+                            <td><?= ucwords($address['brgy']) ?? '' ?></td>
+                            <td><span class="badge badge-info"><?= ucwords(str_replace('_', ' ', $address['appointment_type'])) ?? '' ?></span></td>
+                            <td><?= $address['count'] ?? '' ?></td>
+                        </tr>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>#</th>
+                    <th>Brgy</th>
+                    <th>Type</th>
+                    <th>No. of Appointments</th>
+                </tr>
+            </tfoot>
+        </table>
         </div>
         <script>
             var options = {
@@ -244,6 +261,30 @@ $totalData = getSplineFamilyPlanningDataCount($connection->conn);
 
             var statisticData = new ApexCharts(document.querySelector("#statisticData"), options);
             statisticData.render();
+
+
+
+            jQuery(document).ready(function($) {
+                var $table1 = jQuery('#table-reports');
+
+
+                $table1.DataTable({
+                    "aLengthMenu": [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, "All"]
+                    ],
+                    "bStateSave": true,
+                    responsive: true,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+
+                $table1.closest('.dataTables_wrapper').find('select').select2({
+                    minimumResultsForSearch: -1
+                });
+            });
         </script>
 </body>
 

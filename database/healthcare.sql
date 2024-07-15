@@ -13,28 +13,6 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `appointments`
---
-
-INSERT INTO `appointments` (`id`, `patient_id`, `appointment_type`, `status`, `created_at`, `updated_at`) VALUES
-(25, '61518a32-6f23-4b0d-bad0-ce4d12f7560e', 'family_planning', 'pending', '2024-01-18 22:22:30', '2024-05-29 22:13:12'),
-(28, 'd7f01670-c1c7-4d86-ae72-42344749a236', 'family_planning', 'pending', '2024-05-29 22:40:48', '2024-05-29 22:40:48'),
-(29, '867eb2ea-2bdb-488b-b404-10d061dfc1a4', 'family_planning', 'pending', '2024-06-01 14:16:45', '2024-06-01 14:16:45'),
-(30, '02b7ee85-6b80-4c3e-a2e9-6d486c219f6b', 'family_planning', 'pending', '2024-06-09 09:30:10', '2024-06-09 09:30:10'),
-(31, 'fffe0b6a-83ab-4e9f-8c5e-addf55554f3e', 'vaccination', 'pending', '2024-06-20 22:06:21', '2024-06-20 22:06:21'),
-(32, '56bf6cc2-41ce-4335-a2d2-3bf3476d8e7d', 'vaccination', 'pending', '2024-06-20 22:15:14', '2024-06-20 22:15:14'),
-(33, 'a8586277-3599-4fdf-8abe-d00e0c03afeb', 'family_planning', 'pending', '2024-06-20 22:29:52', '2024-06-20 22:29:52'),
-(34, '906fe89a-bc1b-4371-9e17-1452b5a3f7ca', 'family_planning', 'pending', '2024-06-22 21:22:51', '2024-06-22 21:22:51'),
-(35, 'a82388c3-02af-40a0-8ab9-03a4aa318a03', 'family_planning', 'pending', '2024-06-23 09:31:49', '2024-06-23 09:31:49'),
-(36, '84d036d2-43cf-445c-b194-3c46c63c1724', 'vaccination', 'pending', '2024-06-23 09:34:58', '2024-06-23 09:34:58'),
-(37, '11019d6b-8a20-4b83-8b0c-9276adafb707', 'family_planning', 'pending', '2024-06-29 12:16:09', '2024-06-29 12:16:09');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `family_planning`
---
 
 DROP TABLE IF EXISTS `family_planning`;
 CREATE TABLE IF NOT EXISTS `family_planning` (
@@ -103,12 +81,6 @@ INSERT INTO `family_planning_methods` (`id`, `user_id`, `method_name`, `status`,
 (17, NULL, 'Emergency contraceptive pills (ECPs', NULL, '2024-06-28 22:58:18', '2024-06-28 22:58:18'),
 (18, NULL, 'Sterilization (Tubal ligation or vasectomy)', NULL, '2024-06-28 22:58:26', '2024-06-28 22:58:26');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `logs`
---
-
 DROP TABLE IF EXISTS `logs`;
 CREATE TABLE IF NOT EXISTS `logs` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -118,9 +90,6 @@ CREATE TABLE IF NOT EXISTS `logs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `logs`
---
 
 INSERT INTO `logs` (`id`, `name`, `role`, `timestamp`) VALUES
 (1, 'admin', 0, '2024-06-22 23:38:35'),
@@ -179,12 +148,6 @@ INSERT INTO `logs` (`id`, `name`, `role`, `timestamp`) VALUES
 (54, 'system admin', 1, '2024-06-30 18:16:10'),
 (55, 'system admin', 0, '2024-06-30 20:45:45');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `patient_family_planning_records`
---
-
 DROP TABLE IF EXISTS `patient_family_planning_records`;
 CREATE TABLE IF NOT EXISTS `patient_family_planning_records` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -197,9 +160,6 @@ CREATE TABLE IF NOT EXISTS `patient_family_planning_records` (
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
 
 
---
--- Dumping data for table `patient_family_planning_records`
---
 
 INSERT INTO `patient_family_planning_records` (`id`, `method`, `status`, `patient_id`, `created_at`, `updated_at`) VALUES
 (2, 'test', 'approved', 'd35a7295-922e-47ee-aabb-38d70b13d9ae', '2024-06-25 23:05:39', '2024-06-30 11:19:30'),
@@ -221,11 +181,6 @@ INSERT INTO `patient_family_planning_records` (`id`, `method`, `status`, `patien
 (20, 'Birth control pills', 'not approved', 'd35a7295-922e-47ee-aabb-38d70b13d9ae', '2024-06-30 10:16:03', '2024-06-30 10:16:03'),
 (25, 'Emergency contraceptive pills (ECPs', 'not approved', 'd35a7295-922e-47ee-aabb-38d70b13d9ae', '2024-06-30 11:28:18', '2024-06-30 11:28:18');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `patient_vaccination_records`
---
 
 DROP TABLE IF EXISTS `patient_vaccination_records`;
 CREATE TABLE IF NOT EXISTS `patient_vaccination_records` (
@@ -243,9 +198,6 @@ CREATE TABLE IF NOT EXISTS `patient_vaccination_records` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `patient_vaccination_records`
---
 
 INSERT INTO `patient_vaccination_records` (`id`, `vaccine`, `age`, `wt`, `ht`, `temp`, `remarks`, `status`, `patient_id`, `created_at`, `updated_at`) VALUES
 (11, 'ert', 'ert', 'ert', 'ert', 'ert', 'ert', 'approved', '56bf6cc2-41ce-4335-a2d2-3bf3476d8e7d', '2024-06-24 22:01:33', '2024-06-30 11:20:31'),
@@ -272,12 +224,6 @@ INSERT INTO `patient_vaccination_records` (`id`, `vaccine`, `age`, `wt`, `ht`, `
 (34, 'hfgh', NULL, 'test', 'test', 'test', 'test', 'not approved', '2ca0620e-bdcb-4a1d-afce-35ab3b9ff617', '2024-06-30 11:02:06', '2024-06-30 11:02:06'),
 (35, 'hfgh', NULL, 'test', 'test', 'test', 'test', 'not approved', '2ca0620e-bdcb-4a1d-afce-35ab3b9ff617', '2024-06-30 11:02:31', '2024-06-30 11:02:31');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -290,10 +236,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=264 DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `users`
---
-
 INSERT INTO `users` (`id`, `user_id`, `name`, `username`, `password`, `role`, `status`) VALUES
 (1, NULL, 'system admin', 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 0, 'active'),
 (226, NULL, 'test doctor account', 'doctor', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 4, 'active'),
@@ -301,12 +243,6 @@ INSERT INTO `users` (`id`, `user_id`, `name`, `username`, `password`, `role`, `s
 (228, NULL, 'healthcare admin', 'healthcare', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 'inactive'),
 (262, NULL, 'fpatient', 'fpatient', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 3, 'active'),
 (263, NULL, 'test', 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 1, 'inactive');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `vaccinations`
---
 
 DROP TABLE IF EXISTS `vaccinations`;
 CREATE TABLE IF NOT EXISTS `vaccinations` (
@@ -340,10 +276,6 @@ CREATE TABLE IF NOT EXISTS `vaccinations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `vaccinations`
---
-
 INSERT INTO `vaccinations` (`id`, `user_id`, `first_name`, `middle_name`, `last_name`, `birth_date`, `body_weight`, `body_length`, `province`, `city`, `brgy`, `address`, `philhealth`, `4ps_number`, `mother_maiden_name`, `mother_birth_date`, `mother_age`, `mother_occupation`, `father_name`, `father_birth_date`, `father_age`, `father_occupation`, `phone_number`, `status`, `appointment_type`, `created_at`, `updated_at`) VALUES
 (32, '2ca0620e-bdcb-4a1d-afce-35ab3b9ff617', 'patient testing', 'jhqgwj', 'jhgjhqwg', '2024-05-12', 'j', 'hgj', 'asd', '', '', NULL, 'wqehqwe', 'kqwhek', 'kqjehqw', '2024-05-12', 26, 'kjqweqhjw', 'kqwjeh', '2024-05-12', 123, 'kqwje', '817263812', 'cancelled', 'vaccination', '2024-06-23 09:30:21', '2024-06-30 11:09:05'),
 (33, 'b2a71a4c-0152-4d5c-8172-440c17d27677', 'helloworld', 'helloworld', 'jklh', '2024-05-17', '129837', '982739', '', '', '', NULL, 'kjqhwe', 'kjhek', 'kjh', '2024-05-17', 1928739, 'kjh', 'kjh', '2024-05-17', 1231, 'lkjlkj', '192031902390', 'cancelled', 'vaccination', '2024-06-23 09:30:21', '2024-06-30 11:06:30'),
@@ -352,12 +284,6 @@ INSERT INTO `vaccinations` (`id`, `user_id`, `first_name`, `middle_name`, `last_
 (36, 'fffe0b6a-83ab-4e9f-8c5e-addf55554f3e', 'qwe', 'qweqw', 'qwe', '2024-06-20', '09', '09', '012900000-ilocos_sur', '012906000-city_of_candon', '012906018-caterman', NULL, 'qwe', 'qwe', 'aklsdj', '2024-06-20', 9, ';kwe', ';lwje', '2024-06-20', 2, ';k', '928392', 'cancelled', 'vaccination', '2024-06-23 09:30:21', '2024-06-30 11:06:39'),
 (37, '56bf6cc2-41ce-4335-a2d2-3bf3476d8e7d', 'josh', 'josh', 'josh', '2024-06-20', '12', '23', '031400000-bulacan', '031410000-city_of_malolos', '031410006-balayong', 'josh', '2131321', 'o123u', 'wqkle', '2024-06-20', 4, 'klej', 'lwke', '2024-06-20', 98, 's;dlkf', '03294802384028', 'cancelled', 'vaccination', '2024-06-23 09:30:21', '2024-06-30 18:47:31'),
 (38, '84d036d2-43cf-445c-b194-3c46c63c1724', 'test timestampo', 'qjwkhehqwk', 'jhkjqhwekjh', '2024-06-23', 'kqwjhekjqhw', 'kjqhwekjh', '064500000-negros_occidental', '064502000-city_of_bago', '064502001-abuanan', 'kjhwkqjhekjh', 'qwkejhqwkje', 'kqwjhekqjwhe', 'qwkjehqwkje', '2024-06-23', 198273, 'kjqwhekqwk', 'qwekjhqw', '2024-06-23', 1892371, 'qwebjhj', '123123', 'approved', 'vaccination', '2024-06-23 09:34:58', '2024-06-24 20:19:11');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `vaccines`
---
 
 DROP TABLE IF EXISTS `vaccines`;
 CREATE TABLE IF NOT EXISTS `vaccines` (
@@ -374,10 +300,6 @@ CREATE TABLE IF NOT EXISTS `vaccines` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `vaccines`
---
-
 INSERT INTO `vaccines` (`id`, `vaccine`, `abbreviation`, `manufacturer`, `doses`, `approved_ages`, `description`, `status`, `created_at`, `updated_at`) VALUES
 (24, 'hfgh', 'fhfgffgh', 'fghfh', 'fhghhh', 'fgh', 'fgh', 'active', '2024-05-22 14:09:55', '2024-05-22 14:09:55'),
 (25, 'asd', 'asdad', 'das', 'asd', 'dad', 'asda', 'active', '2024-05-22 14:18:03', '2024-05-22 14:18:03'),
@@ -386,7 +308,6 @@ INSERT INTO `vaccines` (`id`, `vaccine`, `abbreviation`, `manufacturer`, `doses`
 (29, '234', '234', '243', '234', '234', '432', 'active', '2024-05-22 14:42:18', '2024-05-22 14:42:18'),
 (30, 'dfg', 'dfg', 'fgdfg', 'dfgdfgdf', 'gdfgdf', 'gfgd', 'active', '2024-05-22 15:05:44', '2024-05-22 15:05:44'),
 (31, 'test helloworld', 'test helloworld', 'test helloworld', 'test helloworld', '234', 'test helloworld', 'active', '2024-06-02 13:03:08', '2024-06-02 13:03:08');
-
 
 DROP TABLE IF EXISTS `schedules`;
 CREATE TABLE IF NOT EXISTS `schedules` (
