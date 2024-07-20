@@ -146,7 +146,7 @@ $tomorrowSchedules = $controller->getDataById($connection->conn, 'schedules', 'd
 				</script>
 			<?php endif; ?>
 			<br><br>
-			<?php if ($_SESSION['role'] !== 2 && $_SESSION['role'] !== 3) : ?>
+			<?php if ($_SESSION['role'] !== 2 && $_SESSION['role'] !== 3 && $_SESSION['role'] !== 0) : ?>
 				<div class="mt-5">
 					<div class="row">
 						<div class="col-md-6">
