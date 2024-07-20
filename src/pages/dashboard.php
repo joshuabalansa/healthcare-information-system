@@ -67,7 +67,9 @@ $monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
 			}
 			?>
 			<br />
-			<h1>Dashboard</h1>
+			<?php if ($_SESSION['role'] !== 0) : ?>
+				<h1>Dashboard</h1>
+			<?php endif; ?>
 
 			<?php if ($_SESSION['role'] == 1) : ?>
 				<div id="areaChart"></div>
@@ -95,7 +97,7 @@ $monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
 							curve: 'straight'
 						},
 						title: {
-							text: 'Patients by Month',
+							text: 'Appointments this month',
 							align: 'left'
 						},
 						grid: {

@@ -104,7 +104,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 <!-- Toaster JS -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
+<script src="//unpkg.com/alpinejs" defer></script>
 <?php
 // Define an array of notifications
 $notifications = array(

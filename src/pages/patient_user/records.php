@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <br />
 
-            <h3>Patient Data</h3>
+            <h3>Data History</h3>
             <p>This shows your data</p>
             <!-- <p>Appointment Schedule: june, 20, 2021 wed 2:20PM</p> -->
             <div style="display: flex; justify-content: space-between; align-items: start;">
