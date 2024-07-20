@@ -151,7 +151,6 @@ class Controllers
     }
 
     /**
-     * Undocumented function
      *
      * @param object $conn
      * @param string $table

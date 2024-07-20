@@ -10,6 +10,7 @@ session_start();
 isAuthenticated();
 
 $connection = new Connection;
+$controller = new Controllers;
 $pendingVacData = Controllers::countData($connection->conn, 'vaccinations', 'status = ?', ['pending']);
 $pendingFamData = Controllers::countData($connection->conn, 'family_planning', 'status = ?', ['pending']);
 
@@ -32,6 +33,13 @@ $cards = new Cards($connection);
 $usersCard = new UsersCard($connection);
 
 $monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
+
+$todayDate = date('Y-m-d');
+$tomorrowDate = date('Y-m-d', strtotime('+1 day'));
+
+$todaySchedules = $controller->getDataById($connection->conn, 'schedules', 'date', $todayDate);
+$tomorrowSchedules = $controller->getDataById($connection->conn, 'schedules', 'date', $tomorrowDate);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -117,7 +125,7 @@ $monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
 			<?php endif; ?>
 
 
-			<?php if (false) : // if ($_SESSION['role'] !== 1 && $_SESSION['role'] !== 4 && $_SESSION['role'] !== 0) : 
+			<?php if (false) :
 			?>
 				<div id='calendar'></div>
 
@@ -136,6 +144,71 @@ $monthlyAppointmentsData = getMonthlyGraphData($connection->conn);
 						calendar.render();
 					});
 				</script>
+			<?php endif; ?>
+			<br><br>
+			<?php if ($_SESSION['role'] !== 2 && $_SESSION['role'] !== 3) : ?>
+				<div class="mt-5">
+					<div class="row">
+						<div class="col-md-6">
+							<h2>Schedules for Today</h2>
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Type</th>
+										<th scope="col">Patient</th>
+										<th scope="col">Time</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php if (!empty($todaySchedules)) : ?>
+										<?php foreach ($todaySchedules as $index => $todaySchedule) : ?>
+											<tr>
+												<th scope="row"><?php echo $index + 1; ?></th>
+												<td><?php echo $todaySchedule['title']; ?></td>
+												<td><?php echo $todaySchedule['name']; ?></td>
+												<td><?php echo convertTime($todaySchedule['time']); ?></td>
+											</tr>
+										<?php endforeach; ?>
+									<?php else : ?>
+										<tr>
+											<td colspan="3">No schedules for today</td>
+										</tr>
+									<?php endif; ?>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-md-6">
+							<h2>Schedules for Tomorrow</h2>
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Type</th>
+										<th scope="col">Patient</th>
+										<th scope="col">Time</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php if (!empty($tomorrowSchedules)) : ?>
+										<?php foreach ($tomorrowSchedules as $index => $tomorrowSchedule) : ?>
+											<tr>
+												<th scope="row"><?php echo $index + 1; ?></th>
+												<td><?php echo $todaySchedule['title']; ?></td>
+												<td><?php echo $tomorrowSchedule['name']; ?></td>
+												<td><?php echo convertTime($tomorrowSchedule['time']); ?></td>
+											</tr>
+										<?php endforeach; ?>
+									<?php else : ?>
+										<tr>
+											<td colspan="3">No schedules for tomorrow</td>
+										</tr>
+									<?php endif; ?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 			<?php endif; ?>
 </body>
 
