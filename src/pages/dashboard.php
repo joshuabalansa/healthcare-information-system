@@ -75,9 +75,7 @@ $tomorrowSchedules = $controller->getDataById($connection->conn, 'schedules', 'd
 			}
 			?>
 			<br />
-			<?php if ($_SESSION['role'] !== 0) : ?>
-				<h1>Dashboard</h1>
-			<?php endif; ?>
+			<!-- <h1>Dashboard</h1 -->
 
 			<?php if ($_SESSION['role'] == 1) : ?>
 				<div id="areaChart"></div>
@@ -146,6 +144,9 @@ $tomorrowSchedules = $controller->getDataById($connection->conn, 'schedules', 'd
 				</script>
 			<?php endif; ?>
 			<br><br>
+			<?php if ($_SESSION['role'] == 2 || $_SESSION['role'] == 3): ?>
+				<h2>Welcome <?= ucwords($_SESSION['username']) ?></h2>
+			<?php endif; ?>
 			<?php if ($_SESSION['role'] !== 2 && $_SESSION['role'] !== 3 && $_SESSION['role'] !== 0) : ?>
 				<div class="mt-5">
 					<div class="row">
