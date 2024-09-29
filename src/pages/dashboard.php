@@ -1,6 +1,6 @@
 <?php
 require_once '../components/Cards.php';
-require_once '../components/UsersCard.php';
+require_once '../components/usersCard.php';
 require_once '../components/SideBar.php';
 require_once '../class/Controllers.php';
 require_once '../config/Connection.php';

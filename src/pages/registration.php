@@ -2,7 +2,7 @@
 session_start();
 require '../../vendor/autoload.php';
 require_once '../class/Controllers.php';
-require_once '../config/connection.php';
+require_once '../config/Connection.php';
 require_once '../config/Forms.php';
 include     '../functions/functions.php';
 
