@@ -4,7 +4,7 @@ require_once '../../config/Connection.php';
 require_once '../../functions/functions.php';
 require_once '../../components/SideBar.php';
 require_once '../../class/Controllers.php';
-require_once '../../components/modalComponent.php';
+require_once '../../components/ModalComponent.php';
 
 session_start();
 isAuthenticated();
