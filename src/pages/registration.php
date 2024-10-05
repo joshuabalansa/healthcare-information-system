@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row" style="display: flex; justify-content:center">
             <div class="col-md-8">
 
-                <h3 style="margin-bottom: 1em;"><?= $appointmentType == 'vaccination' ? 'Register for Vaccination' : 'Register for   Planning' ?></h3>
+                <h3 style="margin-bottom: 1em;"><?= $appointmentType == 'vaccination' ? 'Register for Vaccination' : 'Register for Family Planning' ?></h3>
                 <div class="card-body">
                     <form method="POST" action="registration.php?registration=<?= $appointmentType ?>">
                         <?php
@@ -65,7 +65,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         ?>
 
                             <div class="form-group row">
-                                <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right"><?= $label == 'Address' ? 'Street, Purok or Subdvision' : $label ?>:</label>
+                                <label for="<?= $field ?>" class="col-md-4 col-form-label text-md-right">
+                                    <?= $label == 'Address' ? 'Street, Purok or Subdvision' : $label ?>: 
+                                    <span style="color: #ff0000">
+                                        <?= !empty($isRequired) ? '*' : '' ?>
+                                    </span>
+                                </label>
 
                                 <div class="col-md-6 mb-3">
                                     <input id="<?= $field ?>" type="<?= $type ?>" onkeypress="<?= $type == 'number' ? 'return isNumberKey(event)' : '' ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>" <?= $isRequired ?>>

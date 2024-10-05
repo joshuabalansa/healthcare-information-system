@@ -29,9 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('location: ../pages/dashboard.php');
     } else {
 
-        $_SESSION['error'] = 'Wrong Username or Password';
-
-        header('location: ../index.php');
+        echo "<script>
+                alert('Invalid Credentials! Try again');
+                window.location.href = '../index.php';
+            </script>";
     }
 
     exit;

@@ -99,7 +99,6 @@ session_start();
                         Login In
                     </button>
                     <br>
-                    <span style="color: #f00"><?= $_SESSION['error'] ?? '' ?></span>
                 </div>
 
                 <div class="form-group">
@@ -129,7 +128,6 @@ session_start();
         <!-- </div> -->
 
     </div>
-
 
     <!-- Bottom scripts (common) -->
     <script src="assets/js/gsap/TweenMax.min.js"></script>

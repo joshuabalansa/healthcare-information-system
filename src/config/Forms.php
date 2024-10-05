@@ -23,11 +23,9 @@ class Forms
             '4ps_number'            =>  ['4Ps Number', 'text', ''],
             'mother_maiden_name'    =>  ['Mother Maiden Name', 'text', ''],
             'mother_birth_date'     =>  ['Mother Birth Date', 'date', ''],
-            'mother_age'            =>  ['Mother Age', 'number', ''],
             'mother_occupation'     =>  ['Mother Occupation', 'text', ''],
             'father_name'           =>  ['Father Name', 'text', ''],
             'father_birth_date'     =>  ['Father Birth Date', 'date', ''],
-            'father_age'            =>  ['Father Age', 'number', ''],
             'father_occupation'     =>  ['Father Occupation', 'text', ''],
             'phone_number'          =>  ['Phone Number', 'number', 'required'],
         ];
