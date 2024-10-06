@@ -20,7 +20,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $registrationType = $_GET['registration'] ?? '';
 
-    appointmentRegistration($registrationType, $connection, $controller, $form, $uuid->toString());
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['image']['tmp_name'];
+        $fileName = $_FILES['image']['name'];
+        $fileSize = $_FILES['image']['size'];
+        $fileType = $_FILES['image']['type'];
+        $fileNameCmps = explode(".", $fileName);
+        $fileExtension = strtolower(end($fileNameCmps));
+    
+        $allowedfileExtensions = ['jpg', 'gif', 'png', 'jpeg'];
+       
+        if (in_array($fileExtension, $allowedfileExtensions)) {
+
+            $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+
+            $uploadFileDir = '../assets/uploads/';
+            
+            if (!is_dir($uploadFileDir)) {
+
+                mkdir($uploadFileDir, 0777, true);
+            }
+           
+            $dest_path = $uploadFileDir . $newFileName;
+    
+            move_uploaded_file($fileTmpPath, $dest_path);
+        }
+    }
+
+    appointmentRegistration($registrationType, $connection, $controller, $form, $uuid->toString(), $newFileName);
+    
 }
 ?>
 
@@ -51,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <h3 style="margin-bottom: 1em;"><?= $appointmentType == 'vaccination' ? 'Register for Vaccination' : 'Register for Family Planning' ?></h3>
                 <div class="card-body">
-                    <form method="POST" action="registration.php?registration=<?= $appointmentType ?>">
+                    <form method="POST" action="registration.php?registration=<?= $appointmentType ?>" enctype="multipart/form-data">
                         <?php
                         $fields = ($appointmentType == 'vaccination') ? $form->vaccinationFields() : $form->familyPlanningFields();
 
@@ -73,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </label>
 
                                 <div class="col-md-6 mb-3">
-                                    <input id="<?= $field ?>" type="<?= $type ?>" onkeypress="<?= $type == 'number' ? 'return isNumberKey(event)' : '' ?>" class="form-control" name="<?= $field ?>" placeholder="Enter <?= $label ?>" <?= $isRequired ?>>
+                                    <input id="<?= $field ?>" type="<?= $type ?>" onkeypress="<?= $type == 'number' ? 'return isNumberKey(event)' : '' ?>" class="form-control" name="<?= $field ?>" placeholder=" <?= $label ?>" <?= $isRequired ?>>
                                 </div>
                             </div>
 
@@ -92,6 +120,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         <?php endforeach; ?>
+
+                        <label for="file">
+                            Attach a Verification Document (e.g., National ID, Health Card): 
+                            <span style="color: #ff0000">*</span>
+                        </label>
+                        <input type="file" name="image" id="file" accept="image/*" required>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

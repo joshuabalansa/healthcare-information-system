@@ -27,7 +27,7 @@ class Forms
             'father_name'           =>  ['Father Name', 'text', ''],
             'father_birth_date'     =>  ['Father Birth Date', 'date', ''],
             'father_occupation'     =>  ['Father Occupation', 'text', ''],
-            'phone_number'          =>  ['Phone Number', 'number', 'required'],
+            'phone_number'          =>  ['+63', 'number', 'required'],
         ];
 
         return $fields;
@@ -48,7 +48,7 @@ class Forms
             'last_name'         =>  ['Last Name', 'text', 'required'],
             'birth_date'        =>  ['Birth Date', 'date', 'required'],
             'address'           =>  ['address', 'text', 'required'],
-            'phone_number'      =>  ['Phone Number', 'number', 'required'],
+            'phone_number'      =>  ['+63', 'number', 'required'],
         ];
 
         return $fields;

@@ -81,7 +81,7 @@ function setUsername($appointmentData)
  * @param object $form
  * @return void
  */
-function appointmentRegistration($registrationType, $connection, $controller, $form, $uuid)
+function appointmentRegistration($registrationType, $connection, $controller, $form, $uuid, $image)
 {
     if ($registrationType == 'vaccination') {
 
@@ -92,6 +92,7 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
         $data = array_merge($data, $additionalAddress);
 
         $data['user_id'] = $uuid;
+        $data['image'] = $image;
 
         $controller->store($connection->conn, 'vaccinations', $data);
 
@@ -116,7 +117,7 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
         $data = array_merge($data, $additionalAddress);
 
         $data['user_id'] = $uuid;
-
+        $data['image'] = $image;
         $controller->store($connection->conn, 'family_planning', $data);
 
         $appointmentData = $controller->getDataById($connection->conn, 'family_planning', 'id', $connection->conn->lastInsertId());
