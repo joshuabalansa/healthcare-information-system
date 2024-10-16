@@ -50,8 +50,7 @@ class Forms
             'suffix'            =>  ['Suffix', 'text', 'required', ''],
             'Age'               =>  ['Age', 'number', 'required', 'min="14" max="50"'],
             'birth_date'        =>  ['Birth Date', 'date', 'required', 'min="2010-01-01"'],
-            'address_1'         =>  ['Current Address', 'text', 'required', ''],
-            'address_2'         =>  ['Permanent Address', 'text', 'required', ''],
+            'address'           =>  ['Address', 'text', 'required', ''],
             'phone_number'      =>  ['Contact # +63', 'number', 'required', ''],
         ];
 

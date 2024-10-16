@@ -69,12 +69,19 @@ $famData = $controller->getDataById($connection->conn, 'family_planning', 'user_
                 <tbody>
                     <?php foreach ($vacData ? $vacData[0] : $famData[0] as $field => $value) : ?>
                         <?php if ($field !== 'id' && $field !== 'user_id') : ?>
+                           
                             <tr>
+                                <tr>
+                                    <?php if ($field == 'image') : ?>
+                                        <img src="../../assets/uploads/<?=$value?>" alt="<?= $value; ?>" width="300" height="300">
+                                    <?php endif; ?>
+                                </tr>
                                 <th scope="row"><?= ucwords(str_replace('_', ' ', $field)) ?>:</th>
                                 <td><?= $value ?? '?' ?></td>
+                                
                             </tr>
-                        <?php endif ?>
-                    <?php endforeach ?>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
 

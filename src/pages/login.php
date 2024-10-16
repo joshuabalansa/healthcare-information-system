@@ -96,7 +96,7 @@ session_start();
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block btn-login">
                         <i class="entypo-login"></i>
-                        Login In
+                        LOGIN
                     </button>
                     <br>
                 </div>
@@ -107,8 +107,8 @@ session_start();
 
                 <div class="form-group">
 
-                    <a href="pages/registration-option" class="btn btn-dark" onmouseout="this.style.textDecorationLine = 'none'" onmouseover="this.style.textDecorationLine = 'underline'">
-                        Register
+                    <a style="font-size: 14px;" href="pages/registration-option" class="btn btn-dark" onmouseout="this.style.textDecorationLine = 'none'" onmouseover="this.style.textDecorationLine = 'underline'">
+                        Register an Appointment
                     </a>
 
                 </div>
