@@ -193,7 +193,7 @@ function sendSms($appointmentData, $message)
         '',
         $appointmentData[0]['phone_number'],
         $message,
-        'SEMAPHORE',
+        'VFPIS',
         'https://semaphore.co/api/v4/messages'
     );
 }

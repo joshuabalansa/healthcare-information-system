@@ -106,10 +106,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <input id="<?= $field ?>" <?=$options?> type="<?= $type ?>" onkeypress="<?= $type == 'number' ? 'return isNumberKey(event)' : '' ?>" class="form-control" name="<?= $field ?>" placeholder=" <?= $label ?>" <?= $isRequired ?>>
                                 </div>
                             </div>
-
+                            <fieldset>
+                            <?php if ($field == 'current_address') : ?>
+                                <legend>
+                               <label for="permanent_address">Permanent Address</label></legend>
+                            <?php endif; ?>
                             <?php if ($field == 'address') : ?>
-
+                               
                                 <?php foreach ($selectField as $label => $id) : ?>
+                                    
                                     <div class="form-group row">
                                         <label for="<?= $label ?> " class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
 
@@ -120,7 +125,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
+                            </fieldset>
                             <?php endif; ?>
+
                         <?php endforeach; ?>
 
                         <label for="file">
