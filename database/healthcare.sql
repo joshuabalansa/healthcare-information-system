@@ -19,10 +19,6 @@ SET time_zone = "+00:00";
 
 --
 -- Database: `healthcare`
---
-CREATE DATABASE IF NOT EXISTS `healthcare` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `healthcare`;
-
 -- --------------------------------------------------------
 
 --
@@ -38,11 +34,11 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   `city` varchar(255) DEFAULT NULL,
   `brgy` varchar(255) DEFAULT NULL,
   `appointment_type` varchar(20) NOT NULL,
-  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'pending',
+  `status` varchar(20) NOT NULL DEFAULT 'pending',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Dumping data for table `appointments`
@@ -91,11 +87,11 @@ CREATE TABLE IF NOT EXISTS `family_planning` (
   `appointment_type` varchar(20) NOT NULL DEFAULT 'family_planning',
   `status` varchar(255) NOT NULL DEFAULT 'pending',
   `user_id` varchar(255) NOT NULL,
-  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Dumping data for table `family_planning`
@@ -141,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `family_planning_methods` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Dumping data for table `family_planning_methods`
@@ -170,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `role` int NOT NULL,
   `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Dumping data for table `logs`
@@ -305,12 +301,12 @@ DROP TABLE IF EXISTS `patient_family_planning_records`;
 CREATE TABLE IF NOT EXISTS `patient_family_planning_records` (
   `id` int NOT NULL AUTO_INCREMENT,
   `method` varchar(255) DEFAULT NULL,
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'not approved',
-  `patient_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `status` varchar(255)  DEFAULT 'not approved',
+  `patient_id` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Dumping data for table `patient_family_planning_records`
@@ -347,12 +343,12 @@ CREATE TABLE IF NOT EXISTS `patient_vaccination_records` (
   `ht` varchar(255) DEFAULT NULL,
   `temp` varchar(255) DEFAULT NULL,
   `remarks` varchar(255) DEFAULT NULL,
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'not approved',
+  `status` varchar(255) DEFAULT 'not approved',
   `patient_id` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Dumping data for table `patient_vaccination_records`
@@ -400,7 +396,7 @@ CREATE TABLE IF NOT EXISTS `reports` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- --------------------------------------------------------
 
@@ -411,15 +407,15 @@ CREATE TABLE IF NOT EXISTS `reports` (
 DROP TABLE IF EXISTS `schedules`;
 CREATE TABLE IF NOT EXISTS `schedules` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `patient_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `patient_id` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `title` varchar(255) NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `'updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Dumping data for table `schedules`
@@ -443,14 +439,14 @@ INSERT INTO `schedules` (`id`, `patient_id`, `name`, `title`, `date`, `time`, `c
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `user_id` varchar(255)  DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `role` int DEFAULT NULL,
-  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'active',
+  `status` varchar(50) DEFAULT 'active',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=270 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Dumping data for table `users`
@@ -487,9 +483,9 @@ CREATE TABLE IF NOT EXISTS `vaccinations` (
   `body_weight` varchar(50) DEFAULT NULL,
   `body_length` varchar(50) DEFAULT NULL,
   `current_address` varchar(255) DEFAULT NULL,
-  `province` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `brgy` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `province` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `brgy` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `philhealth` varchar(20) DEFAULT NULL,
   `4ps_number` varchar(20) DEFAULT NULL,
@@ -502,11 +498,11 @@ CREATE TABLE IF NOT EXISTS `vaccinations` (
   `phone_number` varchar(20) DEFAULT NULL,
   `status` varchar(11) NOT NULL DEFAULT 'pending',
   `appointment_type` varchar(20) NOT NULL DEFAULT 'vaccination',
-  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Dumping data for table `vaccinations`
@@ -546,7 +542,7 @@ CREATE TABLE IF NOT EXISTS `vaccines` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Dumping data for table `vaccines`
@@ -559,7 +555,6 @@ INSERT INTO `vaccines` (`id`, `vaccine`, `abbreviation`, `manufacturer`, `doses`
 (56, 'Hepatitis B', 'Hepatitis B', 'Hepatitis B', '2', '2', 'Hepatitis B', 'active', '2024-07-07 12:12:23', '2024-07-07 12:12:23'),
 (57, 'Hib (Haemophilus influenzae type b)', 'Hib (Haemophilus influenzae type b):', 'Hib (Haemophilus influenzae type b):', '2', '2', 'Hib (Haemophilus influenzae type b):', 'active', '2024-07-07 12:12:41', '2024-07-07 12:12:41'),
 (58, 'HPV (Human Papillomavirus)', 'HPV (Human Papillomavirus)', 'HPV (Human Papillomavirus)', '2', '2', 'HPV (Human Papillomavirus)', 'active', '2024-07-07 12:18:31', '2024-07-07 12:18:31');
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
