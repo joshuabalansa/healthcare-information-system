@@ -76,8 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="container">
         <div class="row" style="display: flex; justify-content:center">
             <div class="col-md-8">
-
                 <h1 style="margin-bottom: 1em; text-align: center;">
+                <img src="../assets/images/app_logo.png" width="120" alt="" /> <br> <br>
                     <b><?= $appointmentType == 'vaccination' ? 'Register for Vaccination' : 'Register for Family Planning' ?></b>
                 </h1>
                 <div class="card-body">
@@ -112,9 +112,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                <label for="permanent_address">Permanent Address</label></legend>
                             <?php endif; ?>
                             <?php if ($field == 'address') : ?>
-                               
+
                                 <?php foreach ($selectField as $label => $id) : ?>
-                                    
+
                                     <div class="form-group row">
                                         <label for="<?= $label ?> " class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
 
@@ -158,6 +158,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             return true;
+        }
+
+
+        function validateAge() {
+
+            const ageInput = document.getElementById('Age');
+            const ageValue = parseInt(ageInput.value);
+
+            if (ageValue < 14 || ageValue > 50) {
+                ageInput.setCustomValidity('Age must be between 14 and 50');
+                alert('Age must be between 14 and 50');
+            } else {
+                ageInput.setCustomValidity('');
+            }
         }
     </script>
 

@@ -49,7 +49,7 @@ class Forms
             'middle_name'       =>  ['Middle Name', 'text', 'required', ''],
             'last_name'         =>  ['Last Name', 'text', 'required', ''],
             'suffix'            =>  ['Suffix', 'text', 'required', ''],
-            'Age'               =>  ['Age', 'number', 'required', 'min="14" max="50"'],
+            'Age'               =>  ['Age', 'number', 'required', 'min="14" max="50"  onblur="validateAge()"'],
             'birth_date'        =>  ['Birth Date', 'date', 'required', 'min="2010-01-01"'],
             'phone_number'      =>  ['Contact # +63', 'number', 'required', ''],
             'current_address'   =>  ['Current Address', 'text', 'required', ''],
