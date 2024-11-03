@@ -128,17 +128,12 @@ if (!empty($famId)) {
                     </tr>
                 </tbody>
             </table>
-            <h3 style="text-align: center;">IMUNIZATION RECORD</h3>
+            <h3 style="text-align: center;">METHODS</h3>
             <table class="table" style="background-color: pink;">
                 <thead>
                     <tr>
-                        <th scope="col">Vaccine</th>
+                        <th scope="col">METHODS</th>
                         <th scope="col">Date</th>
-                        <th scope="col">Age</th>
-                        <th scope="col">WT</th>
-                        <th scope="col">HT</th>
-                        <th scope="col">Temp</th>
-                        <th scope="col">Remarks</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -147,21 +142,6 @@ if (!empty($famId)) {
                             <td><?= strtoupper(isset($data['vaccine']) ? $data['vaccine'] : $data['method']) ?></td>
                             <td>
                                 <?= convertMonth($data['created_at']) ?>
-                            </td>
-                            <td>
-                                <?= $data['age'] ?>
-                            </td>
-                            <td>
-                                <?= $data['wt'] ?>
-                            </td>
-                            <td>
-                                <?= $data['ht'] ?>
-                            </td>
-                            <td class="center">
-                                <?= $data['temp'] ?>
-                            </td>
-                            <td>
-                                <?= isset($data['remarks']) ? $data['remarks'] : 'N/A' ?>
                             </td>
                         </tr>
                 <?php endforeach; ?>

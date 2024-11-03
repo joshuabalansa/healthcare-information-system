@@ -89,7 +89,12 @@ $header   = new Header();
                             <td><?= htmlspecialchars($appointment['first_name'] . ' ' . $appointment['last_name']) ?></td>
                             <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $appointment['appointment_type']))) ?></td>
                             <td class="center">
-                                <a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/patients/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>" class="btn btn-sm btn-primary" title="Patient Information"><i class="entypo-info"></i></a>
+                                <a
+                                    href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/patients/<?= $appointment['appointment_type'] === 'vaccination' ? 'show' : 'show_family_planning' ?>.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>"
+                                    class="btn btn-sm btn-primary"
+                                    title="Patient Information">
+                                    <i class="entypo-info"></i>
+                                </a>
                                 <a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/patients/data.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>" class="btn btn-sm btn-primary" title="Patient Data"><i class="entypo-archive"></i></a>
                             </td>
                         </tr>
