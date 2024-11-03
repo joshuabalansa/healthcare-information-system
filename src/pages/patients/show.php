@@ -104,8 +104,10 @@ if (!empty($famId)) {
                         <th scope="row">
                             <b>Mother's Birth Date:</b>
                             <?= $vacData ? $vacData[0]['mother_birth_date'] : $famData[0]['mother_birth_date'] ?>
-                            <b>Mother's Occupation</b>
-                            <?= $vacData ? $vacData[0]['mother_occupation'] : $famData[0]['mother_occupation'] ?>
+
+                            <span style="margin-left: 20px;">
+                                <b>Mother's Occupation</b><?= $vacData ? $vacData[0]['mother_occupation'] : $famData[0]['mother_occupation'] ?>
+                            </span>
                         </th>
                     </tr>
                     <tr>
@@ -122,9 +124,10 @@ if (!empty($famId)) {
                         <th scope="row">
                             <b>Father's Birth date:
                             </b><?= $vacData ? $vacData[0]['father_birth_date'] : $famData[0]['father_birth_date'] ?>
-                            <b>Father's Occupation
-                            </b><?= $vacData ? $vacData[0]['father_occupation'] : $famData[0]['father_occupation'] ?>
-                        </th>
+                            <span style="margin-left: 20px;">
+                                <b>Father's Occupation</b><?= $vacData ? $vacData[0]['father_occupation'] : $famData[0]['father_occupation'] ?>
+                            </span>
+                     </th>
                     </tr>
                 </tbody>
             </table>
