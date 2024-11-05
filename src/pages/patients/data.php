@@ -232,9 +232,6 @@ $formatSelectedOptionsMethod = formatSelectedOptionsMethod($patientData);
                             <td>
                                 <?= convertTime($schedule['time']) ?>
                             </td>
-                            <td>
-
-                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

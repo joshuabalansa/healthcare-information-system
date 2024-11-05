@@ -80,51 +80,27 @@ if (!empty($famId)) {
                         <th scope="row"><b>First Name:</b>
                             <?= $vacData ? $vacData[0]['first_name'] : $famData[0]['first_name'] ?></th>
                         <td></td>
-                        <th scope="row"><b>Philhealth Number:</b>
-                            <?= $vacData ? $vacData[0]['philhealth'] : $famData[0]['philhealth'] ?></th>
-                    </tr>
                     <tr>
                         <th scope="row"><b>Middle Name:</b>
                             <?= $vacData ? $vacData[0]['middle_name'] : $famData[0]['middle_name'] ?></th>
                         <td></td>
-                        <th scope="row"><b>4PS Number:</b>
-                            <?= $vacData ? $vacData[0]['4ps_number'] : $famData[0]['4ps_number'] ?></th>
-                    </tr>
                     <tr>
                         <th scope="row"><b>Last Name:</b>
                             <?= $vacData ? $vacData[0]['last_name'] : $famData[0]['last_name'] ?></th>
                         <td></td>
-                        <th scope="row"><b>Mother's Maiden Name:</b>
-                            <?= $vacData ? $vacData[0]['mother_maiden_name'] : $famData[0]['mother_maiden_name'] ?></th>
-                    </tr>
                     <tr>
                         <th scope="row"><b>Birth Date:</b>
                             <?= $vacData ? $vacData[0]['birth_date'] : $famData[0]['birth_date'] ?></th>
                         <td></td>
-                        <th scope="row">
-                            <b>Mother's Birth Date:</b>
-                            <?= $vacData ? $vacData[0]['mother_birth_date'] : $famData[0]['mother_birth_date'] ?>
-                            <b>Mother's Occupation</b>
-                            <?= $vacData ? $vacData[0]['mother_occupation'] : $famData[0]['mother_occupation'] ?>
-                        </th>
                     </tr>
                     <tr>
                         <th scope="row"><b>Address:</b>
                             <?= $vacData ? $vacData[0]['address'] : $famData[0]['address'] ?></th>
                         <td></td>
-                        <th scope="row"><b>Father's Name:
-                            </b><?= $vacData ? $vacData[0]['father_name'] : $famData[0]['father_name'] ?></th>
-                    </tr>
                     <tr>
                         <th scope="row"><b>Phone Number:
                             </b>P<?= $vacData ? $vacData[0]['phone_number'] : $famData[0]['phone_number'] ?></th>
                         <td></td>
-                        <th scope="row">
-                            <b>Father's Birth date:
-                            </b><?= $vacData ? $vacData[0]['father_birth_date'] : $famData[0]['father_birth_date'] ?>
-                            <b>Father's Occupation
-                            </b><?= $vacData ? $vacData[0]['father_occupation'] : $famData[0]['father_occupation'] ?>
-                        </th>
                     </tr>
                 </tbody>
             </table>

@@ -30,7 +30,7 @@ session_start();
 
 </head>
 
-<body class="page-body login-page login-form-fall">
+<body class="page-body login-page login-form-fall" style="background-color: #FFA500;">
 
 
 
@@ -46,7 +46,7 @@ session_start();
 
                 <a href="index.html" class="logo">
                     <img src="assets/images/app_logo.png" width="120" alt="" />
-                    <h2 style="color: #fff">Vaccination And Family Planning</h2>
+                    <h2 style="color: #fff">Barangay Estefania Health Center</h2>
                 </a>
 
                 <!-- <p class="description">Dear user, log in to access the admin area!</p> -->
@@ -102,14 +102,16 @@ session_start();
                 </div>
 
                 <div class="form-group">
-                    <em>- or -</em>
+                    <em style="color: #fff; font-size: 16px;">- or -</em>
                 </div>
 
                 <div class="form-group">
-
-                    <a style="font-size: 14px;" href="pages/registration-option" class="btn btn-dark" onmouseout="this.style.textDecorationLine = 'none'" onmouseover="this.style.textDecorationLine = 'underline'">
+                <h1 style="color: #fff">
+                     <a style="font-size: 20px; color: #fff" href="pages/registration-option" onmouseout="this.style.textDecorationLine = 'none'" onmouseover="this.style.textDecorationLine = 'underline'">
                         Register an Appointment
                     </a>
+                </h1>
+
 
                 </div>
 
