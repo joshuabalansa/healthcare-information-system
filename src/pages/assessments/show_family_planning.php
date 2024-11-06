@@ -80,68 +80,36 @@ if (!empty($famId)) {
                         <th scope="row"><b>First Name:</b>
                             <?= $vacData ? $vacData[0]['first_name'] : $famData[0]['first_name'] ?></th>
                         <td></td>
-                        <th scope="row"><b>Philhealth Number:</b>
-                            <?= $vacData ? $vacData[0]['philhealth'] : $famData[0]['philhealth'] ?></th>
-                    </tr>
                     <tr>
                         <th scope="row"><b>Middle Name:</b>
                             <?= $vacData ? $vacData[0]['middle_name'] : $famData[0]['middle_name'] ?></th>
                         <td></td>
-                        <th scope="row"><b>4PS Number:</b>
-                            <?= $vacData ? $vacData[0]['4ps_number'] : $famData[0]['4ps_number'] ?></th>
-                    </tr>
                     <tr>
                         <th scope="row"><b>Last Name:</b>
                             <?= $vacData ? $vacData[0]['last_name'] : $famData[0]['last_name'] ?></th>
                         <td></td>
-                        <th scope="row"><b>Mother's Maiden Name:</b>
-                            <?= $vacData ? $vacData[0]['mother_maiden_name'] : $famData[0]['mother_maiden_name'] ?></th>
-                    </tr>
                     <tr>
                         <th scope="row"><b>Birth Date:</b>
                             <?= $vacData ? $vacData[0]['birth_date'] : $famData[0]['birth_date'] ?></th>
                         <td></td>
-                        <th scope="row">
-                            <b>Mother's Birth Date:</b>
-                            <?= $vacData ? $vacData[0]['mother_birth_date'] : $famData[0]['mother_birth_date'] ?>
-
-                            <span style="margin-left: 20px;">
-                                <b>Mother's Occupation</b><?= $vacData ? $vacData[0]['mother_occupation'] : $famData[0]['mother_occupation'] ?>
-                            </span>
-                        </th>
                     </tr>
                     <tr>
                         <th scope="row"><b>Address:</b>
                             <?= $vacData ? $vacData[0]['address'] : $famData[0]['address'] ?></th>
                         <td></td>
-                        <th scope="row"><b>Father's Name:
-                            </b><?= $vacData ? $vacData[0]['father_name'] : $famData[0]['father_name'] ?></th>
-                    </tr>
                     <tr>
                         <th scope="row"><b>Phone Number:
                             </b>P<?= $vacData ? $vacData[0]['phone_number'] : $famData[0]['phone_number'] ?></th>
                         <td></td>
-                        <th scope="row">
-                            <b>Father's Birth date:
-                            </b><?= $vacData ? $vacData[0]['father_birth_date'] : $famData[0]['father_birth_date'] ?>
-                            <span style="margin-left: 20px;">
-                                <b>Father's Occupation</b><?= $vacData ? $vacData[0]['father_occupation'] : $famData[0]['father_occupation'] ?>
-                            </span>
-                     </th>
                     </tr>
                 </tbody>
             </table>
-            <h3 style="text-align: center;">IMUNIZATION RECORD</h3>
+            <h3 style="text-align: center;">METHODS</h3>
             <table class="table" style="background-color: pink;">
                 <thead>
                     <tr>
-                        <th scope="col">Vaccine</th>
+                        <th scope="col">METHODS</th>
                         <th scope="col">Date</th>
-                        <th scope="col">Age</th>
-                        <th scope="col">WT</th>
-                        <th scope="col">HT</th>
-                        <th scope="col">Temp</th>
-                        <th scope="col">Remarks</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -150,21 +118,6 @@ if (!empty($famId)) {
                             <td><?= strtoupper(isset($data['vaccine']) ? $data['vaccine'] : $data['method']) ?></td>
                             <td>
                                 <?= convertMonth($data['created_at']) ?>
-                            </td>
-                            <td>
-                                <?= $data['age'] ?>
-                            </td>
-                            <td>
-                                <?= $data['wt'] ?>
-                            </td>
-                            <td>
-                                <?= $data['ht'] ?>
-                            </td>
-                            <td class="center">
-                                <?= $data['temp'] ?>
-                            </td>
-                            <td>
-                                <?= isset($data['remarks']) ? $data['remarks'] : 'N/A' ?>
                             </td>
                         </tr>
                 <?php endforeach; ?>

@@ -42,7 +42,6 @@ class Authorization
             4 => [
                 'Dashboard'                     =>   [$baseUrl . 'dashboard', 'folder'],
                 'Calendar'                      =>   [$baseUrl . 'schedules', 'clock'],
-                'Records'                       =>   [$baseUrl . 'dashboard', 'folder'],
                 'Patient Assessments'           =>   [$baseUrl . 'assessments', 'users']
             ],
         ];

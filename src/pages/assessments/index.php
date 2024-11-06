@@ -87,7 +87,12 @@ $header   = new Header();
                             <td><?= htmlspecialchars($assessment['first_name'] . ' ' . $assessment['last_name']) ?></td>
                             <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $assessment['appointment_type']))) ?></td>
                             <td class="center">
-                                <a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/assessments/show.php?<?= $assessment['appointment_type'] ?>=<?= htmlspecialchars($assessment['user_id']) ?>" class="btn btn-sm btn-primary" title="Patient Information"><i class="entypo-info"></i></a>
+                                <a
+                                    href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/assessments/<?= $assessment['appointment_type'] === 'vaccination' ? 'show' : 'show_family_planning' ?>.php?<?= $assessment['appointment_type'] ?>=<?= htmlspecialchars($assessment['user_id']) ?>"
+                                    class="btn btn-sm btn-primary"
+                                    title="Patient Information">
+                                    <i class="entypo-info"></i>
+                                </a>
                                 <a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/assessments/assessment.php?<?= $assessment['appointment_type'] ?>=<?= htmlspecialchars($assessment['user_id']) ?>" class="btn btn-sm btn-primary" title="Patient Data"><i class="entypo-archive"></i></a>
                             </td>
                         </tr>
