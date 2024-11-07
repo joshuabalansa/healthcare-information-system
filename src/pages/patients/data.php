@@ -151,7 +151,22 @@ $formatSelectedOptionsMethod = formatSelectedOptionsMethod($patientData);
 
             if (!empty($famId)) {
 
-                $render->createModal([], $selectOptionsData);
+                $render->createModal([
+                    [
+                    'label' => 'Date of Visit',
+                    'id' => 'date_of_visit',
+                    'name' => 'date_of_visit',
+                    'type' => 'date',
+                    'required' => false
+                    ],
+                    [
+                    'label' => 'Medical Findings',
+                    'id' => 'medical_findings',
+                    'name' => 'medical_findings',
+                    'type' => 'text',
+                    'required' => false
+                    ],
+            ], $selectOptionsData);
             }
             ?>
 
@@ -159,6 +174,8 @@ $formatSelectedOptionsMethod = formatSelectedOptionsMethod($patientData);
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Date of  Visit</th>
+                        <th>Medical Findings</th>
                         <th>Method</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -168,6 +185,8 @@ $formatSelectedOptionsMethod = formatSelectedOptionsMethod($patientData);
                     <?php foreach ($patientData as  $index => $data) : ?>
                         <tr class="odd gradeX">
                             <td><?= $index + 1 ?></td>
+                            <td><?= isset($data['date_of_visit']) ? convertMonth($data['date_of_visit']) : '' ?></td>
+                            <td><?= isset($data['medical_findings']) ? $data['medical_findings'] : '' ?></td>
                             <td><?= strtoupper(isset($data['vaccine']) ? $data['vaccine'] : $data['method']) ?></td>
                             <td class="center">
                                 <span class="badge badge-<?= $data['status'] == 'not approved' ? 'danger' : 'info' ?>">
@@ -186,6 +205,8 @@ $formatSelectedOptionsMethod = formatSelectedOptionsMethod($patientData);
                 <tfoot>
                     <tr>
                         <th>#</th>
+                        <th>Date of  Visit</th>
+                        <th>Medical Findings</th>
                         <th>Method</th>
                         <th>Status</th>
                         <th>Action</th>

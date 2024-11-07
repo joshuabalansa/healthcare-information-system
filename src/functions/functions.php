@@ -166,7 +166,7 @@ function storeAppointments($appointmentData, $connection, $controller)
     $controller->store($connection->conn, 'appointments', $appointmentFields);
 }
 
-/** 
+/**
  *
  * @param string $address
  * @return void

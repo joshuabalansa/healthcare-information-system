@@ -20,9 +20,12 @@ $vacData = $controller->getDataById($connection->conn, 'vaccinations', 'user_id'
 $famData = $controller->getDataById($connection->conn, 'family_planning', 'user_id', $patientId);
 
 if ($vacData) {
+
     $patientInformation =   $vacData;
+
 } else {
-    $patientInformation =   $famData;
+
+    header('location: fam-records.php');
 }
 
 $patientData = [];

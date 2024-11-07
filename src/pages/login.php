@@ -27,10 +27,15 @@ session_start();
     <link rel="stylesheet" href="assets/css/custom.css">
 
     <script src="assets/js/jquery-1.11.3.min.js"></script>
-
+    <style>
+      
+        .login-page .login-header {
+            background: #FFA500;
+        }
+    </style>
 </head>
 
-<body class="page-body login-page login-form-fall" style="background-color: #FFA500;">
+<body class="page-body login-page login-form-fall" style="background-color: white;">
 
 
 
@@ -44,9 +49,9 @@ session_start();
 
             <div class="login-content">
 
-                <a href="index.html" class="logo">
-                    <img src="assets/images/app_logo.png" width="120" alt="" />
-                    <h2 style="color: #fff">Barangay Estefania Health Center</h2>
+                <a href="index.php" class="logo">
+                    <img src="assets/images/app_logo.png" width="160" alt="" />
+                    <h2 style="color: #fff; width: 460px; text-align: center; margin-left: -70px">Barangay Estefania Health Center</h2>
                 </a>
 
                 <!-- <p class="description">Dear user, log in to access the admin area!</p> -->
@@ -107,8 +112,8 @@ session_start();
 
                 <div class="form-group">
                 <h1 style="color: #fff">
-                     <a style="font-size: 20px; color: #fff" href="pages/registration-option" onmouseout="this.style.textDecorationLine = 'none'" onmouseover="this.style.textDecorationLine = 'underline'">
-                        Register an Appointment
+                     <a style="font-size: 20px; color: #333" href="pages/registration-option" onmouseout="this.style.textDecorationLine = 'none'" onmouseover="this.style.textDecorationLine = 'underline'">
+                        REGISTER
                     </a>
                 </h1>
 

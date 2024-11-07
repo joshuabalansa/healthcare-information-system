@@ -14,10 +14,8 @@ $sideBar = new SideBar($_SESSION['routes']);
 $controller = new Controllers();
 $connection = new Connection();
 
-$patientId = $_GET['family_planning'] ?? '';
-
+$patientId = $_SESSION['patient_id'];
 $patientInformation = [];
-
 $vacData = $controller->getDataById($connection->conn, 'vaccinations', 'user_id', $patientId);
 $famData = $controller->getDataById($connection->conn, 'family_planning', 'user_id', $patientId);
 
@@ -37,6 +35,7 @@ if($vacData1) {
 } else {
     $patientData =   $famData2;
 }
+
 ?>
 
 <!DOCTYPE html>

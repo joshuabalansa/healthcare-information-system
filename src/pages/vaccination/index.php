@@ -19,7 +19,7 @@ $connection = new Connection();
 $sideBar    = new Sidebar($_SESSION['routes']);
 $header     = new Header();
 $controller = new Controllers;
-$render = new ModalComponent('New Record', 'Add Vaccine', 'Add a vaccine records');
+$render = new ModalComponent('New Vaccine', 'Add Vaccine', 'Add a vaccine records');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
