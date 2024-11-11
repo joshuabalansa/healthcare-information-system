@@ -28,7 +28,7 @@ session_start();
 
     <script src="assets/js/jquery-1.11.3.min.js"></script>
     <style>
-      
+
         .login-page .login-header {
             background: #FFA500;
         }
@@ -50,7 +50,7 @@ session_start();
             <div class="login-content">
 
                 <a href="index.php" class="logo">
-                    <img src="assets/images/app_logo.png" width="160" alt="" />
+                    <img src="assets/images/app_logo.png" width="190" alt="" />
                     <h2 style="color: #fff; width: 460px; text-align: center; margin-left: -70px">Barangay Estefania Health Center</h2>
                 </a>
 
@@ -113,7 +113,7 @@ session_start();
                 <div class="form-group">
                 <h1 style="color: #fff">
                      <a style="font-size: 20px; color: #333" href="pages/registration-option" onmouseout="this.style.textDecorationLine = 'none'" onmouseover="this.style.textDecorationLine = 'underline'">
-                        REGISTER
+                        REGISTRATION
                     </a>
                 </h1>
 
