@@ -233,7 +233,7 @@ function updateAppointment($appointmentData, $appointment_type, $controller, $co
 
     $username = setUsername($appointmentData);
     $password = getRandomChars();
-    $message  = "Your appointment has been approved. you may login using the provided credentials to track your records \n \n Username: $username \n Password: $password";
+    $message  = "Your appointment has been approved. you can visit the health center to book your appointment";
 
     $controller->store($connection->conn, 'users', setUserData($appointmentData, $username, $password), 'index.php');
 
