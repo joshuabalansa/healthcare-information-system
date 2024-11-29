@@ -29,8 +29,8 @@ if (!empty($vacId)) {
 if (!empty($famId)) {
 
     $patientData    =   $controller->getDataById($connection->conn, 'patient_family_planning_records', 'patient_id', $famId);
+    $userData       =   $controller->getDataById($connection->conn, 'users', 'user_id', $famId);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +73,10 @@ if (!empty($famId)) {
             <br />
 
             <h3>All Information</h3>
-            <a href="index.php" class="btn btn-primary" style="margin-bottom: 10px;">Back to List</a>
+            <a href="index.php" class="btn btn-primary" style="margin-bottom: 10px;">Back to List</a> <br> <br>
+            Login Details <br>
+            Username: <?= $userData[0]['username'] ?? '' ?> <br>
+            Password: <?= $userData[0]['password'] ?? '' ?>
             <table class="table" style="background-color: pink;">
                 <tbody>
                     <tr>

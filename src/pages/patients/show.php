@@ -1,7 +1,6 @@
 <?php
 
 session_start();
-
 require_once '../../class/Controllers.php';
 require_once '../../config/Connection.php';
 require_once '../../functions/functions.php';
@@ -20,10 +19,12 @@ $vacData = $controller->getDataById($connection->conn, 'vaccinations', 'user_id'
 $famData = $controller->getDataById($connection->conn, 'family_planning', 'user_id', $famId);
 
 $patientData    = [];
+$userData = [];
 
 if (!empty($vacId)) {
 
     $patientData    =   $controller->getDataById($connection->conn, 'patient_vaccination_records', 'patient_id', $vacId);
+    $userData       =   $controller->getDataById($connection->conn, 'users', 'user_id', $vacId);
 }
 
 if (!empty($famId)) {
@@ -73,7 +74,10 @@ if (!empty($famId)) {
             <br />
 
             <h3>All Information</h3>
-            <a href="index.php" class="btn btn-primary" style="margin-bottom: 10px;">Back to List</a>
+            <a href="index.php" class="btn btn-primary" style="margin-bottom: 10px;">Back to List</a> <br> <br>
+            Login Details <br>
+            Username: <?= $userData[0]['username'] ?? '' ?> <br>
+            Password: <?= $userData[0]['password'] ?? '' ?>
             <table class="table" style="background-color: pink;">
                 <tbody>
                     <tr>

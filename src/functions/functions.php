@@ -55,7 +55,7 @@ function setUserData($appointmentData, $username, $password)
         'name' => $appointmentData[0]['first_name'],
         'username' => $username,
         'role' => 2,
-        'password' => sha1($password),
+        'password' => $password,
         'status' => 'active'
     ];
 

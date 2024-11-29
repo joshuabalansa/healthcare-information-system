@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $statement = $db->prepare("SELECT * FROM users WHERE username = :username AND password = :password AND status = 'active' ");
 
-    $statement->execute([':username' => $username, ':password' => sha1($password)]);
+    $statement->execute([':username' => $username, ':password' => $password]);
 
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
