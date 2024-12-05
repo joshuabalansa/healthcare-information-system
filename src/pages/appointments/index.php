@@ -74,7 +74,6 @@ if (isset($_GET['approve'])) {
 }
 
 $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -113,61 +112,54 @@ $appointments = joinTable($connection->conn, 'vaccinations', 'family_planning');
 			<hr />
 
 			<br />
+			<h3 class="mt-4 mb-3">Appointments</h3>
+			<button onclick="notify('confirm')" class="btn btn-primary mb-3">Approve All</button>
 
-			<h3>Appointments</h3>
-			<button onclick="notify('confirm')" style="margin-bottom: 10px;" class="btn btn-sm btn-primary">Approve All</button>
-			<table class="table table-bordered datatable" id="table-1">
-				<thead>
+			<table class="table table-striped table-hover">
+				<thead class="table-light">
 					<tr>
 						<th>#</th>
 						<th>Name</th>
 						<th>Phone Number</th>
 						<th>Type</th>
 						<th>Status</th>
-						<th>Action</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php foreach ($appointments as $index => $appointment) : ?>
-						<tr class="odd gradeX">
+						<tr>
 							<td><?= $index + 1 ?></td>
 							<td><?= htmlspecialchars($appointment['first_name'] . ' ' . $appointment['last_name']) ?></td>
 							<td><?= htmlspecialchars($appointment['phone_number']) ?></td>
 							<td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $appointment['appointment_type']))) ?></td>
 							<td>
-								<span class="badge <?= $appointment['status'] == 'approved' ? 'badge-success' : 'badge-danger' ?>">
+								<span class="badge <?= $appointment['status'] == 'approved' ? 'bg-success' : 'bg-danger' ?>">
 									<?= ucfirst(htmlspecialchars($appointment['status'])) ?>
 								</span>
 							</td>
-							<td class="center">
-								<a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/appointments/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>" class="btn btn-sm btn-primary">
-									<i class="entypo-info"></i>
-								</a>
+							<td>
+								<div class="btn-group" role="group">
+									<a href="<?= htmlspecialchars($_SESSION['base_url']) ?>pages/appointments/show.php?<?= $appointment['appointment_type'] ?>=<?= htmlspecialchars($appointment['user_id']) ?>" class="btn btn-sm btn-info">
+										<i class="entypo-info"></i>
+									</a>
 
-								<?php if ($appointment['status'] !== 'approved') : ?>
-									<button onclick='confirmation(<?= json_encode($appointment['user_id']) ?>, <?= json_encode('approve') ?>)' class="btn btn-sm btn-info btn-icon icon-left">
-										Approve<i class="entypo-check"></i>
+									<?php if ($appointment['status'] !== 'approved') : ?>
+										<button onclick='confirmation(<?= json_encode($appointment['user_id']) ?>, <?= json_encode('approve') ?>)' class="btn btn-sm btn-success">
+											<i class="entypo-check"></i>
+										</button>
+									<?php endif; ?>
+
+									<button class="btn btn-sm btn-danger" onclick='confirmation(<?= json_encode($appointment['user_id']) ?>, <?= json_encode('cancel') ?>)'>
+										<i class="entypo-cancel"></i>
 									</button>
-
-								<?php endif; ?>
-								<button class="btn btn-sm btn-secondary btn-secondary" onclick='confirmation(<?= json_encode($appointment['user_id']) ?>, <?= json_encode('cancel') ?>)'><i class="entypo-cancel"></i></button>
-
+								</div>
 							</td>
 						</tr>
 					<?php endforeach; ?>
 				</tbody>
-				<tfoot>
-					<tr>
-						<th>#</th>
-						<th>Name</th>
-						<th>Phone Number</th>
-						<th>Type</th>
-						<th>Status</th>
-						<th>Action</th>
-					</tr>
-					</thead>
-				</tfoot>
 			</table>
+		</div>
 
 			<br />
 		</div>

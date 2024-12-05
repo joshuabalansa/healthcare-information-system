@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         storeLoginLogs($connection, $user);
 
         header('location: ../pages/dashboard.php');
+        
     } else {
 
         echo "<script>
@@ -45,7 +46,7 @@ function setSessions($user)
     $_SESSION['patient_id']  =  $user['user_id'];
     $_SESSION['username']    =  $user['username'];
     $_SESSION['role']        =  $user['role'];
-    $_SESSION['base_url']    =  'http://localhost/healthcare/src/';
+    $_SESSION['base_url']    =  'https://localhost/healthcare/src/';
     $_SESSION['profile']     =  $_SESSION['base_url'] . 'pages/profile/index.php';
     $_SESSION['routes']      =  Authorization::routes($user['role']);
 }

@@ -87,9 +87,10 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
 
         $data = getFormData($form->vaccinationFields());
 
-        $additionalAddress = getRegistrationAdditionalAddress();
+        // commented remove complete address field from vaccination table
+        // $additionalAddress = getRegistrationAdditionalAddress();
 
-        $data = array_merge($data, $additionalAddress);
+        // $data = array_merge($data, $additionalAddress);
 
         $data['user_id'] = $uuid;
         $data['image'] = $image;
@@ -112,9 +113,10 @@ function appointmentRegistration($registrationType, $connection, $controller, $f
 
         $data = getFormData($form->familyPlanningFields());
 
-        $additionalAddress = getRegistrationAdditionalAddress();
+        // commented remove complete address field from family planning table
+        // $additionalAddress = getRegistrationAdditionalAddress();
 
-        $data = array_merge($data, $additionalAddress);
+        // $data = array_merge($data, $additionalAddress);
 
         $data['user_id'] = $uuid;
         $data['image'] = $image;
@@ -154,13 +156,22 @@ function getRegistrationAdditionalAddress()
  */
 function storeAppointments($appointmentData, $connection, $controller)
 {
+    // $appointmentFields = [
+    //     'patient_id'        =>  $appointmentData[0]['user_id'],
+    //     'appointment_type'  =>  $appointmentData[0]['appointment_type'],
+    //     'address'           =>  formatAddress($appointmentData[0]['address']),
+    //     'brgy'              =>  formatAddress($appointmentData[0]['brgy']),
+    //     'province'          =>  formatAddress($appointmentData[0]['province']),
+    //     'city'              =>  formatAddress($appointmentData[0]['city']),
+    // ];
+
     $appointmentFields = [
         'patient_id'        =>  $appointmentData[0]['user_id'],
         'appointment_type'  =>  $appointmentData[0]['appointment_type'],
         'address'           =>  formatAddress($appointmentData[0]['address']),
-        'brgy'              =>  formatAddress($appointmentData[0]['brgy']),
-        'province'          =>  formatAddress($appointmentData[0]['province']),
-        'city'              =>  formatAddress($appointmentData[0]['city']),
+        // 'brgy'              =>  formatAddress($appointmentData[0]['brgy']),
+        // 'province'          =>  formatAddress($appointmentData[0]['province']),
+        // 'city'              =>  formatAddress($appointmentData[0]['city']),
     ];
 
     $controller->store($connection->conn, 'appointments', $appointmentFields);
@@ -568,7 +579,7 @@ function storeUsers($connection, $controller)
 
     $name         = sanitizeInput($_POST['name']);
     $username     = sanitizeInput($_POST['username']);
-    $password     = sanitizeInput(sha1($_POST['password']));
+    $password     = sanitizeInput($_POST['password']);
     $role         = sanitizeInput(sha1($_POST['userSelect']));
 
     $userData = [

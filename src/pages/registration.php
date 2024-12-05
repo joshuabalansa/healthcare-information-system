@@ -13,13 +13,15 @@ $appointmentType = $_GET['appointment'] ?? '';
 $form = new Forms;
 $uuid = Uuid::uuid4();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Instantiate connection and controller objects
     $connection = new Connection();
     $controller = new Controllers();
 
+    // Get registration type from the query string
     $registrationType = $_GET['registration'] ?? '';
 
+    // Check if a file was uploaded
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['image']['tmp_name'];
         $fileName = $_FILES['image']['name'];
@@ -30,26 +32,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $allowedfileExtensions = ['jpg', 'gif', 'png', 'jpeg'];
 
+        // Validate file extension
         if (in_array($fileExtension, $allowedfileExtensions)) {
-
+            // Generate a new unique file name
             $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
 
+            // Define upload directory
             $uploadFileDir = '../assets/uploads/';
 
+            // Ensure the directory exists and is writable
             if (!is_dir($uploadFileDir)) {
-
-                mkdir($uploadFileDir, 0777, true);
+                if (!mkdir($uploadFileDir, 0777, true)) {
+                    die('Failed to create upload directory.');
+                }
             }
 
+            // Define the destination path
             $dest_path = $uploadFileDir . $newFileName;
 
-            move_uploaded_file($fileTmpPath, $dest_path);
+            // Move the uploaded file to the destination directory
+            if (!move_uploaded_file($fileTmpPath, $dest_path)) {
+                die('Failed to move uploaded file.');
+            }
+        } else {
+            die('Invalid file type. Allowed types: ' . implode(', ', $allowedfileExtensions));
         }
+    } else {
+        // Handle upload errors
+        if (isset($_FILES['image']['error']) && $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+            die('File upload error: ' . $_FILES['image']['error']);
+        }
+        // Set a default value if no file is uploaded
+        $newFileName = null;
     }
 
-    appointmentRegistration($registrationType, $connection, $controller, $form, $uuid->toString(), $newFileName);
-
+    // Call the registration function
+    appointmentRegistration(
+        $registrationType,
+        $connection,
+        $controller,
+        $form,
+        $uuid->toString(),
+        $newFileName
+    );
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -85,11 +112,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php
                         $fields = ($appointmentType == 'vaccination') ? $form->vaccinationFields() : $form->familyPlanningFields();
 
-                        $selectField = [
-                            'Province'  => 'provincesSelect',
-                            'City'      => 'citiesSelect',
-                            'Barangay'  => 'barangaysSelect'
-                        ];
+                        // $selectField = [
+                        //     'Province'  => 'provincesSelect',
+                        //     'City'      => 'citiesSelect',
+                        //     'Barangay'  => 'barangaysSelect'
+                        // ];
 
                         foreach ($fields as $field => [$label, $type, $isRequired, $options]) :
                         ?>
@@ -106,28 +133,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <input id="<?= $field ?>" <?=$options?> type="<?= $type ?>" onkeypress="<?= $type == 'number' ? 'return isNumberKey(event)' : '' ?>" class="form-control" name="<?= $field ?>" placeholder=" <?= $label ?>" <?= $isRequired ?>>
                                 </div>
                             </div>
-                            <fieldset>
-                            <?php if ($field == 'current_address') : ?>
-                                <legend>
-                               <label for="permanent_address">Permanent Address</label></legend>
-                            <?php endif; ?>
-                            <?php if ($field == 'address') : ?>
-
-                                <?php foreach ($selectField as $label => $id) : ?>
-
-                                    <div class="form-group row">
-                                        <label for="<?= $label ?> " class="col-md-4 col-form-label text-md-right"><?= $label ?>:</label>
-
-                                        <div class="col-md-6 mb-3">
-                                            <select class="form-control" name="<?= $id ?>" id="<?= $id ?>" required>
-                                                <option value="">-- Select a <?= $label ?> --</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </fieldset>
-                            <?php endif; ?>
-
                         <?php endforeach; ?>
 
                         <label for="file">

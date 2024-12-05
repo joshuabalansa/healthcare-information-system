@@ -66,47 +66,8 @@ if (!isset($_GET['familyplanning']) && !isset($_GET['vaccination'])) {
                 <div style="margin-top: 30px;" id="statisticData"></div>
             <br />
 
-            <a href="<?= $_SESSION['base_url'] . 'pages/reports/' ?>?familyplanning=true" class="btn btn-primary">View Family Planning</a>
-        <a href="<?= $_SESSION['base_url'] . 'pages/reports/' ?>?vaccination=true" class="btn btn-primary">View Vaccination</a> <br /><br />
-        <p>This shows the patient appointment in every barangay</p>
-        <table class="table table-bordered datatable mt-5" id="table-reports">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Brgy</th>
-                    <th>Type</th>
-                    <th>No. of Appointments</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach (Controllers::getDataByGroup($connection->conn, 'appointments', 'brgy', 'appointment_type') as $index => $address) : ?>
-                    <?php if (isset($_GET['vaccination']) && $_GET['vaccination'] && $address['appointment_type'] === 'vaccination') : ?>
-                        <tr class="odd gradeX">
-                            <td><?= $index + 1 ?></td>
-                            <td><?= ucwords($address['brgy']) ?? '' ?></td>
-                            <td><span class="badge badge-info"><?= ucwords(str_replace('_', ' ', $address['appointment_type'])) ?? '' ?></span></td>
-                            <td><?= $address['count'] ?? '' ?></td>
-                        </tr>
-                    <?php endif; ?>
-                    <?php if (isset($_GET['familyplanning']) && $_GET['familyplanning'] && $address['appointment_type'] === 'family_planning') : ?>
-                        <tr class="odd gradeX">
-                            <td><?= $index + 1 ?></td>
-                            <td><?= ucwords($address['brgy']) ?? '' ?></td>
-                            <td><span class="badge badge-info"><?= ucwords(str_replace('_', ' ', $address['appointment_type'])) ?? '' ?></span></td>
-                            <td><?= $address['count'] ?? '' ?></td>
-                        </tr>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>#</th>
-                    <th>Brgy</th>
-                    <th>Type</th>
-                    <th>No. of Appointments</th>
-                </tr>
-            </tfoot>
-        </table>
+            <!-- <a href="<?= $_SESSION['base_url'] . 'pages/reports/' ?>?familyplanning=true" class="btn btn-primary">View Family Planning</a>
+        <a href="<?= $_SESSION['base_url'] . 'pages/reports/' ?>?vaccination=true" class="btn btn-primary">View Vaccination</a> <br /><br /> -->
         </div>
         <script>
             var options = {

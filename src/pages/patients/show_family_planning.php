@@ -20,6 +20,7 @@ $vacData = $controller->getDataById($connection->conn, 'vaccinations', 'user_id'
 $famData = $controller->getDataById($connection->conn, 'family_planning', 'user_id', $famId);
 
 $patientData    = [];
+$userData = [];
 
 if (!empty($vacId)) {
 
@@ -74,9 +75,11 @@ if (!empty($famId)) {
 
             <h3>All Information</h3>
             <a href="index.php" class="btn btn-primary" style="margin-bottom: 10px;">Back to List</a> <br> <br>
-            Login Details <br>
-            Username: <?= $userData[0]['username'] ?? '' ?> <br>
-            Password: <?= $userData[0]['password'] ?? '' ?>
+            <?php if (!empty($userData)) : ?>
+                Login Details <br>
+                Username: <?= $userData[0]['username'] ?? '' ?> <br>
+                Password: <?= $userData[0]['password'] ?? '' ?>
+            <?php endif; ?>
             <table class="table" style="background-color: pink;">
                 <tbody>
                     <tr>
